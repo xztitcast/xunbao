@@ -1,0 +1,99 @@
+server:
+  port: 8380
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /
+  shutdown: graceful
+  
+spring:
+  application:
+    name: xunbao-framework-service
+  lifecycle:
+    timeout-per-shutdown-phase: 30S
+  profiles:
+    active: '@profile.name@'
+  jackson:
+    default-property-inclusion: NON_EMPTY
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        username: '@nacos.username@'
+        password: '@nacos.password@'
+        server-addr: '@dubbo.server-addr@'
+        namespace: '@dubbo.namespace@'
+        file-extension: yml
+        refresh-enabled: true
+        extension-configs:
+        - data-id: taotao-redis.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        - data-id: taotao-rabbitmq.yml
+          group: DEFAULT_GROUP
+          refresh: true
+
+dubbo:
+  application:
+    qos-enable: false
+    qos-port: 22225
+    name: ${spring.application.name}
+    metadata-type: remote
+  protocol:
+    name: dubbo
+    port: -1
+    #serialization: kryo
+    serialization: fastjson2
+    dispatcher: message
+    threads: 20
+    threadpool: fixed
+  registry:
+    protocol: nacos
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
+    parameters:
+      namespace: ${spring.cloud.nacos.config.namespace}
+  metadata-report:
+    protocol: nacos
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
+    parameters:
+      namespace: ${spring.cloud.nacos.config.namespace}
+  provider:
+    filter: exceptionCustomizerFilter,-exception
+    loadbalance: roundrobin
+    serialization: fastjson2
+    retries: 0
+    timeout: 6000
+  consumer:
+    loadbalance: roundrobin
+    validation: false
+    timeout: 30000
+    check: false
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+        
+mybatis-plus:
+  mapper-locations:
+  - classpath:mapper/**/*.xml
+  typeAliasesPackage: com.bfox.xunbao.framework.entity
+  global-config:
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: null
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
