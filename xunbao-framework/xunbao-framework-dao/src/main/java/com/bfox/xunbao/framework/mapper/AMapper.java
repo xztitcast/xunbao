@@ -1,5 +1,5 @@
 package com.bfox.xunbao.framework.mapper;
 
-public class AMapper {
+public interface AMapper {
 
 }
