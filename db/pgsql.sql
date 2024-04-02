@@ -970,3 +970,81 @@ COMMENT ON COLUMN "public"."tb_card_config"."status" IS '状态（0 禁用 1 启
 COMMENT ON COLUMN "public"."tb_card_config"."created" IS '创建时间';
 COMMENT ON COLUMN "public"."tb_card_config"."updated" IS '更新时间';
 COMMENT ON TABLE "public"."tb_card_config" IS '数币通配置';
+
+DROP TABLE IF EXISTS "public"."tb_content_cat";
+CREATE TABLE "public"."tb_content_cat" (
+    "id" bigserial NOT NULL PRIMARY KEY,
+    "parent_id" int8 NOT NULL DEFAULT 0,
+    "name" varchar(50) DEFAULT NULL,
+    "status" int2 DEFAULT 1,
+    "sorted" int2 DEFAULT 0,
+    "path" varchar(255) NOT NULL DEFAULT '0',
+    "terminal" VARCHAR(10) NOT NULL DEFAULT 'PC',
+    "tisid" int8 NOT NULL,
+    "tisname" varchar(20) NOT NULL,
+    "creator" int8,
+    "create_name" varchar(20),
+    "created" TIMESTAMP DEFAULT NOW(),
+    "updater" int8,
+    "update_name" varchar(20),
+    "updated" TIMESTAMP DEFAULT NOW()
+);
+
+COMMENT ON COLUMN "public"."tb_content_cat"."id" IS '主键ID';
+COMMENT ON COLUMN "public"."tb_content_cat"."parent_id" IS '父类目ID=0时，代表的是一级的类目';
+COMMENT ON COLUMN "public"."tb_content_cat"."name" IS '分类名称';
+COMMENT ON COLUMN "public"."tb_content_cat"."status" IS '状态是否删除 0:否 1:是';
+COMMENT ON COLUMN "public"."tb_content_cat"."sorted" IS '排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列';
+COMMENT ON COLUMN "public"."tb_content_cat"."path" IS '所属类目，叶子类目';
+COMMENT ON COLUMN "public"."tb_content_cat"."terminal" IS '终端PC:浏览器, APP:手机应用端, MIN:微信小程序';
+COMMENT ON COLUMN "public"."tb_content_cat"."tisid" IS '机构号';
+COMMENT ON COLUMN "public"."tb_content_cat"."tisname" IS '机构名称';
+COMMENT ON COLUMN "public"."tb_content_cat"."creator" IS '创建人id';
+COMMENT ON COLUMN "public"."tb_content_cat"."create_name" IS '创建名称';
+COMMENT ON COLUMN "public"."tb_content_cat"."created" IS '创建时间';
+COMMENT ON COLUMN "public"."tb_content_cat"."updater" IS '更新人id';
+COMMENT ON COLUMN "public"."tb_content_cat"."update_name" IS '更新人名称';
+COMMENT ON COLUMN "public"."tb_content_cat"."updated" IS '更新时间';
+COMMENT ON TABLE "public"."tb_content_cat" IS '内容分类表';
+
+
+DROP TABLE IF EXISTS "public"."tb_content";
+CREATE TABLE "public"."tb_content" (
+    "id" bigserial NOT NULL PRIMARY KEY,
+    "cid" int8 NOT NULL,
+    "title" varchar(200) DEFAULT NULL,
+    "sub_title" varchar(100) DEFAULT NULL,
+    "title_desc" varchar(500) DEFAULT NULL,
+    "url" varchar(500) DEFAULT NULL,
+    "pic" varchar(300) DEFAULT NULL,
+    "pic2" varchar(300) DEFAULT NULL ,
+    "content" text,
+    "tisid" int8 NOT NULL,
+    "tisname" varchar(20) NOT NULL,
+    "creator" int8,
+    "create_name" varchar(20),
+    "created" TIMESTAMP DEFAULT NOW(),
+    "updater" int8,
+    "update_name" varchar(20),
+    "updated" TIMESTAMP DEFAULT NOW()
+);
+
+COMMENT ON COLUMN "public"."tb_content"."id" IS '主键ID';
+COMMENT ON COLUMN "public"."tb_content"."cid" IS '内容类目ID';
+COMMENT ON COLUMN "public"."tb_content"."title" IS '内容标题';
+COMMENT ON COLUMN "public"."tb_content"."sub_title" IS '子标题';
+COMMENT ON COLUMN "public"."tb_content"."title_desc" IS '标题描述';
+COMMENT ON COLUMN "public"."tb_content"."url" IS '链接';
+COMMENT ON COLUMN "public"."tb_content"."pic" IS '图片绝对路径';
+COMMENT ON COLUMN "public"."tb_content"."pic2" IS '图片2';
+COMMENT ON COLUMN "public"."tb_content"."url" IS '所属类目，叶子类目';
+COMMENT ON COLUMN "public"."tb_content"."content" IS '内容';
+COMMENT ON COLUMN "public"."tb_content"."tisid" IS '机构号';
+COMMENT ON COLUMN "public"."tb_content"."tisname" IS '机构名称';
+COMMENT ON COLUMN "public"."tb_content"."creator" IS '创建人id';
+COMMENT ON COLUMN "public"."tb_content"."create_name" IS '创建名称';
+COMMENT ON COLUMN "public"."tb_content"."created" IS '创建时间';
+COMMENT ON COLUMN "public"."tb_content"."updater" IS '更新人id';
+COMMENT ON COLUMN "public"."tb_content"."update_name" IS '更新人名称';
+COMMENT ON COLUMN "public"."tb_content"."updated" IS '更新时间';
+COMMENT ON TABLE "public"."tb_content" IS '内容表';

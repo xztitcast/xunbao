@@ -3,6 +3,7 @@ package com.bfox.xunbao.admin.web.annotation.aspect;
 import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.entity.SysUser;
+import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import com.bfox.xunbao.common.mybatis.entity.CreateEntity;
 import com.bfox.xunbao.common.mybatis.entity.TissueEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -50,8 +51,8 @@ public class StrictFillAspect {
 		SysUser sysUser = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		for(Object arg : args) {
-			if(arg instanceof TissueEntity && value == FillType.INSERT) {
-				setTissueEntityEnhance(arg, sysUser);
+			if(arg instanceof BaseEntity && value == FillType.INSERT) {
+				setBaseEntityEnhance(arg, sysUser);
 			}
 			if(arg instanceof CreateEntity && value == FillType.INSERT) {
 				setCreateEntityEnhance(arg, sysUser);
@@ -68,8 +69,8 @@ public class StrictFillAspect {
 	 * @param arg
 	 * @param sysUser
 	 */
-	private void setTissueEntityEnhance(Object arg, SysUser sysUser) {
-		TissueEntity te = (TissueEntity)arg;
+	private void setBaseEntityEnhance(Object arg, SysUser sysUser) {
+		BaseEntity te = (BaseEntity)arg;
 		te.setTisid(sysUser.getTisid());
 		te.setTisname(sysUser.getTisname());
 	}
