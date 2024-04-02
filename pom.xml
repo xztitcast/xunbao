@@ -11,6 +11,7 @@
   	<module>xunbao-common</module>
   	<module>xunbao-setup</module>
   	<module>xunbao-framework</module>
+  	<module>xunbao-sso</module>
   </modules>
   <properties>
 		<java.version>17</java.version>
