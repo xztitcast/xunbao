@@ -195,8 +195,8 @@
             <nacos.username>nacos</nacos.username>
             <nacos.password>nacos</nacos.password>
             <dubbo.server-addr>192.168.25.103:8848</dubbo.server-addr>
-            <dubbo.namespace>6aaab3a4-1a74-4fb8-b56e-6a66533e20fd</dubbo.namespace>
-            <config.namespace>2bb40149-832c-463f-af79-8126ab57e6f8</config.namespace>
+            <dubbo.namespace>59f6d1be-b059-4010-850f-20de005c54e3</dubbo.namespace>
+            <config.namespace>af8fdd78-f829-48d3-a0a5-ed3791651b76</config.namespace>
         </properties>
     </profile>
   </profiles>

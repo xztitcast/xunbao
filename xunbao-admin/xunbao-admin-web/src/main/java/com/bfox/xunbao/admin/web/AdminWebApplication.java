@@ -21,7 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableDubbo
 @SpringBootApplication
-@MapperScan(basePackages = "com.bovine.xunbaoshu.admin.web.mapper")
+@MapperScan(basePackages = "com.bfox.xunbao.admin.web.mapper")
 public class AdminWebApplication {
 
 	public static void main(String[] args) {
