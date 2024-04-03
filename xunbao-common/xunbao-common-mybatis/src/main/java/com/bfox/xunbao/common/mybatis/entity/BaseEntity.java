@@ -25,16 +25,6 @@ public abstract class BaseEntity {
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	protected Date updated;
-
-	/**
-	 * 机构ID
-	 */
-	protected Long tisid;
-
-	/**
-	 * 机构名称
-	 */
-	protected String tisname;
 	
 	public Date getCreated() {
 		return created;
@@ -52,22 +42,5 @@ public abstract class BaseEntity {
 		this.updated = updated;
 	}
 
-	@JsonIgnore
-	public Long getTisid() {
-		return tisid;
-	}
-
-	public void setTisid(Long tisid) {
-		this.tisid = tisid;
-	}
-
-	@JsonIgnore
-	public String getTisname() {
-		return tisname;
-	}
-
-	public void setTisname(String tisname) {
-		this.tisname = tisname;
-	}
 
 }

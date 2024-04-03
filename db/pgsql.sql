@@ -45,8 +45,8 @@ COMMENT ON TABLE tb_sys_user_tenant IS '用户租户关联表';
 COMMENT ON COLUMN tb_sys_user_tenant.id IS '主键ID（即用户id）';
 COMMENT ON COLUMN tb_sys_user_tenant.tenant_id IS '租户ID';
 COMMENT ON COLUMN tb_sys_user_tenant.tenant_name IS '租户名称';
-COMMENT ON COLUMN tb_sys_user.created IS '创建时间';
-COMMENT ON COLUMN tb_sys_user.updated IS '更新时间';
+COMMENT ON COLUMN tb_sys_user_tenant.created IS '创建时间';
+COMMENT ON COLUMN tb_sys_user_tenant.updated IS '更新时间';
 
 -- 系统用户
 CREATE TABLE tb_sys_user (

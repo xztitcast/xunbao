@@ -1,5 +1,6 @@
 package com.bfox.xunbao.admin.web.controller;
 
+import com.bfox.xunbao.admin.web.entity.SysUserTenant;
 import com.bfox.xunbao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;
 
 import com.bfox.xunbao.admin.web.entity.SysUser;
@@ -14,13 +15,28 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public abstract class BaseController {
 
 	/**
+	 * 获取登陆详情
+	 * @return
+	 */
+	protected LoginUserDetails getLoginUserDetails() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return (LoginUserDetails) authentication.getPrincipal();
+	}
+
+	/**
 	 * 获取用户信息
 	 * @return SysUser
 	 */
 	protected SysUser getUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		LoginUserDetails principal = (LoginUserDetails) authentication.getPrincipal();
-		return principal.getSysUser();
+		return getLoginUserDetails().getSysUser();
+	}
+
+	/**
+	 * 获取用户租户信息
+	 * @return
+	 */
+	protected SysUserTenant getUserTenant() {
+		return getLoginUserDetails().getSysUserTenant();
 	}
 
 	/**
@@ -38,18 +54,19 @@ public abstract class BaseController {
 	protected String getUsername() {return getUser().getUsername();}
 
 	/**
-	 * 获取机构ID
-	 * @return Long
+	 * 获取租户ID
+	 * @return
 	 */
-	protected Long getTisid() {
-		return getUser().getTisid();
+	protected Long getTenantId() {
+		return getUserTenant().getTenantId();
 	}
 
 	/**
-	 * 获取机构名称
-	 * @return String
+	 * 获取租户名称
+	 * @return
 	 */
-	protected String getTisname() {
-		return getUser().getTisname();
+	protected String getTenantName() {
+		return getUserTenant().getTenantName();
 	}
+
 }

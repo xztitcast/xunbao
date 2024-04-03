@@ -3,9 +3,11 @@ package com.bfox.xunbao.admin.web.annotation.aspect;
 import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.entity.SysUser;
+import com.bfox.xunbao.admin.web.entity.SysUserTenant;
+import com.bfox.xunbao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;
 import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import com.bfox.xunbao.common.mybatis.entity.CreateEntity;
-import com.bfox.xunbao.common.mybatis.entity.TissueEntity;
+import com.bfox.xunbao.common.mybatis.entity.TenantEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -48,17 +50,17 @@ public class StrictFillAspect {
 		}
 		FillType value = fill.value();
 		Object[] args = joinPoint.getArgs();
-		SysUser sysUser = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		LoginUserDetails loginUserDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		for(Object arg : args) {
 			if(arg instanceof BaseEntity && value == FillType.INSERT) {
-				setBaseEntityEnhance(arg, sysUser);
+				setTenantEntityEnhance(arg, loginUserDetails.getSysUserTenant());
 			}
 			if(arg instanceof CreateEntity && value == FillType.INSERT) {
-				setCreateEntityEnhance(arg, sysUser);
+				setCreateEntityEnhance(arg, loginUserDetails.getSysUser());
 			}
 			if(value == FillType.UPDATE) {
-				setUpdateEntityEnhance(arg, sysUser);
+				setUpdateEntityEnhance(arg, loginUserDetails.getSysUser());
 			}
 		}
 		return joinPoint.proceed();
@@ -67,12 +69,12 @@ public class StrictFillAspect {
 	/**
 	 * 填充机构数据
 	 * @param arg
-	 * @param sysUser
+	 * @param sysUserTenant
 	 */
-	private void setBaseEntityEnhance(Object arg, SysUser sysUser) {
-		BaseEntity te = (BaseEntity)arg;
-		te.setTisid(sysUser.getTisid());
-		te.setTisname(sysUser.getTisname());
+	private void setTenantEntityEnhance(Object arg, SysUserTenant sysUserTenant) {
+		TenantEntity te = (TenantEntity)arg;
+		te.setTenantId(sysUserTenant.getTenantId());
+		te.setTenantName(sysUserTenant.getTenantName());
 	}
 	
 	/**

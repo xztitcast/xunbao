@@ -34,16 +34,6 @@ public class SysUser extends BaseEntity implements Serializable {
     private String avatar;
     
     private Long creator;
-    
-    /**
-     * 冗余机构ID
-     */
-    private Long tisid;
-    
-    /**
-     * 冗余机构名称
-     */
-    private String tisname;
 
 	/**
 	 * 锁定账号时间(可以是Long值或设置成Date值)
@@ -113,22 +103,6 @@ public class SysUser extends BaseEntity implements Serializable {
 	
 	public void setCreator(Long creator) {
 		this.creator = creator;
-	}
-	
-	public Long getTisid() {
-		return tisid;
-	}
-
-	public void setTisid(Long tisid) {
-		this.tisid = tisid;
-	}
-
-	public String getTisname() {
-		return tisname;
-	}
-
-	public void setTisname(String tisname) {
-		this.tisname = tisname;
 	}
 	
 	public Integer getParentId() {
