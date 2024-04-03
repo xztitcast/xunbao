@@ -60,8 +60,6 @@ CREATE TABLE tb_sys_user (
      created timestamp(6),
      updated timestamp(6),
      creator int8,
-     tisid int8,
-     tisname varchar(50),
      PRIMARY KEY (id),
      UNIQUE (username)
 );
@@ -76,8 +74,6 @@ COMMENT ON COLUMN tb_sys_user.avatar IS '头像';
 COMMENT ON COLUMN tb_sys_user.created IS '创建时间';
 COMMENT ON COLUMN tb_sys_user.updated IS '更新时间';
 COMMENT ON COLUMN tb_sys_user.creator IS '创建者ID';
-COMMENT ON COLUMN tb_sys_user.tisid IS '机构ID(冗余字段)';
-COMMENT ON COLUMN tb_sys_user.tisname IS '机构名称(冗余字段)';
 
 -- 角色
 CREATE TABLE tb_sys_role (
@@ -198,28 +194,47 @@ alter sequence tb_sys_user_id_seq restart with 2;
 
 commit;
 
-DROP TABLE IF EXISTS "public"."tb_sys_device";
-CREATE TABLE "public"."tb_sys_device"(
-     "id" int8 NOT NULL PRIMARY KEY,
-     "key" varchar(16) NOT NULL,
-     "slat" varchar(16) NOT NULL,
-     "type" int2 NOT NULL,
-     "tisid" int8 NOT NULL,
-     "tisname" varchar(50),
-     "created" timestamp(6) DEFAULT NOW(),
-     "updated" timestamp(6) DEFAULT NOW()
+--framework模块
+CREATE TABLE tb_tenant(
+    id bigserial NOT NULL PRIMARY KEY ,
+    name varchar(30) NOT NULL ,
+    logo varchar(255) DEFAULT NULL ,
+    mobile varchar(20) NOT NULL ,
+    contacts varchar(30) NOT NULL ,
+    contacts_mobile varchar(20) NOT NULL ,
+    pid varchar(20) NOT NULL ,
+    pname varchar(30) NOT NULL ,
+    cid varchar(20) NOT NULL ,
+    cname varchar(30) NOT NULL ,
+    aid varchar(20) NOT NULL ,
+    aname varchar(30) NOT NULL ,
+    address varchar(100) NOT NULL ,
+    remark varchar(50) NOT NULL ,
+    sign_time timestamp NOT NULL ,
+    expire_time timestamp NOT NULL ,
+    created timestamp DEFAULT NOW(),
+    updated timestamp DEFAULT NOW()
 );
 
-COMMENT ON TABLE "public"."tb_sys_device" IS 'API授权设备表';
-COMMENT ON COLUMN "public"."tb_sys_device".id IS '主键ID';
-COMMENT ON COLUMN "public"."tb_sys_device".key IS 'AES加密KEY';
-COMMENT ON COLUMN "public"."tb_sys_device".slat IS 'AES IV向量';
-COMMENT ON COLUMN "public"."tb_sys_device".type IS '类型(1:PC 2:小程序 3:移动APP)';
-COMMENT ON COLUMN "public"."tb_sys_device"."tisid" IS '机构号';
-COMMENT ON COLUMN "public"."tb_sys_device"."tisname" IS '机构名称';
-COMMENT ON COLUMN "public"."tb_sys_device".created IS '创建时间';
-COMMENT ON COLUMN "public"."tb_sys_device".updated IS '更新时间';
-
+COMMENT ON TABLE tb_tenant IS '租户表';
+COMMENT ON COLUMN tb_tenant.id IS '主键ID';
+COMMENT ON COLUMN tb_tenant.name IS '租户名称';
+COMMENT ON COLUMN tb_tenant.logo IS '备注';
+COMMENT ON COLUMN tb_tenant.mobile IS '服务电话';
+COMMENT ON COLUMN tb_tenant.contacts IS '联系人';
+COMMENT ON COLUMN tb_tenant.contacts_mobile IS '联系人电话';
+COMMENT ON COLUMN tb_tenant.pid IS '省编号';
+COMMENT ON COLUMN tb_tenant.pname IS '省名称';
+COMMENT ON COLUMN tb_tenant.cid IS '城市编号';
+COMMENT ON COLUMN tb_tenant.cname IS '城市名称';
+COMMENT ON COLUMN tb_tenant.aid IS '区编号';
+COMMENT ON COLUMN tb_tenant.aname IS '区名称';
+COMMENT ON COLUMN tb_tenant.address IS '详细底子';
+COMMENT ON COLUMN tb_tenant.remark IS '备注';
+COMMENT ON COLUMN tb_tenant.sign_time IS '签约时间';
+COMMENT ON COLUMN tb_tenant.expire_time IS '到期时间';
+COMMENT ON COLUMN tb_tenant.created IS '创建时间';
+COMMENT ON COLUMN tb_tenant.updated IS '更新时间';
 
 --setup模块
 DROP TABLE IF EXISTS "tb_layout";
@@ -995,8 +1010,8 @@ CREATE TABLE "public"."tb_content_cat" (
     "sorted" int2 DEFAULT 0,
     "path" varchar(255) NOT NULL DEFAULT '0',
     "terminal" VARCHAR(10) NOT NULL DEFAULT 'PC',
-    "tisid" int8 NOT NULL,
-    "tisname" varchar(20) NOT NULL,
+    "tenant_id" int8 NOT NULL,
+    "tenant_name" varchar(20) NOT NULL,
     "creator" int8,
     "create_name" varchar(20),
     "created" TIMESTAMP DEFAULT NOW(),
@@ -1012,8 +1027,8 @@ COMMENT ON COLUMN "public"."tb_content_cat"."status" IS '状态是否删除 0:�
 COMMENT ON COLUMN "public"."tb_content_cat"."sorted" IS '排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列';
 COMMENT ON COLUMN "public"."tb_content_cat"."path" IS '所属类目，叶子类目';
 COMMENT ON COLUMN "public"."tb_content_cat"."terminal" IS '终端PC:浏览器, APP:手机应用端, MIN:微信小程序';
-COMMENT ON COLUMN "public"."tb_content_cat"."tisid" IS '机构号';
-COMMENT ON COLUMN "public"."tb_content_cat"."tisname" IS '机构名称';
+COMMENT ON COLUMN "public"."tb_content_cat"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."tb_content_cat"."tenant_name" IS '租户名称';
 COMMENT ON COLUMN "public"."tb_content_cat"."creator" IS '创建人id';
 COMMENT ON COLUMN "public"."tb_content_cat"."create_name" IS '创建名称';
 COMMENT ON COLUMN "public"."tb_content_cat"."created" IS '创建时间';
@@ -1034,8 +1049,8 @@ CREATE TABLE "public"."tb_content" (
     "pic" varchar(300) DEFAULT NULL,
     "pic2" varchar(300) DEFAULT NULL ,
     "content" text,
-    "tisid" int8 NOT NULL,
-    "tisname" varchar(20) NOT NULL,
+    "tenant_id" int8 NOT NULL,
+    "tenant_name" varchar(20) NOT NULL,
     "creator" int8,
     "create_name" varchar(20),
     "created" TIMESTAMP DEFAULT NOW(),
@@ -1054,8 +1069,8 @@ COMMENT ON COLUMN "public"."tb_content"."pic" IS '图片绝对路径';
 COMMENT ON COLUMN "public"."tb_content"."pic2" IS '图片2';
 COMMENT ON COLUMN "public"."tb_content"."url" IS '所属类目，叶子类目';
 COMMENT ON COLUMN "public"."tb_content"."content" IS '内容';
-COMMENT ON COLUMN "public"."tb_content"."tisid" IS '机构号';
-COMMENT ON COLUMN "public"."tb_content"."tisname" IS '机构名称';
+COMMENT ON COLUMN "public"."tb_content"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."tb_content"."tenant_name" IS '租户名称';
 COMMENT ON COLUMN "public"."tb_content"."creator" IS '创建人id';
 COMMENT ON COLUMN "public"."tb_content"."create_name" IS '创建名称';
 COMMENT ON COLUMN "public"."tb_content"."created" IS '创建时间';
