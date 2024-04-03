@@ -33,6 +33,21 @@ COMMENT ON COLUMN tb_sys_menu.status IS '状态 是否能被删除 0：否 1：�
 COMMENT ON COLUMN tb_sys_menu.icon IS '菜单图标';
 COMMENT ON COLUMN tb_sys_menu.sorted IS '排序';
 
+CREATE TABLE tb_sys_user_tenant(
+    id int8 NOT NULL PRIMARY KEY ,
+    tenant_id int8 NOT NULL,
+    tenant_name varchar(30) NOT NULL,
+    created timestamp default now(),
+    updated timestamp default now()
+);
+
+COMMENT ON TABLE tb_sys_user_tenant IS '用户租户关联表';
+COMMENT ON COLUMN tb_sys_user_tenant.id IS '主键ID（即用户id）';
+COMMENT ON COLUMN tb_sys_user_tenant.tenant_id IS '租户ID';
+COMMENT ON COLUMN tb_sys_user_tenant.tenant_name IS '租户名称';
+COMMENT ON COLUMN tb_sys_user.created IS '创建时间';
+COMMENT ON COLUMN tb_sys_user.updated IS '更新时间';
+
 -- 系统用户
 CREATE TABLE tb_sys_user (
      id bigserial,
