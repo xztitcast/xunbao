@@ -1,10 +1,9 @@
 package com.bfox.xunbao.admin.web.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.util.Date;
+
+import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("tb_sys_user_tenant")
-public class SysUserTenant implements Serializable {
+public class SysUserTenant extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,14 +37,4 @@ public class SysUserTenant implements Serializable {
      */
     private String tenantName;
 
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date created;
-
-    /**
-     * 更新时间
-     */
-    private Date updated;
 }

@@ -2,10 +2,9 @@ package com.bfox.xunbao.admin.web.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
+import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 /**
  * 数据字典实体类
@@ -15,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("tb_sys_dict")
-public class SysDict {
+public class SysDict extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -27,16 +26,4 @@ public class SysDict {
     private String value;
 
     private String remark;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date created;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updated;
 }
