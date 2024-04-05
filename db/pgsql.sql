@@ -1023,10 +1023,10 @@ CREATE TABLE "public"."tb_content_cat" (
 COMMENT ON COLUMN "public"."tb_content_cat"."id" IS '主键ID';
 COMMENT ON COLUMN "public"."tb_content_cat"."parent_id" IS '父类目ID=0时，代表的是一级的类目';
 COMMENT ON COLUMN "public"."tb_content_cat"."name" IS '分类名称';
-COMMENT ON COLUMN "public"."tb_content_cat"."status" IS '状态是否删除 0:否 1:是';
+COMMENT ON COLUMN "public"."tb_content_cat"."status" IS '状态是否有效 0:否 1:是';
 COMMENT ON COLUMN "public"."tb_content_cat"."sorted" IS '排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列';
 COMMENT ON COLUMN "public"."tb_content_cat"."path" IS '所属类目，叶子类目';
-COMMENT ON COLUMN "public"."tb_content_cat"."terminal" IS '终端PC:浏览器, APP:手机应用端, MIN:微信小程序';
+COMMENT ON COLUMN "public"."tb_content_cat"."terminal" IS '终端PC:浏览器, APP:手机应用端, MINI:微信小程序';
 COMMENT ON COLUMN "public"."tb_content_cat"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."tb_content_cat"."tenant_name" IS '租户名称';
 COMMENT ON COLUMN "public"."tb_content_cat"."creator" IS '创建人id';

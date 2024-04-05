@@ -1,5 +1,7 @@
 package com.bfox.xunbao.setup.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bfox.xunbao.common.core.BaseModel;
 import com.bfox.xunbao.common.core.P;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -58,5 +61,11 @@ public class ContentCatServiceImpl extends ServiceImpl<ContentCatMapper, Content
     @Transactional
     public boolean delete(Long id) {
         return this.removeById(id);
+    }
+
+    @Override
+    public List<ContentCat> getContentCatList(Long parentId, Long tenantId) {
+        LambdaQueryWrapper<ContentCat> query = Wrappers.lambdaQuery(ContentCat.class).eq(ContentCat::getParentId, parentId).eq(ContentCat::getTenantId, tenantId);
+        return this.list(query);
     }
 }

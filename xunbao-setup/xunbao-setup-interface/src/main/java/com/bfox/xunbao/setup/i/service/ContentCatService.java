@@ -3,6 +3,8 @@ package com.bfox.xunbao.setup.i.service;
 import com.bfox.xunbao.setup.entity.ContentCat;
 import com.bfox.xunbao.common.core.injecter.FrameworkService;
 
+import java.util.List;
+
 /**
  * <p>
  * 内容分类表 服务类
@@ -13,4 +15,5 @@ import com.bfox.xunbao.common.core.injecter.FrameworkService;
  */
 public interface ContentCatService extends FrameworkService<ContentCat, Long> {
 
+    List<ContentCat> getContentCatList(Long parentId, Long tenantId);
 }

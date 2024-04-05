@@ -14,19 +14,11 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class RegionView extends BaseSelectorView<String> {
+public class TreeNodeView<T> extends TreeView<T> {
 	
 	/**
 	 * 子节点
 	 */
-	private List<RegionView> children = new ArrayList<>();
-	
-	public RegionView() {
-		
-	}
-	
-	public RegionView(String label, String value) {
-		super(label, value);
-	}
-	
+	private List<TreeNodeView> children = new ArrayList<>();
+
 }

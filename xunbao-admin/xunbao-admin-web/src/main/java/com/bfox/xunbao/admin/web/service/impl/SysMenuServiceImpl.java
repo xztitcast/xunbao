@@ -89,7 +89,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 	 * @return
 	 */
 	private List<SysMenu> resolveMenuTreeList(final List<SysMenu> menuList) {
-		return menuList.stream().filter(s -> s.getParentId() == 0L).map(s -> findNodeTree(menuList, s)).collect(Collectors.toList());
+		return menuList.stream().filter(s -> s.getParentId() == 0L).map(s -> findTreeNode(menuList, s)).collect(Collectors.toList());
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 	 * @param sysMenu
 	 * @return
 	 */
-	private SysMenu findNodeTree(List<SysMenu> menuList, SysMenu sysMenu){
-		menuList.stream().filter(s -> s.getParentId() == sysMenu.getId().longValue()).forEach(s -> sysMenu.getChildren().add(findNodeTree(menuList, s)));
+	private SysMenu findTreeNode(List<SysMenu> menuList, SysMenu sysMenu){
+		menuList.stream().filter(s -> s.getParentId() == sysMenu.getId().longValue()).forEach(s -> sysMenu.getChildren().add(findTreeNode(menuList, s)));
 		return sysMenu;
 	}
 
