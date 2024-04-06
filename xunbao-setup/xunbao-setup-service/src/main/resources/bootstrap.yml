@@ -29,7 +29,7 @@ spring:
         file-extension: yml
         refresh-enabled: true
         extension-configs:
-        - data-id: taotao-redis.yml
+        - data-id: xunbao-redis.yml
           group: DEFAULT_GROUP
           refresh: true
 
@@ -87,7 +87,7 @@ management:
 mybatis-plus:
   mapper-locations:
   - classpath:mapper/**/*.xml
-  typeAliasesPackage: com.bovine.taotao.setup.entity
+  typeAliasesPackage: com.bfox.xunbao.setup.entity
   global-config:
     banner: false
   configuration:
