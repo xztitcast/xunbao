@@ -24,14 +24,11 @@ spring:
         username: '@nacos.username@'
         password: '@nacos.password@'
         server-addr: '@dubbo.server-addr@'
-        namespace: '@dubbo.namespace@'
+        namespace: '@config.namespace@'
         file-extension: yml
         refresh-enabled: true
         extension-configs:
         - data-id: taotao-redis.yml
-          group: DEFAULT_GROUP
-          refresh: true
-        - data-id: taotao-rabbitmq.yml
           group: DEFAULT_GROUP
           refresh: true
 
@@ -55,14 +52,14 @@ dubbo:
     username: ${spring.cloud.nacos.config.username}
     password: ${spring.cloud.nacos.config.password}
     parameters:
-      namespace: ${spring.cloud.nacos.config.namespace}
+      namespace: '@dubbo.namespace@'
   metadata-report:
     protocol: nacos
     address: ${spring.cloud.nacos.config.server-addr}
     username: ${spring.cloud.nacos.config.username}
     password: ${spring.cloud.nacos.config.password}
     parameters:
-      namespace: ${spring.cloud.nacos.config.namespace}
+      namespace: '@dubbo.namespace@'
   provider:
     filter: exceptionCustomizerFilter,-exception
     loadbalance: roundrobin

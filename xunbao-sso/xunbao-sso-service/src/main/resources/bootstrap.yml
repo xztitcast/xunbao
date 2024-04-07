@@ -20,12 +20,6 @@ spring:
     time-zone: GMT+8
   cloud:
     nacos:
-      discovery:
-        enabled: false
-        username: '@nacos.username@'
-        password: '@nacos.password@'
-        server-addr: '@dubbo.server-addr@'
-        namespace: '@dubbo.namespace@'
       config:
         enabled: true
         username: '@nacos.username@'
@@ -58,14 +52,14 @@ dubbo:
     username: ${spring.cloud.nacos.discovery.username}
     password: ${spring.cloud.nacos.discovery.password}
     parameters:
-      namespace: ${spring.cloud.nacos.discovery.namespace}
+      namespace: '@dubbo.namespace@'
   metadata-report:
     protocol: nacos
     address: ${spring.cloud.nacos.discovery.server-addr}
     username: ${spring.cloud.nacos.discovery.username}
     password: ${spring.cloud.nacos.discovery.password}
     parameters:
-      namespace: ${spring.cloud.nacos.discovery.namespace}
+      namespace: '@dubbo.namespace@'
   provider:
     filter: exceptionCustomizerFilter,-exception
     loadbalance: roundrobin
