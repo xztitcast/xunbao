@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.setup.entity.ContentCat;
 import com.bfox.xunbao.setup.mapper.ContentCatMapper;
@@ -41,7 +42,12 @@ public class ContentCatServiceImpl extends ServiceImpl<ContentCatMapper, Content
     @Override
     @Transactional
     public ContentCat saveEntity(ContentCat t) {
+        ContentCat entity = this.getById(t.getParentId());
+        t.setPath(entity.getPath().concat(Constant.DELIMITER_SLASH));
+        t.setTerminal(entity.getTerminal());
         this.save(t);
+        t.setPath(t.getPath().concat(String.valueOf(t.getId())));
+        this.updateById(t);
         return t;
     }
 

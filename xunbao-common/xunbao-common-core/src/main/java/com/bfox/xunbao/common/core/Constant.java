@@ -28,6 +28,11 @@ public interface Constant {
 	String DELIMITER_COMMA = ",";
 
 	/**
+	 * 斜杠分隔符
+	 */
+	String DELIMITER_SLASH = "/";
+
+	/**
 	 * 总数
 	 */
 	String TOTAL = "TOTAL";

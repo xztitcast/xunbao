@@ -44,12 +44,12 @@ public class ContentCat extends CreateEntity implements Serializable {
     /**
      * 状态是否删除 0:否 1:是
      */
-    private Short status;
+    private Integer status;
 
     /**
      * 排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列
      */
-    private Short sorted;
+    private Integer sorted;
 
     /**
      * 所属类目，叶子类目

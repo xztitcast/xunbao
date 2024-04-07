@@ -54,7 +54,7 @@ public class SysTemplateController {
     @Log("删除{}数据")
     @DeleteMapping("/delete")
     @PreAuthorize(value = "hasAuthority('sys:#:delete')")
-    public R delete() {
+    public R delete(@RequestBody Long[] ids) {
 
         return R.ok();
     }
