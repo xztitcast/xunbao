@@ -42,7 +42,7 @@ public class ContentCat extends CreateEntity implements Serializable {
     private String name;
 
     /**
-     * 状态是否删除 0:否 1:是
+     * 状态是否有效 0:否 1:是
      */
     private Integer status;
 

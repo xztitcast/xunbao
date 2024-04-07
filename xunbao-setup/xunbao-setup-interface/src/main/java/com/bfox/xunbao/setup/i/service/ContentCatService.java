@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface ContentCatService extends FrameworkService<ContentCat, Long> {
 
-    List<ContentCat> getContentCatList(Long parentId, Long tenantId);
+    List<ContentCat> getContentCatList(Long tenantId);
 }

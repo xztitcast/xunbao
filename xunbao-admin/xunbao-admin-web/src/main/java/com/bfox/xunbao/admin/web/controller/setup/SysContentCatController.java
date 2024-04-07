@@ -29,16 +29,9 @@ public class SysContentCatController extends BaseController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:content:cat:list')")
-    public R list(@RequestParam Long parentId) {
-        if(parentId == null || parentId < 0) {
-            parentId = 0L;
-        }
-        List<ContentCat> list = this.contentCatService.getContentCatList(parentId, getTenantId());
-        List<TreeNodeView<Long>> result = list.stream().map(e -> {
-            List<ContentCat> contentCatList = this.contentCatService.getContentCatList(e.getId(), getTenantId());
-            TreeNodeView<Long> view = new TreeNodeView<>(e.getName(), e.getId(), !contentCatList.isEmpty(), e.getParentId(),null);
-            return view;
-        }).collect(Collectors.toList());
+    public R list() {
+        List<ContentCat> list = this.contentCatService.getContentCatList(getTenantId());
+        List<TreeNodeView<Long>> result = resolveTreeList(list);
         return R.ok(result);
     }
 
@@ -77,6 +70,32 @@ public class SysContentCatController extends BaseController {
     public R delete(@RequestBody Long[] ids) {
         this.contentCatService.delete(Arrays.asList(ids));
         return R.ok();
+    }
+
+    /**
+     * 解析树
+     * @param list
+     * @return
+     */
+    private List<TreeNodeView<Long>> resolveTreeList(List<ContentCat> list) {
+        return list.stream().filter(e -> e.getParentId() == 0L).map(e -> {
+            TreeNodeView<Long> view = new TreeNodeView<>(e.getName(), e.getId(), e.getParentId(), null);
+            return findTreeNode(list, view);
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 查找树下子节点
+     * @param list
+     * @param view
+     * @return
+     */
+    private TreeNodeView<Long> findTreeNode(List<ContentCat> list, TreeNodeView<Long> view) {
+        list.stream().filter(e -> e.getParentId() == view.getId().longValue()).forEach(e -> {
+            TreeNodeView<Long> nodeView = new TreeNodeView<>(e.getName(), e.getId(), e.getParentId(), null);
+            view.getChildren().add(findTreeNode(list, nodeView));
+        });
+        return view;
     }
 
 }

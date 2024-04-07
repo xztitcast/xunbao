@@ -25,7 +25,7 @@ public class TreeView<T> {
 	/**
 	 * 是否叶子节点
 	 */
-	protected boolean isLeaf = false;
+	protected Boolean isLeaf = false;
 	
 	/**
 	 * 是否禁用

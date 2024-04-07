@@ -1,5 +1,7 @@
 package com.bfox.xunbao.admin.web.controller;
 
+import com.bfox.xunbao.admin.web.annotation.Fill;
+import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.common.core.R;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +38,7 @@ public class SysTemplateController {
     }
 
     @Log("保存{}数据")
+    @Fill(FillType.INSERT)
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:#:save')")
     public R save() {
@@ -44,6 +47,7 @@ public class SysTemplateController {
     }
 
     @Log("修改{}数据")
+    @Fill(FillType.UPDATE)
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:#:update')")
     public R update() {
