@@ -36,6 +36,7 @@ spring:
 dubbo:
   application:
     qos-enable: false
+    qos-accept-foreign-ip: false
     name: ${spring.application.name}
     metadata-type: remote
     serialize-check-status: WARN

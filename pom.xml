@@ -36,7 +36,7 @@
 	  	<kaptcha.version>2.3.2</kaptcha.version>
 	  	<captcha.version>1.3.0</captcha.version>
 	  	<jsoup.version>1.16.1</jsoup.version>
-		<dubbo.version>3.2.2</dubbo.version>
+		<dubbo.version>3.2.10</dubbo.version>
 		<kryo.version>2.7.21</kryo.version>
 		<poi.version>5.2.2</poi.version>
 	  	<wx.version>4.4.0</wx.version>

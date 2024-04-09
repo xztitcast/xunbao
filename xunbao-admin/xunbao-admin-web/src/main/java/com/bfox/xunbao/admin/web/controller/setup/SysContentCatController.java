@@ -59,7 +59,7 @@ public class SysContentCatController extends BaseController {
     @Fill(FillType.UPDATE)
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:content:cat:update')")
-    public R update(ContentCat t) {
+    public R update(@RequestBody ContentCat t) {
         this.contentCatService.updateEntity(t);
         return R.ok();
     }

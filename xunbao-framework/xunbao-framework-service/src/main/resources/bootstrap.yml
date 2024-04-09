@@ -35,7 +35,7 @@ spring:
 dubbo:
   application:
     qos-enable: false
-    qos-port: 22225
+    qos-accept-foreign-ip: false
     name: ${spring.application.name}
     metadata-type: remote
   protocol:

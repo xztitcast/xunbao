@@ -1042,13 +1042,15 @@ DROP TABLE IF EXISTS "public"."tb_content";
 CREATE TABLE "public"."tb_content" (
     "id" bigserial NOT NULL PRIMARY KEY,
     "cid" int8 NOT NULL,
-    "title" varchar(200) DEFAULT NULL,
-    "sub_title" varchar(100) DEFAULT NULL,
-    "title_desc" varchar(500) DEFAULT NULL,
-    "url" varchar(500) DEFAULT NULL,
-    "pic" varchar(300) DEFAULT NULL,
-    "pic2" varchar(300) DEFAULT NULL ,
-    "content" text,
+    "text1" varchar(30) DEFAULT NULL,
+    "text2" varchar(80) DEFAULT NULL,
+    "text3" varchar(125) DEFAULT NULL,
+    "text4" varchar(255) DEFAULT NULL,
+    "text5" text DEFAULT NULL,
+    "url" varchar(255) DEFAULT NULL,
+    "pic" varchar(255) DEFAULT NULL,
+    "pic2" varchar(255) DEFAULT NULL ,
+    "pic3" varchar(255) DEFAULT NULL ,
     "tenant_id" int8 NOT NULL,
     "tenant_name" varchar(20) NOT NULL,
     "creator" int8,
@@ -1061,14 +1063,15 @@ CREATE TABLE "public"."tb_content" (
 
 COMMENT ON COLUMN "public"."tb_content"."id" IS '主键ID';
 COMMENT ON COLUMN "public"."tb_content"."cid" IS '内容类目ID';
-COMMENT ON COLUMN "public"."tb_content"."title" IS '内容标题';
-COMMENT ON COLUMN "public"."tb_content"."sub_title" IS '子标题';
-COMMENT ON COLUMN "public"."tb_content"."title_desc" IS '标题描述';
+COMMENT ON COLUMN "public"."tb_content"."text1" IS '内容1';
+COMMENT ON COLUMN "public"."tb_content"."text2" IS '内容2';
+COMMENT ON COLUMN "public"."tb_content"."text3" IS '内容3';
+COMMENT ON COLUMN "public"."tb_content"."text4" IS '内容4';
+COMMENT ON COLUMN "public"."tb_content"."text5" IS '内容5';
 COMMENT ON COLUMN "public"."tb_content"."url" IS '链接';
 COMMENT ON COLUMN "public"."tb_content"."pic" IS '图片绝对路径';
 COMMENT ON COLUMN "public"."tb_content"."pic2" IS '图片2';
-COMMENT ON COLUMN "public"."tb_content"."url" IS '所属类目，叶子类目';
-COMMENT ON COLUMN "public"."tb_content"."content" IS '内容';
+COMMENT ON COLUMN "public"."tb_content"."pic3" IS '图片3';
 COMMENT ON COLUMN "public"."tb_content"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."tb_content"."tenant_name" IS '租户名称';
 COMMENT ON COLUMN "public"."tb_content"."creator" IS '创建人id';

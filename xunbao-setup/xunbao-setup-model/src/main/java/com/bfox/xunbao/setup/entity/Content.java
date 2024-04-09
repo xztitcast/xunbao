@@ -37,22 +37,32 @@ public class Content extends CreateEntity implements Serializable {
     private Long cid;
 
     /**
-     * 内容标题
+     * 内容1
      */
-    private String title;
+    private String text1;
 
     /**
-     * 子标题
+     * 内容2
      */
-    private String subTitle;
+    private String text2;
 
     /**
-     * 标题描述
+     * 内容3
      */
-    private String titleDesc;
+    private String text3;
 
     /**
-     * 所属类目，叶子类目
+     * 内容4
+     */
+    private String text4;
+
+    /**
+     * 内容5
+     */
+    private String text5;
+
+    /**
+     * 链接
      */
     private String url;
 
@@ -67,8 +77,8 @@ public class Content extends CreateEntity implements Serializable {
     private String pic2;
 
     /**
-     * 内容
+     * 图片3
      */
-    private String content;
+    private String pic3;
 
 }

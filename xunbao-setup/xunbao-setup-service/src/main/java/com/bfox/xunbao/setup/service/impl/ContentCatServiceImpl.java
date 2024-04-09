@@ -71,7 +71,7 @@ public class ContentCatServiceImpl extends ServiceImpl<ContentCatMapper, Content
 
     @Override
     public List<ContentCat> getContentCatList(Long tenantId) {
-        LambdaQueryWrapper<ContentCat> query = Wrappers.lambdaQuery(ContentCat.class).eq(ContentCat::getStatus, 1).eq(ContentCat::getTenantId, tenantId);
+        LambdaQueryWrapper<ContentCat> query = Wrappers.lambdaQuery(ContentCat.class).eq(ContentCat::getStatus, 1).eq(ContentCat::getTenantId, tenantId).orderByDesc(ContentCat::getSorted);
         return this.list(query);
     }
 }
