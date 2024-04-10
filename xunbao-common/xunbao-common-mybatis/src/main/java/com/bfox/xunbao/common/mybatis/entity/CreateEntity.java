@@ -1,5 +1,7 @@
 package com.bfox.xunbao.common.mybatis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 创建者实体类
  * @author eden
@@ -27,6 +29,7 @@ public abstract class CreateEntity extends TenantEntity {
 	 */
 	protected String updateName;
 
+	@JsonIgnore
 	public Long getCreator() {
 		return creator;
 	}
@@ -35,6 +38,7 @@ public abstract class CreateEntity extends TenantEntity {
 		this.creator = creator;
 	}
 
+	@JsonIgnore
 	public String getCreateName() {
 		return createName;
 	}
@@ -43,6 +47,7 @@ public abstract class CreateEntity extends TenantEntity {
 		this.createName = createName;
 	}
 
+	@JsonIgnore
 	public Long getUpdater() {
 		return updater;
 	}
@@ -51,6 +56,7 @@ public abstract class CreateEntity extends TenantEntity {
 		this.updater = updater;
 	}
 
+	@JsonIgnore
 	public String getUpdateName() {
 		return updateName;
 	}
