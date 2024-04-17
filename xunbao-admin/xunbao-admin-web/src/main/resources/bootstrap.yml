@@ -42,7 +42,7 @@ spring:
         - data-id: ${spring.application.name}.yml
           group: DEFAULT_GROUP
           refresh: true
-        - data-id: xunhao-storage.yml
+        - data-id: xunbao-storage.yml
           group: DEFAULT_GROUP
           refresh: true
 

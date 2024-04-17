@@ -37,6 +37,7 @@
 	  	<captcha.version>1.3.0</captcha.version>
 	  	<jsoup.version>1.16.1</jsoup.version>
 		<dubbo.version>3.2.10</dubbo.version>
+	  	<minio.version>8.4.5</minio.version>
 		<kryo.version>2.7.21</kryo.version>
 		<poi.version>5.2.2</poi.version>
 	  	<wx.version>4.4.0</wx.version>
@@ -184,6 +185,11 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.minio</groupId>
+			<artifactId>minio</artifactId>
+			<version>${minio.version}</version>
 		</dependency>
 	</dependencies>
   </dependencyManagement>

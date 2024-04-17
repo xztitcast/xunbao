@@ -49,10 +49,10 @@ public class SysUploadController {
                 client.putObject(objectArgs);
                 Map<String, String> map = new HashMap<>();
                 map.put("name", imageName);
-                map.put("url", config.getDomain().concat(config.getBucketName()).concat(suffix));
+                map.put("url", config.getDomain().concat(config.getBucketName()).concat("/").concat(suffix));
                 left.add(map);
             }catch (Exception e){
-
+                e.printStackTrace();
             }
         }, List::addAll);
         return R.ok(result);
