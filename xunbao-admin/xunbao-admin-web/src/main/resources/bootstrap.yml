@@ -42,6 +42,9 @@ spring:
         - data-id: ${spring.application.name}.yml
           group: DEFAULT_GROUP
           refresh: true
+        - data-id: xunhao-storage.yml
+          group: DEFAULT_GROUP
+          refresh: true
 
 dubbo:
   application:
