@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.bfox</groupId>
+    <artifactId>xunbao-common</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>xunbao-common-storage</artifactId>
+  <name>xunbao-common-storage</name>
+  <description>图片/文件存储组件</description>
+  <dependencies>
+	 <dependency>
+		<groupId>io.minio</groupId>
+		<artifactId>minio</artifactId>
+  	</dependency>
+  </dependencies>
+</project>

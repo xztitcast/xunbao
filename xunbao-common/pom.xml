@@ -15,5 +15,6 @@
   	<module>xunbao-common-mybatis</module>
   	<module>xunbao-common-redis</module>
   	<module>xunbao-common-security</module>
+  	<module>xunbao-common-storage</module>
   </modules>
 </project>
