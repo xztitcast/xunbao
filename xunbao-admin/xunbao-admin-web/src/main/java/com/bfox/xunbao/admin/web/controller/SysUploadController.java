@@ -2,6 +2,8 @@ package com.bfox.xunbao.admin.web.controller;
 
 import com.bfox.xunbao.admin.web.config.StorageConfig;
 import com.bfox.xunbao.common.core.R;
+import com.bfox.xunbao.common.storage.core.StorageTemplate;
+import com.bfox.xunbao.common.storage.entity.Storage;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class SysUploadController {
 
     @Autowired
     private StorageConfig config;
+
+    private StorageTemplate storageTemplate;
 
     /**
      * 上传图片
@@ -55,7 +59,8 @@ public class SysUploadController {
                 e.printStackTrace();
             }
         }, List::addAll);
-        return R.ok(result);
+        List<Storage> storages = storageTemplate.execute(files);
+        return R.ok(storages);
     }
 
     /**

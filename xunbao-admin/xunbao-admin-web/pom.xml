@@ -24,6 +24,11 @@
 		<artifactId>xunbao-common-captcha</artifactId>
 		<version>${project.version}</version>
   	</dependency>
+  	<dependency>
+		<groupId>${project.groupId}</groupId>
+		<artifactId>xunbao-common-storage</artifactId>
+		<version>${project.version}</version>
+	</dependency>
     <dependency>
 		<groupId>${project.groupId}</groupId>
 		<artifactId>xunbao-setup-interface</artifactId>
