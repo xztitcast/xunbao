@@ -1,10 +1,11 @@
 package com.bfox.xunbao.common.storage.connection.minio;
 
-import com.bfox.xunbao.common.storage.MinioConnectionConfiguration;
 import com.bfox.xunbao.common.storage.connection.StorageClient;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.RemoveObjectArgs;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
@@ -30,22 +31,23 @@ public class MinioClientHandler implements StorageClient {
         this.bucket = configuration.getBucket();
     }
     @Override
-    public void putObject(InputStream inputStream, long size, String extName) {
+    public String putObject(InputStream inputStream, long size, String extName) throws Exception {
         PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(this.bucket).object(extName).stream(inputStream, size, -1).build();
-        try {
-            this.minioClient.putObject(objectArgs);
-        }catch (Exception e) {
-
-        }
+        this.minioClient.putObject(objectArgs);
+        StringBuilder sb = new StringBuilder(this.point);
+        sb.append(this.bucket).append("/").append(extName);
+        return sb.toString();
     }
 
     @Override
-    public void putObject(byte[] content, String extName) {
-
+    public String putObject(byte[] content, String extName) throws Exception {
+        return putObject(new ByteArrayInputStream(content), content.length, extName);
     }
 
     @Override
-    public void deleteObject() {
-
+    public void deleteObject(String name) throws Exception {
+        String replace = name.replace(this.point, "").replace(this.bucket.concat("/"), "");
+        RemoveObjectArgs objectArgs = RemoveObjectArgs.builder().bucket(this.bucket).object(replace).build();
+        this.minioClient.removeObject(objectArgs);
     }
 }

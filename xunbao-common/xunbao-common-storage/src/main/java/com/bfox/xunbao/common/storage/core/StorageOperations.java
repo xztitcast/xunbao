@@ -14,12 +14,21 @@ public interface StorageOperations {
     /**
      * 执行上传
      * @param file
+     * @return
      */
     Storage execute(MultipartFile file);
 
     /**
      * 执行上传
      * @param files
+     * @return
      */
     List<Storage> execute(MultipartFile[] files);
+
+    /**
+     * 执行删除
+     * @param entity
+     * @return
+     */
+    boolean execute(Storage entity);
 }
