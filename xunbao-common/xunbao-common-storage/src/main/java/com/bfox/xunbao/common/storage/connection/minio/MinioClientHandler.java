@@ -31,8 +31,8 @@ public class MinioClientHandler implements StorageClient {
         this.bucket = configuration.getBucket();
     }
     @Override
-    public String putObject(InputStream inputStream, long size, String extName) throws Exception {
-        PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(this.bucket).object(extName).stream(inputStream, size, -1).build();
+    public String putObject(InputStream is, long size, String extName) throws Exception {
+        PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(this.bucket).object(extName).stream(is, size, -1).build();
         this.minioClient.putObject(objectArgs);
         StringBuilder sb = new StringBuilder(this.point);
         sb.append(this.bucket).append("/").append(extName);

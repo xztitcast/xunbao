@@ -10,11 +10,11 @@ public interface StorageClient {
 
     /**
      * 上传
-     * @param inputStream 流
+     * @param is 流
      * @param size 大小
      * @param extName 文件名
      */
-    String putObject(InputStream inputStream, long size, String extName) throws Exception;
+    String putObject(InputStream is, long size, String extName) throws Exception;
 
     /**
      * 上传

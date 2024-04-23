@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(name = "storage.client-type", havingValue = "minio")
 public class MinioConnectionConfiguration extends StorageConnectionConfiguration {
 
-
     MinioConnectionConfiguration(StorageProperties properties) {
         super(properties);
     }
