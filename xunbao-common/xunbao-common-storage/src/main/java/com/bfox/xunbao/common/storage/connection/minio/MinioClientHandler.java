@@ -45,8 +45,8 @@ public class MinioClientHandler implements StorageClient {
     }
 
     @Override
-    public void deleteObject(String name) throws Exception {
-        String replace = name.replace(this.point, "").replace(this.bucket.concat("/"), "");
+    public void deleteObject(String url) throws Exception {
+        String replace = url.replace(this.point, "").replace(this.bucket.concat("/"), "");
         RemoveObjectArgs objectArgs = RemoveObjectArgs.builder().bucket(this.bucket).object(replace).build();
         this.minioClient.removeObject(objectArgs);
     }

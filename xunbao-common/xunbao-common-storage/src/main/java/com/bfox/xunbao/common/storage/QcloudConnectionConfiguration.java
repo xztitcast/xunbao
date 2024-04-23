@@ -5,6 +5,7 @@ import com.bfox.xunbao.common.storage.connection.qcloud.QcloudClientFactory;
 import org.springframework.context.annotation.Bean;
 
 /**
+ * 腾讯云连接配置
  * @Author eden
  * @Date 2024/4/23 20:53
  */

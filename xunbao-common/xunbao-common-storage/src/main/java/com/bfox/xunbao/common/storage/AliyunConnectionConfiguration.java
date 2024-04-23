@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * 阿里云连接配置
  * @Author eden
  * @Date 2024/4/23 20:20
  */

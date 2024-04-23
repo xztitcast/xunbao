@@ -16,7 +16,8 @@ import org.springframework.context.annotation.Import;
  */
 @ConditionalOnClass(StorageProperties.class)
 @EnableConfigurationProperties(StorageProperties.class)
-@Import({ MinioConnectionConfiguration.class })
+@Import({ MinioConnectionConfiguration.class, AliyunConnectionConfiguration.class,
+        QcloudConnectionConfiguration.class, QiniuConnectionConfiguration.class })
 public class StorageAutoConfiguration {
 
     @Bean
