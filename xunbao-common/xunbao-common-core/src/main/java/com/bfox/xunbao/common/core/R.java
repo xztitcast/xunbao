@@ -58,12 +58,9 @@ public class R extends JSONObject {
 		return this;
 	}
 	
-	public R ofAll(Map<String, Object> ofAll) {
-		super.putAll(ofAll);
+	public R put(Map<String, Object> map) {
+		super.putAll(map);
 		return this;
 	}
-	
-	public Object get() {
-		return super.get(RESULT);
-	}
+
 }
