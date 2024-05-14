@@ -8,12 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,29 +31,22 @@ public class StorageTemplate implements StorageOperations {
 
     @Override
     public Storage execute(MultipartFile file) {
-        List<Storage> list = execute(new MultipartFile[]{file});
-        return list.isEmpty() ? null : list.get(0);
-    }
-
-    @Override
-    public List<Storage> execute(MultipartFile[] files) {
-        final String prefix = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
-        return Arrays.stream(files).collect(ArrayList::new, (left, right) -> {
-            try{
-                InputStream is = right.getInputStream();
-                if(FileMagic.UNKNOWN == FileMagic.valueOf(is)) {
-                    throw new RuntimeException("文件格式不正确, 请重新上传!");
-                }
-                String originalFilename = right.getOriginalFilename();
-                String extName = originalFilename.substring(originalFilename.lastIndexOf("."));
-                String imageName = UUID.randomUUID().toString().replace("-", "") + extName;
-                String suffix = prefix.concat("/").concat(imageName);
-                left.add(new Storage(imageName, this.storageClient.putObject(is, right.getSize(), suffix)));
-            }catch (Exception e) {
-                log.error("上传文件失败", e);
-                throw new RuntimeException(e);
+        try{
+            InputStream is = file.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+            if(FileMagic.UNKNOWN == FileMagic.valueOf(bis)) {
+                throw new RuntimeException("文件格式不正确, 请重新上传!");
             }
-        }, List::addAll);
+            String prefix = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+            String originalFilename = file.getOriginalFilename();
+            String extName = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String imageName = UUID.randomUUID().toString().replace("-", "") + extName;
+            String suffix = prefix.concat("/").concat(imageName);
+            return new Storage(imageName, this.storageClient.putObject(bis, file.getSize(), suffix));
+        }catch (Exception e) {
+            log.error("上传文件失败", e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

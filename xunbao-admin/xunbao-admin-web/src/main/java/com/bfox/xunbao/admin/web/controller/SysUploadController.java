@@ -1,14 +1,11 @@
 package com.bfox.xunbao.admin.web.controller;
 
-import com.bfox.xunbao.admin.web.config.StorageConfig;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.storage.core.StorageTemplate;
 import com.bfox.xunbao.common.storage.entity.Storage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.*;
 
 /**
  * 后台管理上传
@@ -20,20 +17,17 @@ import java.util.*;
 public class SysUploadController {
 
     @Autowired
-    private StorageConfig config;
-
-    @Autowired
     private StorageTemplate storageTemplate;
 
     /**
      * 上传图片
-     * @param files
+     * @param file
      * @return
      */
     @PostMapping("/save")
-    public R save(MultipartFile[] files) {
-        List<Storage> storages = storageTemplate.execute(files);
-        return R.ok(storages);
+    public R save(MultipartFile file) {
+        Storage entity = storageTemplate.execute(file);
+        return R.ok(entity);
     }
 
     /**
