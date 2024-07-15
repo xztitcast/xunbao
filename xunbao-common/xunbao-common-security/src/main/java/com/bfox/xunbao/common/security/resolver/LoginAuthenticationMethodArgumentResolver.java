@@ -7,7 +7,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.bfox.xunbao.common.core.Principal;
+import com.bfox.xunbao.common.core.injecter.Principal;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.common.core.exception.custom.AuthenticationException;
 import com.bfox.xunbao.common.security.annotation.Subject;

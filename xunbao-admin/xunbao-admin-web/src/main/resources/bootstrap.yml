@@ -52,6 +52,9 @@ dubbo:
     qos-accept-foreign-ip: false
     name: ${spring.application.name}
     metadata-type: remote
+    serialize-check-status: STRICT
+    auto-trust-serialize-class: true
+    trust-serialize-class-level: 3
   protocol:
     #serialization: kryo
     serialization: fastjson2

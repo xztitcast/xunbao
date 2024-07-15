@@ -1,5 +1,6 @@
-package com.bfox.xunbao.common.core;
+package com.bfox.xunbao.common.core.injecter;
 
+import com.bfox.xunbao.common.core.Constant;
 import lombok.Getter;
 import lombok.Setter;
 

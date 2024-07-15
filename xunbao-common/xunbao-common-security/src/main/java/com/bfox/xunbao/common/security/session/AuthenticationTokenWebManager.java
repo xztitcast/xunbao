@@ -1,6 +1,6 @@
 package com.bfox.xunbao.common.security.session;
 
-import com.bfox.xunbao.common.core.Principal;
+import com.bfox.xunbao.common.core.injecter.Principal;
 
 /**
  * 认证Token管理器

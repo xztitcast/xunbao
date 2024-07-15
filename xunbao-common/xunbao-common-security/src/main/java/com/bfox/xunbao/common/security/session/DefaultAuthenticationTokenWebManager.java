@@ -2,7 +2,7 @@ package com.bfox.xunbao.common.security.session;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson2.JSON;
-import com.bfox.xunbao.common.core.Principal;
+import com.bfox.xunbao.common.core.injecter.Principal;
 import com.bfox.xunbao.common.core.enums.BaseEnum;
 
 import org.apache.commons.lang.StringUtils;

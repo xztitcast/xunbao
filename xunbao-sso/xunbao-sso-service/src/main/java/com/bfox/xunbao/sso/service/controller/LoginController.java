@@ -1,6 +1,6 @@
 package com.bfox.xunbao.sso.service.controller;
 
-import com.bfox.xunbao.common.core.Principal;
+import com.bfox.xunbao.common.core.injecter.Principal;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.security.session.AuthenticationTokenWebManager;
 import jakarta.validation.constraints.NotBlank;

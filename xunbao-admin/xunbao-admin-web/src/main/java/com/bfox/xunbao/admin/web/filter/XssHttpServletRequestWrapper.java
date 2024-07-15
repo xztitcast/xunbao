@@ -1,7 +1,7 @@
 package com.bfox.xunbao.admin.web.filter;
 
 import com.bfox.xunbao.common.core.S;
-import com.bfox.xunbao.common.core.exception.custom.XunbaoshuServiceException;
+import com.bfox.xunbao.common.core.exception.custom.XunbaoServiceException;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -159,7 +159,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             Pattern sqlPattern = Pattern.compile(SQL_REG, Pattern.CASE_INSENSITIVE);
             if(sqlPattern.matcher(clean.toLowerCase()).find()) {
                 log.warn("请求存在SQL注入: {}", html);
-                throw new XunbaoshuServiceException(S.SYSTEM_UNAUTHORIZED.getValue(), S.SYSTEM_UNAUTHORIZED.getMessage());
+                throw new XunbaoServiceException(S.SYSTEM_UNAUTHORIZED.getValue(), S.SYSTEM_UNAUTHORIZED.getMessage());
             }
             return clean;
         }
