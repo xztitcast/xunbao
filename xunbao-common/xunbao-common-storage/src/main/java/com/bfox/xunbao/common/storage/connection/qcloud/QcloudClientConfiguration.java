@@ -1,18 +1,10 @@
 package com.bfox.xunbao.common.storage.connection.qcloud;
 
-import com.bfox.xunbao.common.storage.connection.StorageClientFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Configuration;
-
 /**
  * 腾讯云客户端配置
  * @Author eden
  * @Date 2024/4/23 20:34
  */
-@Configuration
-@ConditionalOnMissingBean(StorageClientFactory.class)
-@ConditionalOnProperty(name = "storage.client-type", havingValue = "qcloud")
 public class QcloudClientConfiguration {
 
     private String domain;
