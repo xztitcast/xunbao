@@ -29,7 +29,7 @@ public class LoginController {
     public R account(@NotBlank(message = "手机号码不能为空!") @RequestParam String username,
                      @NotBlank(message = "验证码不能为空!") @RequestParam String code) {
         Principal p = new Principal(1L, "测试登录", "账号登录");
-        String token = this.authenticationTokenWebManager.createToken(p, true);
+        String token = this.authenticationTokenWebManager.createToken(p);
         return R.ok(Map.of("token", token));
     }
 }

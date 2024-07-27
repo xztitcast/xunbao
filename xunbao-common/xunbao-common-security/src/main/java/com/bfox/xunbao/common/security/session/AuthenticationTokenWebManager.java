@@ -7,7 +7,7 @@ import com.bfox.xunbao.common.core.injecter.Principal;
  * @author eden
  * @date 2023/9/23 22:28:28
  */
-public interface AuthenticationTokenWebManager {
+public interface AuthenticationTokenWebManager extends TokenSessionManager {
 
     String TOKEN_KEY = "JC:SECURITY:TOKEN:";
 
@@ -19,24 +19,14 @@ public interface AuthenticationTokenWebManager {
     String createToken(Principal principal);
 
     /**
-     * 生成token
-     * @param principal 主体
-     * @param isVisitor 是否是临时访问者
-     * @return
-     */
-    String createToken(Principal principal, boolean isVisitor);
-
-    /**
-     * 获取用户信息
-     * @param token 令牌
-     * @return
-     */
-    Principal getByToken(String token);
-
-    /**
      * 删除
      * @param token 令牌
      * @return
      */
     boolean remove(String token);
+
+    /**
+     * 初始化
+     */
+    void initLocalCache();
 }

@@ -24,7 +24,7 @@ public class TokenManagerAutoConfiguration {
         return new LoginAuthenticationMethodArgumentResolver(manager);
     }
 
-    @Bean("authenticationTokenWebManager")
+    @Bean(value = "authenticationTokenWebManager", initMethod = "initLocalCache")
     AuthenticationTokenWebManager manager(RedisTemplate<String, String> redisTemplate) {
         return new DefaultAuthenticationTokenWebManager(redisTemplate);
     }

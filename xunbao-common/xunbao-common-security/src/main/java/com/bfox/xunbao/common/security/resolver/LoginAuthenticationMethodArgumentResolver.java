@@ -42,18 +42,7 @@ public class LoginAuthenticationMethodArgumentResolver implements HandlerMethodA
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 								  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 		String authorization = webRequest.getHeader("Authorization");
-		if(StringUtils.isBlank(authorization)) {
-			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
-		}
-		Matcher matcher = pattern.matcher(authorization);
-		if(!matcher.matches()) {
-			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
-		}
-		String token = matcher.group("token");
-		if(StringUtils.isBlank(token)) {
-			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
-		}
-		Principal principal = this.authenticationTokenWebManager.getByToken(token);
+		Principal principal = this.authenticationTokenWebManager.getByToken(authorization);
 		if(principal == null) {
 			throw new AuthenticationException(S.UNAUTHORIZED.getValue(), S.UNAUTHORIZED.getMessage());
 		}
