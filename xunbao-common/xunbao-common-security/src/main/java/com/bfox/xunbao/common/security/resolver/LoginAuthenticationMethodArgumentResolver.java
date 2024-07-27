@@ -1,6 +1,5 @@
 package com.bfox.xunbao.common.security.resolver;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -13,8 +12,6 @@ import com.bfox.xunbao.common.core.exception.custom.AuthenticationException;
 import com.bfox.xunbao.common.security.annotation.Subject;
 import com.bfox.xunbao.common.security.session.AuthenticationTokenWebManager;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 登录验证参数解析器
@@ -25,9 +22,7 @@ import java.util.regex.Pattern;
  */
 public class LoginAuthenticationMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
-	private Pattern pattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-:._~+/]+=*)$", Pattern.CASE_INSENSITIVE);
-
-	private AuthenticationTokenWebManager authenticationTokenWebManager;
+	private final AuthenticationTokenWebManager authenticationTokenWebManager;
 
 	public LoginAuthenticationMethodArgumentResolver(AuthenticationTokenWebManager authenticationTokenWebManager) {
 		this.authenticationTokenWebManager = authenticationTokenWebManager;
