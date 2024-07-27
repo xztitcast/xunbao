@@ -41,14 +41,14 @@ public class ContentCatServiceImpl extends ServiceImpl<ContentCatMapper, Content
 
     @Override
     @Transactional
-    public ContentCat saveEntity(ContentCat t) {
+    public Long saveEntity(ContentCat t) {
         ContentCat entity = this.getById(t.getParentId());
         t.setPath(entity.getPath().concat(Constant.DELIMITER_SLASH));
         t.setTerminal(entity.getTerminal());
         this.save(t);
         t.setPath(t.getPath().concat(String.valueOf(t.getId())));
         this.updateById(t);
-        return t;
+        return t.getId();
     }
 
     @Override

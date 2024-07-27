@@ -35,7 +35,7 @@ public interface FrameworkService<T, ID extends Serializable> {
 	 * @param t
 	 * @return
 	 */
-	default T saveEntity(T t) {return t;};
+	default ID saveEntity(T t) {return null;};
 	
 	/**
 	 * 修改单个对象

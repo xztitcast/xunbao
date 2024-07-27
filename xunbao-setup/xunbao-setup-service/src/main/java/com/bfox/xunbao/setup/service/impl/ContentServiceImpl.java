@@ -44,9 +44,9 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
 
     @Override
     @Transactional
-    public Content saveEntity(Content t) {
+    public Long saveEntity(Content t) {
         this.save(t);
-        return t;
+        return t.getId();
     }
 
     @Override
