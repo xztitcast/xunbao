@@ -71,7 +71,6 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 					response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 					response.getWriter().print(R.error(S.SYSTEM_UNAUTHORIZED));
 				}).authenticationEntryPoint((request, response, authException) -> {
-					authException.printStackTrace();
 					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 					response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 					response.setStatus(HttpServletResponse.SC_OK);

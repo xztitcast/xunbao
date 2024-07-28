@@ -3,6 +3,7 @@ package com.bfox.xunbao.common.core;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,8 @@ public class P<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private long total;
-	
+
+	@JsonInclude
 	private List<T> pageList;
 
 	public P() {

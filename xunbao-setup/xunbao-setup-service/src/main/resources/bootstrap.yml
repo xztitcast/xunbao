@@ -76,16 +76,6 @@ dubbo:
     validation: false
     timeout: 30000
     check: false
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      enabled: true
-      show-details: always
         
 mybatis-plus:
   mapper-locations:

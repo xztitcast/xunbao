@@ -25,11 +25,27 @@ public class LoginController {
     @Autowired
     private AuthenticationTokenWebManager authenticationTokenWebManager;
 
+    /**
+     * 账号登录
+     * @param username
+     * @param code
+     * @return
+     */
     @PostMapping("/account")
     public R account(@NotBlank(message = "手机号码不能为空!") @RequestParam String username,
                      @NotBlank(message = "验证码不能为空!") @RequestParam String code) {
         Principal p = new Principal(1L, "测试登录", "账号登录");
         String token = this.authenticationTokenWebManager.createToken(p);
         return R.ok(Map.of("token", token));
+    }
+
+    /**
+     * 小程序登录
+     * @return
+     */
+    @PostMapping("/mini")
+    public R mini() {
+
+        return R.ok();
     }
 }

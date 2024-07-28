@@ -29,7 +29,7 @@ spring:
         file-extension: yml
         refresh-enabled: true
         extension-configs:
-        - data-id: taotao-redis.yml
+        - data-id: xunbao-redis.yml
           group: DEFAULT_GROUP
           refresh: true    
 dubbo:
@@ -51,16 +51,16 @@ dubbo:
     threadpool: fixed
   registry:
     protocol: nacos
-    address: ${spring.cloud.nacos.discovery.server-addr}
-    username: ${spring.cloud.nacos.discovery.username}
-    password: ${spring.cloud.nacos.discovery.password}
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
     parameters:
       namespace: '@dubbo.namespace@'
   metadata-report:
     protocol: nacos
-    address: ${spring.cloud.nacos.discovery.server-addr}
-    username: ${spring.cloud.nacos.discovery.username}
-    password: ${spring.cloud.nacos.discovery.password}
+    address: ${spring.cloud.nacos.config.server-addr}
+    username: ${spring.cloud.nacos.config.username}
+    password: ${spring.cloud.nacos.config.password}
     parameters:
       namespace: '@dubbo.namespace@'
   provider:
@@ -75,21 +75,11 @@ dubbo:
     validation: false
     timeout: 30000
     check: false
-    
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      enabled: true
-      show-details: always
         
 mybatis-plus:
   mapper-locations:
   - classpath:mapper/**/*.xml
-  typeAliasesPackage: com.bovine.taotao.sso.entity
+  typeAliasesPackage: com.bfox.xunbao.sso.entity
   global-config:
     banner: false
   configuration:

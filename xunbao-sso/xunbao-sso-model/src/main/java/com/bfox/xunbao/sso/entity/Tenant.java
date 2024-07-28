@@ -1,10 +1,13 @@
 package com.bfox.xunbao.sso.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import lombok.Getter;
@@ -121,4 +124,6 @@ public class Tenant extends BaseEntity implements Serializable {
      */
     private String remark;
 
+    @TableField(exist = false)
+    private List<Tenant> children = new ArrayList<>();
 }
