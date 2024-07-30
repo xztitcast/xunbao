@@ -4,7 +4,7 @@ server:
   
 spring:
   application:
-    name: taotao-serve-gateway
+    name: xunbao-serve-gateway
   lifecycle:
     timeout-per-shutdown-phase: 30S
   profiles:
@@ -34,7 +34,7 @@ spring:
         file-extension: yml
         refresh-enabled: true
         extension-configs:
-        - data-id: taotao-redis.yml
+        - data-id: xunbao-redis.yml
           group: DEFAULT_GROUP
           refresh: true
     sentinel:

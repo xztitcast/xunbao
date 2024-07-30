@@ -16,7 +16,7 @@ CREATE TABLE "tb_tenant"(
     "address" varchar(100),
     "signtime" TIMESTAMP(6) DEFAULT NOW(),
     "expiretime" TIMESTAMP(6) DEFAULT NOW(),
-    "path" varchar(100),
+    "path" varchar(100) NOT NULL DEFAULT '0',
     "remark" varchar(255),
     "created" timestamp(6) DEFAULT now(),
     "updated" timestamp(6) DEFAULT now()
@@ -39,7 +39,7 @@ COMMENT ON COLUMN "tb_tenant"."aname" IS '区名称';
 COMMENT ON COLUMN "tb_tenant"."address" IS '机构详细地址';
 COMMENT ON COLUMN "tb_tenant"."signtime" IS '签约时间';
 COMMENT ON COLUMN "tb_tenant"."expiretime" IS '到期时间';
-COMMENT ON COLUMN "tb_tenant"."path" IS '0-总机构 1-子机构';
+COMMENT ON COLUMN "tb_tenant"."path" IS '树路径0/1/2';
 COMMENT ON COLUMN "tb_tenant"."remark" IS '机构简称';
 COMMENT ON COLUMN "tb_tenant"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_tenant"."updated" IS '更新时间';

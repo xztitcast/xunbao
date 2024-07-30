@@ -6,12 +6,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.sso.entity.Tenant;
-import com.bfox.xunbao.sso.mapper.TenantMapper;
 import com.bfox.xunbao.sso.i.service.TenantService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bfox.xunbao.sso.mapper.TenantMapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -51,13 +52,21 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
     @Override
     @Transactional
     public Long saveEntity(Tenant t) {
-        this.save(t);
+        boolean save = this.save(t);
+        if(save) this.updateEntity(t);
         return t.getId();
     }
 
     @Override
     @Transactional
     public boolean updateEntity(Tenant t) {
+        Long parentId = t.getParentId();
+        if(parentId == null || parentId == 0) {
+            t.setPath(String.valueOf(t.getId()));
+        }else {
+            Tenant entity = this.getById(parentId);
+            t.setPath(entity.getPath() + Constant.DELIMITER_SLASH + t.getId());
+        }
         return this.updateById(t);
     }
 

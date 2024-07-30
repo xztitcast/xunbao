@@ -51,7 +51,6 @@ dubbo:
     qos-enable: false
     qos-accept-foreign-ip: false
     name: ${spring.application.name}
-    metadata-type: remote
     serialize-check-status: STRICT
     auto-trust-serialize-class: true
     trust-serialize-class-level: 3
@@ -64,13 +63,6 @@ dubbo:
     username: ${spring.cloud.nacos.discovery.username}
     password: ${spring.cloud.nacos.discovery.password}
     register: true
-    parameters:
-      namespace: ${spring.cloud.nacos.discovery.namespace}
-  metadata-report:
-    protocol: nacos
-    address: ${spring.cloud.nacos.discovery.server-addr}
-    username: ${spring.cloud.nacos.discovery.username}
-    password: ${spring.cloud.nacos.discovery.password}
     parameters:
       namespace: ${spring.cloud.nacos.discovery.namespace}
   consumer:

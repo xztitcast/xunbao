@@ -3,7 +3,6 @@ package com.bfox.xunbao.admin.web.controller;
 import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
-import com.bfox.xunbao.common.core.BaseModel;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.sso.entity.Tenant;
 import com.bfox.xunbao.sso.i.service.TenantService;
@@ -11,6 +10,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,19 +40,19 @@ public class SysTenantController extends BaseController {
      * 获取单条数据信息
      * @return
      */
-    @GetMapping("/info")
+    @GetMapping("/info/{id}")
     @PreAuthorize(value = "hasAuthority('sys:tenant:info')")
-    public R info() {
-
-        return R.ok();
+    public R info(@PathVariable Long id) {
+        Tenant entity = this.tenantService.getEntity(id);
+        return R.ok(entity);
     }
 
     @Log("保存机构数据")
     @Fill(FillType.INSERT)
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:tenant:save')")
-    public R save() {
-
+    public R save(@RequestBody Tenant tenant) {
+        this.tenantService.saveEntity(tenant);
         return R.ok();
     }
 
@@ -60,8 +60,8 @@ public class SysTenantController extends BaseController {
     @Fill(FillType.UPDATE)
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:tenant:update')")
-    public R update() {
-
+    public R update(@RequestBody Tenant tenant) {
+        this.tenantService.updateEntity(tenant);
         return R.ok();
     }
 
@@ -69,7 +69,7 @@ public class SysTenantController extends BaseController {
     @DeleteMapping("/delete")
     @PreAuthorize(value = "hasAuthority('sys:tenant:delete')")
     public R delete(@RequestBody Long[] ids) {
-
+        this.tenantService.delete(Arrays.asList(ids));
         return R.ok();
     }
 }

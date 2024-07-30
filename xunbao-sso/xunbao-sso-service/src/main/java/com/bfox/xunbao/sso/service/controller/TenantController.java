@@ -1,5 +1,9 @@
 package com.bfox.xunbao.sso.service.controller;
 
+import com.bfox.xunbao.common.core.R;
+import com.bfox.xunbao.sso.i.service.TenantService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,4 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sso/tenant")
 public class TenantController {
 
+    @Autowired
+    private TenantService tenantService;
+
+    @GetMapping("/info")
+    public R info() {
+        tenantService.getTenantIdList(1L);
+        return R.ok();
+    }
 }

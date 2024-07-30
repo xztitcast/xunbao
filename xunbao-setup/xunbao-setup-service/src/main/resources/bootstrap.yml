@@ -38,7 +38,6 @@ dubbo:
     qos-enable: false
     qos-accept-foreign-ip: false
     name: ${spring.application.name}
-    metadata-type: remote
     serialize-check-status: STRICT
     auto-trust-serialize-class: true
     trust-serialize-class-level: 3
@@ -51,13 +50,6 @@ dubbo:
     threads: 20
     threadpool: fixed
   registry:
-    protocol: nacos
-    address: ${spring.cloud.nacos.config.server-addr}
-    username: ${spring.cloud.nacos.config.username}
-    password: ${spring.cloud.nacos.config.password}
-    parameters:
-      namespace: '@dubbo.namespace@'
-  metadata-report:
     protocol: nacos
     address: ${spring.cloud.nacos.config.server-addr}
     username: ${spring.cloud.nacos.config.username}

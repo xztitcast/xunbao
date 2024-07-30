@@ -20,6 +20,12 @@ spring:
     time-zone: GMT+8
   cloud:
     nacos:
+      discovery:
+        enabled: false
+        username: '@nacos.username@'
+        password: '@nacos.password@'
+        server-addr: '@dubbo.server-addr@'
+        namespace: '@dubbo.namespace@'
       config:
         enabled: true
         username: '@nacos.username@'
@@ -31,13 +37,13 @@ spring:
         extension-configs:
         - data-id: xunbao-redis.yml
           group: DEFAULT_GROUP
-          refresh: true    
+          refresh: true
+
 dubbo:
   application:
     qos-enable: false
     qos-accept-foreign-ip: false
     name: ${spring.application.name}
-    metadata-type: remote
     serialize-check-status: STRICT
     auto-trust-serialize-class: true
     trust-serialize-class-level: 3
@@ -56,13 +62,6 @@ dubbo:
     password: ${spring.cloud.nacos.config.password}
     parameters:
       namespace: '@dubbo.namespace@'
-  metadata-report:
-    protocol: nacos
-    address: ${spring.cloud.nacos.config.server-addr}
-    username: ${spring.cloud.nacos.config.username}
-    password: ${spring.cloud.nacos.config.password}
-    parameters:
-      namespace: '@dubbo.namespace@'
   provider:
     filter: exceptionCustomizerFilter,-exception
     loadbalance: roundrobin
@@ -75,7 +74,7 @@ dubbo:
     validation: false
     timeout: 30000
     check: false
-        
+
 mybatis-plus:
   mapper-locations:
   - classpath:mapper/**/*.xml
