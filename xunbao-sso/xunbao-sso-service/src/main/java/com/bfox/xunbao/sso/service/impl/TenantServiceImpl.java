@@ -17,7 +17,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -85,15 +84,22 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
     @Override
     public List<Long> getTenantIdList(long id) {
         Tenant entity = this.getById(id);
-        long parentId = entity.getParentId() == 0 ? id : entity.getParentId();
-        LambdaQueryWrapper<Tenant> queryWrapper = Wrappers.lambdaQuery(Tenant.class).eq(Tenant::getParentId, parentId);
+        LambdaQueryWrapper<Tenant> queryWrapper = Wrappers.lambdaQuery(Tenant.class).eq(Tenant::getParentId, id);
         List<Tenant> list = this.list(queryWrapper);
-        return CollectionUtils.isEmpty(list) ? List.of(id) : list.stream().map(Tenant::getId).collect(Collectors.toList());
+        list.add(entity);
+        return list.stream().map(Tenant::getId).collect(Collectors.toList());
     }
 
     @Override
     public List<Tenant> getTenantList(String name) {
-        LambdaQueryWrapper<Tenant> queryWrapper = Wrappers.lambdaQuery(Tenant.class).eq(StringUtils.isBlank(name), Tenant::getName, name).orderByAsc(Tenant::getCreated);
+        LambdaQueryWrapper<Tenant> queryWrapper = Wrappers.lambdaQuery(Tenant.class).orderByAsc(Tenant::getCreated);
+        if(StringUtils.isNotBlank(name)) {
+            Tenant entity = this.getOne(Wrappers.lambdaQuery(Tenant.class).eq(Tenant::getName, name));
+            if(entity != null) {
+                String[] split = entity.getPath().split(Constant.DELIMITER_SLASH);
+                queryWrapper.likeRight(Tenant::getPath, split[0]);
+            }
+        }
         List<Tenant> list = this.list(queryWrapper);
         return list.stream().filter(e -> e.getParentId() == 0L).map(e -> findTreeNode(list, e)).collect(Collectors.toList());
     }

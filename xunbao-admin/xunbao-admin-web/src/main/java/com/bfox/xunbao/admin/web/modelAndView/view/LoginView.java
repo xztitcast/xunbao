@@ -33,6 +33,6 @@ public class LoginView implements Serializable {
     /**
      * 双因子验证
      */
-    private boolean factor2;
+    private boolean a2F;
 
 }

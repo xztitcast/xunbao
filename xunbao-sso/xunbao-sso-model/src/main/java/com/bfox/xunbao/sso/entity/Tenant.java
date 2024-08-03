@@ -4,14 +4,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -35,17 +35,17 @@ public class Tenant extends BaseEntity implements Serializable {
     private Long id;
 
     /**
-     * 机构全名
+     * 租户名称
      */
     private String name;
 
     /**
-     * 父机构ID,0为总机构
+     * 父租户ID,0为主租户
      */
     private Long parentId;
 
     /**
-     * 父机构名称
+     * 父租户名称
      */
     private String parentName;
 
@@ -107,12 +107,12 @@ public class Tenant extends BaseEntity implements Serializable {
     /**
      * 签约时间
      */
-    private LocalDateTime signtime;
+    private Date signtime;
 
     /**
      * 到期时间
      */
-    private LocalDateTime expiretime;
+    private Date expiretime;
 
     /**
      * 0-总机构 1-子机构

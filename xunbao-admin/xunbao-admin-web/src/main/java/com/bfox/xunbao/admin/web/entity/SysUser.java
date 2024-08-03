@@ -39,6 +39,21 @@ public class SysUser extends BaseEntity implements Serializable {
 	 * 锁定账号时间(可以是Long值或设置成Date值)
 	 */
 	private Date locked;
+
+	/**
+	 * 租户ID
+	 */
+	private Long tenantId;
+
+	/**
+	 * 租户名称
+	 */
+	private String tenantName;
+
+	/**
+	 * 多租户父子列表
+	 */
+	private String tenantIds;
     
     @TableField(exist = false)
     private Integer parentId = 0;
@@ -127,5 +142,29 @@ public class SysUser extends BaseEntity implements Serializable {
 
 	public void setLocked(Date locked) {
 		this.locked = locked;
+	}
+
+	public Long getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(Long tenantId) {
+		this.tenantId = tenantId;
+	}
+
+	public String getTenantName() {
+		return tenantName;
+	}
+
+	public void setTenantName(String tenantName) {
+		this.tenantName = tenantName;
+	}
+
+	public String getTenantIds() {
+		return tenantIds;
+	}
+
+	public void setTenantIds(String tenantIds) {
+		this.tenantIds = tenantIds;
 	}
 }

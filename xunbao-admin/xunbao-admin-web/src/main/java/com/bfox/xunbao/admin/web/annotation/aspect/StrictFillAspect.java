@@ -5,7 +5,6 @@ import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.admin.web.entity.SysUserTenant;
 import com.bfox.xunbao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;
-import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import com.bfox.xunbao.common.mybatis.entity.CreateEntity;
 import com.bfox.xunbao.common.mybatis.entity.TenantEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -45,22 +44,20 @@ public class StrictFillAspect {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
 		Fill fill = method.getAnnotation(Fill.class);
-		if(fill == null) {
-			return joinPoint.proceed();
-		}
-		FillType value = fill.value();
-		Object[] args = joinPoint.getArgs();
-		LoginUserDetails loginUserDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		for(Object arg : args) {
-			if(arg instanceof BaseEntity && value == FillType.INSERT) {
-				setTenantEntityEnhance(arg, loginUserDetails.getSysUserTenant());
-			}
-			if(arg instanceof CreateEntity && value == FillType.INSERT) {
-				setCreateEntityEnhance(arg, loginUserDetails.getSysUser());
-			}
-			if(value == FillType.UPDATE) {
-				setUpdateEntityEnhance(arg, loginUserDetails.getSysUser());
+		if(fill != null) {
+			FillType value = fill.value();
+			Object[] args = joinPoint.getArgs();
+			LoginUserDetails loginUserDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			for(Object arg : args) {
+				if(arg instanceof TenantEntity && value == FillType.INSERT) {
+					setTenantEntityEnhance(arg, loginUserDetails.getSysUserTenant());
+				}
+				if(arg instanceof CreateEntity && value == FillType.INSERT) {
+					setCreateEntityEnhance(arg, loginUserDetails.getSysUser());
+				}
+				if(arg instanceof CreateEntity && value == FillType.UPDATE) {
+					setUpdateEntityEnhance(arg, loginUserDetails.getSysUser());
+				}
 			}
 		}
 		return joinPoint.proceed();

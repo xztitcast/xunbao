@@ -23,9 +23,9 @@ CREATE TABLE "tb_tenant"(
 );
 
 COMMENT ON COLUMN "tb_tenant"."id" IS '主键';
-COMMENT ON COLUMN "tb_tenant"."name" IS '机构全名';
-COMMENT ON COLUMN "tb_tenant"."parent_id" IS '父机构ID,0为总机构';
-COMMENT ON COLUMN "tb_tenant"."parent_name" IS '父机构名称';
+COMMENT ON COLUMN "tb_tenant"."name" IS '租户名称';
+COMMENT ON COLUMN "tb_tenant"."parent_id" IS '父租户ID,0为主租户';
+COMMENT ON COLUMN "tb_tenant"."parent_name" IS '父租户名称';
 COMMENT ON COLUMN "tb_tenant"."status" IS '状态是否有效0:无效 1:有效';
 COMMENT ON COLUMN "tb_tenant"."phones" IS '机构服务电话(类似400)';
 COMMENT ON COLUMN "tb_tenant"."tname" IS '负责人姓名';

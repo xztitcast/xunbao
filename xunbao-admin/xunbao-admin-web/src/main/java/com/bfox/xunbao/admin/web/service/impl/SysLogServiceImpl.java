@@ -1,13 +1,5 @@
 package com.bfox.xunbao.admin.web.service.impl;
 
-import java.util.Date;
-
-import jakarta.servlet.http.HttpServletRequest;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,9 +11,12 @@ import com.bfox.xunbao.admin.web.modelAndView.model.LoginModel;
 import com.bfox.xunbao.admin.web.modelAndView.model.UserModel;
 import com.bfox.xunbao.admin.web.service.SysLogService;
 import com.bfox.xunbao.common.core.P;
-import com.bfox.xunbao.common.core.utils.IPUtil;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service("sysLogService")
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService, ApplicationListener<SysLoginEvent> {
@@ -42,7 +37,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 		Object source = event.getSource();
 		if(source instanceof LoginModel) {
 			LoginModel form = (LoginModel)source;
-			sysLog.setOperation("登录");
+			sysLog.setOperation("用户登录");
 			sysLog.setUsername(form.getUsername());
 			sysLog.setMethod("com.jc.smart.admin.web.controller.SysLoginController.login()");
 		}else {
@@ -50,9 +45,8 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 			sysLog.setUsername(event.getSource().toString());
 			sysLog.setMethod("com.jc.smart.admin.web.controller.SysLoginController.logout()");
 		}
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		sysLog.setIp(IPUtil.getIpAddr(request));
 		sysLog.setTime(0L);
+		sysLog.setIp(event.getIp());
 		sysLog.setCreated(new Date());
 		this.save(sysLog);
 	}

@@ -12,4 +12,10 @@ public class LoginModel extends SysModel {
 	
 	@NotBlank(message = "uuid不能为空!")
 	private String uuid;
+
+	public LoginModel() {}
+
+	public LoginModel(String username) {
+		super.username = username;
+	}
 }

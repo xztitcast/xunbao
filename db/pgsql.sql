@@ -57,6 +57,9 @@ CREATE TABLE tb_sys_user (
      status smallint,
      locked timestamp(6) DEFAULT NOW(),
      avatar varchar(255),
+     tenant_id int8,
+     tenant_name varchar(30),
+     tenant_ids varchar(255),
      created timestamp(6),
      updated timestamp(6),
      creator int8,
@@ -71,6 +74,9 @@ COMMENT ON COLUMN tb_sys_user.password IS '密码';
 COMMENT ON COLUMN tb_sys_user.status IS '状态  0：停用 1：正常';
 COMMENT ON COLUMN tb_sys_user.locked IS '锁定时间';
 COMMENT ON COLUMN tb_sys_user.avatar IS '头像';
+COMMENT ON COLUMN tb_sys_user.tenant_id IS '租户ID';
+COMMENT ON COLUMN tb_sys_user.tenant_name IS '租户名称';
+COMMENT ON COLUMN tb_sys_user.tenant_ids IS '租户父子ID列表';
 COMMENT ON COLUMN tb_sys_user.created IS '创建时间';
 COMMENT ON COLUMN tb_sys_user.updated IS '更新时间';
 COMMENT ON COLUMN tb_sys_user.creator IS '创建者ID';

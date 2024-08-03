@@ -28,7 +28,7 @@ spring:
         file-extension: yml
         refresh-enabled: true
         extension-configs:
-        - data-id: taotao-redis.yml
+        - data-id: xunbao-redis.yml
           group: DEFAULT_GROUP
           refresh: true
 

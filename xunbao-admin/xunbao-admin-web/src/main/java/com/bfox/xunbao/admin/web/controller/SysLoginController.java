@@ -2,9 +2,11 @@ package com.bfox.xunbao.admin.web.controller;
 
 import com.bfox.xunbao.admin.web.event.SysLoginEvent;
 import com.bfox.xunbao.admin.web.modelAndView.model.SmsModel;
+import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.Constant.RedisKey;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
+import com.bfox.xunbao.common.core.utils.IPUtil;
 import com.google.code.kaptcha.Producer;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -96,9 +98,8 @@ public class SysLoginController extends BaseController implements ApplicationEve
 	 */
 	@PostMapping("/logout")
 	public R logout(HttpServletRequest request) {
-		this.applicationEventPublisher.publishEvent(new SysLoginEvent(getUser().getUsername()));
-		String token = request.getHeader("token");
-		redisTemplate.delete(RedisKey.SYS_SESSION_ID_KEY.concat(token));
+		this.applicationEventPublisher.publishEvent(new SysLoginEvent(getUser().getUsername(), IPUtil.getIpAddr(request)));
+		redisTemplate.delete(RedisKey.SYS_SESSION_ID_KEY.concat(request.getHeader(Constant.Sys.TOKEN)));
 		SecurityContextHolder.clearContext();
 		return R.ok();
 	}

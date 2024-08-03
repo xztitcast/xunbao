@@ -1,7 +1,5 @@
 package com.bfox.xunbao.admin.web.controller;
 
-import com.bfox.xunbao.admin.web.annotation.Fill;
-import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.sso.entity.Tenant;
@@ -48,7 +46,6 @@ public class SysTenantController extends BaseController {
     }
 
     @Log("保存机构数据")
-    @Fill(FillType.INSERT)
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:tenant:save')")
     public R save(@RequestBody Tenant tenant) {
@@ -57,7 +54,6 @@ public class SysTenantController extends BaseController {
     }
 
     @Log("修改机构数据")
-    @Fill(FillType.UPDATE)
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:tenant:update')")
     public R update(@RequestBody Tenant tenant) {

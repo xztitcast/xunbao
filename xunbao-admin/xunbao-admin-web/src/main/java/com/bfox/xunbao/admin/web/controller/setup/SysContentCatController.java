@@ -79,7 +79,7 @@ public class SysContentCatController extends BaseController {
      */
     private List<TreeNodeView<Long>> resolveTreeList(List<ContentCat> list) {
         return list.stream().filter(e -> e.getParentId() == 0L).map(e -> {
-            TreeNodeView<Long> view = new TreeNodeView<>(e.getName(), e.getId(), e.getParentId(), null);
+            TreeNodeView<Long> view = new TreeNodeView<>(e.getName(), e.getId(), e.getParentId());
             return findTreeNode(list, view);
         }).collect(Collectors.toList());
     }
@@ -91,8 +91,8 @@ public class SysContentCatController extends BaseController {
      * @return
      */
     private TreeNodeView<Long> findTreeNode(List<ContentCat> list, TreeNodeView<Long> view) {
-        list.stream().filter(e -> e.getParentId() == view.getId().longValue()).forEach(e -> {
-            TreeNodeView<Long> nodeView = new TreeNodeView<>(e.getName(), e.getId(), e.getParentId(), null);
+        list.stream().filter(e -> e.getParentId() == view.getValue().longValue()).forEach(e -> {
+            TreeNodeView<Long> nodeView = new TreeNodeView<>(e.getName(), e.getId(), e.getParentId());
             view.getChildren().add(findTreeNode(list, nodeView));
         });
         return view;

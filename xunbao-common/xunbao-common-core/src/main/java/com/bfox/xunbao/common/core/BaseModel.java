@@ -1,6 +1,7 @@
 package com.bfox.xunbao.common.core;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 基础查询条件参数(映射前端form表单提交)
@@ -32,6 +33,11 @@ public class BaseModel implements Serializable {
      * 需要排序字段
      */
     protected String orderField;
+
+    /**
+     * 多租户ID列表
+     */
+    protected List<Long> ids;
 
     public BaseModel(){
         super();
@@ -73,5 +79,13 @@ public class BaseModel implements Serializable {
 
     public void setOrderField(String orderField) {
         this.orderField = orderField;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 }

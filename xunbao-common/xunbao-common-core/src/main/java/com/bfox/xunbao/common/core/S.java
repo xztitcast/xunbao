@@ -45,7 +45,7 @@ public enum S {
 
 	USER_STATUS_PARAMTER_ERROR(1008, "前端状态参数传递异常!"),
 
-	USER_REMOVE_SUPER_ADMIN_ERROR(1009, "系统管理员不能删除！"),
+	USER_REMOVE_SUPER_ADMIN_ERROR(1009, "系统超管不能被删除！"),
 
 	USER_CURRENT_REMOVE_ERROR(1010, "当前用户不能被删除!"),
 

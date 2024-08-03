@@ -5,7 +5,6 @@ import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.admin.web.entity.SysUserTenant;
 import com.bfox.xunbao.admin.web.service.SysMenuService;
 import com.bfox.xunbao.admin.web.service.SysUserService;
-import com.bfox.xunbao.admin.web.service.SysUserTenantService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +34,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private SysMenuService sysMenuService;
 
-    @Autowired
-    private SysUserTenantService sysUserTenantService;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser sysUser = sysUserService.getByUserName(username);
         Set<String> permissions = sysMenuService.getPermissions(sysUser.getId());
-        SysUserTenant sysUserTenant = sysUserTenantService.getById(sysUser.getId());
-        return new LoginUserDetails(sysUser, permissions, sysUserTenant);
+        return new LoginUserDetails(sysUser, permissions);
     }
 
     @Getter
@@ -58,10 +53,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         private SysUserTenant sysUserTenant;
 
-        public LoginUserDetails(SysUser sysUser, Set<String> permissions, SysUserTenant sysUserTenant) {
+        public LoginUserDetails(SysUser sysUser, Set<String> permissions) {
             this.sysUser = sysUser;
             this.permissions = permissions;
-            this.sysUserTenant = sysUserTenant;
         }
 
         @Override
