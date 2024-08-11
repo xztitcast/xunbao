@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedInputStream;
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -31,9 +32,7 @@ public class StorageTemplate implements StorageOperations {
 
     @Override
     public Storage execute(MultipartFile file) {
-        try{
-            InputStream is = file.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
+        try(BufferedInputStream bis = new BufferedInputStream(file.getInputStream())){
             if(FileMagic.UNKNOWN == FileMagic.valueOf(bis)) {
                 throw new RuntimeException("文件格式不正确, 请重新上传!");
             }
@@ -43,6 +42,18 @@ public class StorageTemplate implements StorageOperations {
             String imageName = UUID.randomUUID().toString().replace("-", "") + extName;
             String suffix = prefix.concat("/").concat(imageName);
             return new Storage(imageName, this.storageClient.putObject(bis, file.getSize(), suffix));
+        }catch (Exception e) {
+            log.error("上传文件失败", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Storage execute(File file) {
+        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
+            String prefix = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+            String suffix = prefix.concat("/").concat(file.getName());
+            return new Storage(file.getName(), this.storageClient.putObject(bis, file.length(), suffix));
         }catch (Exception e) {
             log.error("上传文件失败", e);
             throw new RuntimeException(e);

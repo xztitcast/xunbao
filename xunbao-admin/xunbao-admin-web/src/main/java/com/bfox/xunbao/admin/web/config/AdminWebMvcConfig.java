@@ -1,12 +1,14 @@
 package com.bfox.xunbao.admin.web.config;
 
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ThreadPoolExecutor;
-
+import com.alibaba.fastjson2.JSON;
 import com.bfox.xunbao.admin.web.filter.AuthenticationTokenFilter;
-import com.bfox.xunbao.admin.web.security.*;
+import com.bfox.xunbao.admin.web.security.LockedAuthenticationFailureHandler;
+import com.bfox.xunbao.admin.web.security.MultipleWebAuthenticationDetailsSource;
+import com.bfox.xunbao.admin.web.security.RefreshAuthenticationSuccessHandler;
+import com.bfox.xunbao.common.core.R;
+import com.bfox.xunbao.common.core.S;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +25,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.alibaba.fastjson2.JSON;
-import com.bfox.xunbao.common.core.R;
-import com.bfox.xunbao.common.core.S;
-
-import lombok.extern.slf4j.Slf4j;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 后台管理系统 webMvc配置
@@ -84,9 +84,9 @@ public class AdminWebMvcConfig implements WebMvcConfigurer, AsyncConfigurer {
 		int coreNum = (int) (Runtime.getRuntime().availableProcessors() / 0.8);
 		executor.setCorePoolSize(coreNum);
 		executor.setMaxPoolSize(coreNum * 2);
-		executor.setQueueCapacity(512);
+		executor.setQueueCapacity(256);
 		executor.setAwaitTerminationSeconds(30);
-		executor.setThreadNamePrefix("smart-sys-pool");
+		executor.setThreadNamePrefix("xunbao");
 		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
 		executor.initialize();
 		return executor;

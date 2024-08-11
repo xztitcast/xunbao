@@ -51,4 +51,9 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 		this.save(sysLog);
 	}
 
+	@Override
+	public P<SysLog> getExcelList(UserModel model) {
+		return this.getSysLogList(model);
+	}
+
 }

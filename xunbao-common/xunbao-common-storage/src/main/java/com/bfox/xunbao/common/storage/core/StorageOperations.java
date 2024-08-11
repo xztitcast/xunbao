@@ -3,6 +3,8 @@ package com.bfox.xunbao.common.storage.core;
 import com.bfox.xunbao.common.storage.entity.Storage;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+
 
 /**
  * @author eden
@@ -16,6 +18,13 @@ public interface StorageOperations {
      * @return
      */
     Storage execute(MultipartFile file);
+
+    /**
+     * 执行上传
+     * @param file
+     * @return
+     */
+    Storage execute(File file);
 
     /**
      * 执行删除

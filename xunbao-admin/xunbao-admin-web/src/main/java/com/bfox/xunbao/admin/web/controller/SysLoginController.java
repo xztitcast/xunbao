@@ -51,7 +51,7 @@ public class SysLoginController extends BaseController implements ApplicationEve
 	 * @throws Exception
 	 */
 	@GetMapping("/captcha.jpg")
-	public void captcha(HttpServletResponse response, @Validated @NotBlank(message = "uuid不能为空!") @RequestParam String uuid) throws Exception {
+	public void captcha(HttpServletResponse response, @Validated @NotBlank(message = "uuid不能为空!") @RequestParam("uuid") String uuid) throws Exception {
 		String text = this.producer.createText();
 		String cap = text.substring(0, text.lastIndexOf("@"));
 		String code = text.substring(text.lastIndexOf("@") + 1);

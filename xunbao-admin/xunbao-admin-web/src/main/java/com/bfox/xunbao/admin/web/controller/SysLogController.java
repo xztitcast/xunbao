@@ -1,16 +1,14 @@
 package com.bfox.xunbao.admin.web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.bfox.xunbao.admin.web.entity.SysLog;
 import com.bfox.xunbao.admin.web.modelAndView.model.UserModel;
 import com.bfox.xunbao.admin.web.service.SysLogService;
+import com.bfox.xunbao.admin.web.support.excel.SimpleExcelWriter;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 管理系统日志控制器
@@ -30,5 +28,16 @@ public class SysLogController extends BaseController {
 		P<SysLog> p = sysLogService.getSysLogList(form);
 		return R.ok(p);
 	}
-	
+
+	/**
+	 * 导出
+	 * @param form
+	 * @return
+	 */
+	@PostMapping("export")
+	public R export(@RequestBody UserModel form) {
+		SimpleExcelWriter<SysLog, UserModel> writer = new SimpleExcelWriter<>(this.sysLogService, form, SysLog.class);
+		writer.export("系统日志");
+		return R.ok();
+	}
 }
