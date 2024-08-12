@@ -1,5 +1,6 @@
 package com.bfox.xunbao.admin.web.support.excel;
 
+import cn.hutool.core.util.ZipUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
@@ -10,10 +11,6 @@ import com.bfox.xunbao.common.core.injecter.EasyExcelService;
 import com.bfox.xunbao.common.storage.core.StorageTemplate;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 /**
  * @author eden
@@ -21,9 +18,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class SimpleExcelWriter<R, T extends BaseModel> {
 
-    private static final int DEFAULT_SHEET_SIZE = 100000;
-
-    private static final int DEFAULT_PAGE_SIZE = 50;
+    private static final int DEFAULT_PAGE_SIZE = 1000;
 
     /**
      * 对象
@@ -41,18 +36,16 @@ public final class SimpleExcelWriter<R, T extends BaseModel> {
     private T query;
 
 
-    public SimpleExcelWriter(EasyExcelService<R, T> easyExcelService, T query, Class<R> classR) {
+    public SimpleExcelWriter(EasyExcelService<R, T> easyExcelService, T query) {
         this.easyExcelService = easyExcelService;
         this.query = query;
-        this.classR = classR;
         this.query.setPageSize(DEFAULT_PAGE_SIZE);
     }
 
     public void export(String name) {
         String tempDir = "D:\\temp\\";
-        File zipFile = new File(tempDir.concat(name) + ".zip");
-        try(ExcelWriter excelWriter = EasyExcel.write(tempDir.concat(name).concat(".xlsx"), this.classR).build();
-            ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(zipFile.toPath()))){
+        String tempFileName = tempDir.concat(name).concat(".xlsx");
+        try(ExcelWriter excelWriter = EasyExcel.write(tempFileName, this.classR).build()){
             WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
             P<R> first = this.easyExcelService.getExcelList(this.query);
             excelWriter.write(first.getPageList(), writeSheet);
@@ -65,14 +58,12 @@ public final class SimpleExcelWriter<R, T extends BaseModel> {
                 P<R> next = this.easyExcelService.getExcelList(this.query);
                 excelWriter.write(next.getPageList(), writeSheet);
             }
-            ZipEntry zipEntry = new ZipEntry(zipFile.getName());
-            zos.putNextEntry(zipEntry);
-            Files.copy(zipFile.toPath(), zos);
-            zos.closeEntry();
-        }catch (IOException e) {
-
+            excelWriter.finish();
         }
+        File zipFile = ZipUtil.zip(tempFileName);
 
         StorageTemplate storageTemplate = SpringContextManager.getBean(StorageTemplate.class);
+
+        storageTemplate.execute(zipFile);
     }
 }
