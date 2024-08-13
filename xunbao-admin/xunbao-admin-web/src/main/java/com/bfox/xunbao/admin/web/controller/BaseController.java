@@ -2,9 +2,7 @@ package com.bfox.xunbao.admin.web.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.bfox.xunbao.admin.web.entity.SysUser;
-import com.bfox.xunbao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.bfox.xunbao.admin.web.support.SecuritySubjectManager;
 
 import java.util.List;
 
@@ -16,20 +14,11 @@ import java.util.List;
 public abstract class BaseController {
 
 	/**
-	 * 获取登陆详情
-	 * @return
-	 */
-	protected LoginUserDetails getLoginUserDetails() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return (LoginUserDetails) authentication.getPrincipal();
-	}
-
-	/**
 	 * 获取用户信息
 	 * @return SysUser
 	 */
 	protected SysUser getUser() {
-		return getLoginUserDetails().getSysUser();
+		return SecuritySubjectManager.getSubject();
 	}
 
 	/**

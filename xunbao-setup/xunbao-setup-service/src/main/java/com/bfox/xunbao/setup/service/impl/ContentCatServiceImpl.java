@@ -3,7 +3,7 @@ package com.bfox.xunbao.setup.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.setup.entity.ContentCat;
@@ -30,7 +30,7 @@ import java.util.List;
 public class ContentCatServiceImpl extends ServiceImpl<ContentCatMapper, ContentCat> implements IService<ContentCat>, ContentCatService {
 
     @Override
-    public P<ContentCat> getBaseList(BaseModel m) {
+    public P<ContentCat> getBaseList(LimitModel m) {
         return ContentCatService.super.getBaseList(m);
     }
 

@@ -25,7 +25,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
 	public P<SysLog> getSysLogList(UserModel um) {
 		IPage<SysLog> page = new Page<>(um.getPageNum(), um.getPageSize());
 		QueryWrapper<SysLog> query = new QueryWrapper<>();
-		query.eq(StringUtils.isNotBlank(um.getUsername()), "`username`", um.getUsername()).orderBy(true, um.getOrder(), um.getOrderField());
+		query.eq(StringUtils.isNotBlank(um.getUsername()), "`username`", um.getUsername()).orderBy(true, um.getOrderByAsc(), um.getOrderField());
 		page(page, query);
 		return new P<>(page.getTotal(), page.getRecords());
 	}

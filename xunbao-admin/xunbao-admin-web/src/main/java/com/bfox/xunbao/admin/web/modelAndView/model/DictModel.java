@@ -2,7 +2,7 @@ package com.bfox.xunbao.admin.web.modelAndView.model;
 
 import java.io.Serializable;
 
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class DictModel extends BaseModel implements Serializable {
+public class DictModel extends LimitModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.setup.entity.Content;
 import com.bfox.xunbao.setup.mapper.ContentMapper;
@@ -29,10 +29,10 @@ import java.util.Collection;
 public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> implements IService<Content>, ContentService {
 
     @Override
-    public P<Content> getBaseList(BaseModel m) {
+    public P<Content> getBaseList(LimitModel m) {
         IPage<Content> page = new Page<>(m.getPageNum(), m.getPageSize());
         QueryWrapper<Content> query = new QueryWrapper<>();
-        query.orderBy(true, m.getOrder(), m.getOrderField());
+        query.orderBy(true, m.getOrderByAsc(), m.getOrderField());
         this.page(page, query);
         return new P<>(page.getTotal(), page.getRecords());
     }

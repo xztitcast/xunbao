@@ -4,7 +4,7 @@ import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.admin.web.controller.BaseController;
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.setup.entity.Content;
@@ -28,7 +28,7 @@ public class SysContentController extends BaseController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:content:list')")
-    public R list(BaseModel m) {
+    public R list(LimitModel m) {
         P<Content> p = this.contentService.getBaseList(m);
         return R.ok(p);
     }

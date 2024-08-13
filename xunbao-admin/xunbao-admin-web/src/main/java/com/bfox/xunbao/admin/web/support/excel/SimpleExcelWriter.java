@@ -5,7 +5,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.bfox.xunbao.admin.web.support.SpringContextManager;
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.injecter.EasyExcelService;
 import com.bfox.xunbao.common.storage.core.StorageTemplate;
@@ -16,7 +16,7 @@ import java.io.File;
  * @author eden
  * @date 2024/8/10 21:29:29
  */
-public final class SimpleExcelWriter<R, T extends BaseModel> {
+public final class SimpleExcelWriter<R, T extends LimitModel> {
 
     private static final int DEFAULT_PAGE_SIZE = 1000;
 

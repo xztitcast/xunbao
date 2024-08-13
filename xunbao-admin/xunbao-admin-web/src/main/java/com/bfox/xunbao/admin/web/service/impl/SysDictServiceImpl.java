@@ -1,17 +1,5 @@
 package com.bfox.xunbao.admin.web.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -22,6 +10,17 @@ import com.bfox.xunbao.admin.web.modelAndView.model.DictModel;
 import com.bfox.xunbao.admin.web.service.SysDictService;
 import com.bfox.xunbao.common.core.Constant.DictTemplate;
 import com.bfox.xunbao.common.core.P;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 数据字典业务接口实现
@@ -38,7 +37,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 	public P<SysDict> getDictList(DictModel dm) {
 		IPage<SysDict> page = new Page<>(dm.getPageNum(), dm.getPageSize());
 		QueryWrapper<SysDict> wrapper = new QueryWrapper<>();
-		wrapper.eq(StringUtils.isNotBlank(dm.getKey()), "key", dm.getKey()).orderBy(true, dm.getOrder(), dm.getOrderField());
+		wrapper.eq(StringUtils.isNotBlank(dm.getKey()), "key", dm.getKey()).orderBy(true, dm.getOrderByAsc(), dm.getOrderField());
 		page(page, wrapper);
 		return new P<>(page.getTotal(), page.getRecords());
 	}

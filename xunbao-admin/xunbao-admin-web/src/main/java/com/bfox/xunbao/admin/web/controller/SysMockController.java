@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.admin.web.modelAndView.model.UserModel;
 import com.bfox.xunbao.admin.web.service.SysUserService;
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.utils.AESUtil;
@@ -27,7 +27,7 @@ public class SysMockController {
     }
 
     @GetMapping("/demo1")
-    public R demo1(BaseModel vo){
+    public R demo1(LimitModel vo){
         return R.ok(vo);
     }
     

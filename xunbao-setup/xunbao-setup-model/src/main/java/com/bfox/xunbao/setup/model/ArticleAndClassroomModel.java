@@ -1,6 +1,6 @@
 package com.bfox.xunbao.setup.model;
 
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.serialize.IntegerIdKeyDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ArticleAndClassroomModel extends BaseModel {
+public class ArticleAndClassroomModel extends LimitModel {
 
 	private static final long serialVersionUID = 1L;
 	

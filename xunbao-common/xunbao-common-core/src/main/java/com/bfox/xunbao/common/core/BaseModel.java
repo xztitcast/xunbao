@@ -1,91 +1,44 @@
 package com.bfox.xunbao.common.core;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * 基础查询条件参数(映射前端form表单提交)
- * 定义分页、排序条件
- * 所有请求分页条件对象都需要集成该类
+ * 基础数据结构
  * @author eden
- * @date 2022/10/22 22:43:43
+ * @date 2024/8/13 22:07:07
  */
+@Getter
+@Setter
 public class BaseModel implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 
-	/**
-     * 分页页码
-     */
-    protected Integer pageNum;
+    private static final long serialVersionUID = 1L;
 
     /**
-     * 分页页量
+     * 管理系统用户ID
      */
-    protected Integer pageSize;
+    private Long sysUserId;
 
     /**
-     * 排序 ASC = true DESC = false
+     * 管理系统用户名称
      */
-    protected Boolean order;
+    private String sysUsername;
 
     /**
-     * 需要排序字段
+     * 租户ID
      */
-    protected String orderField;
+    private Long tenantId;
 
     /**
-     * 多租户ID列表
+     * 租户名称
      */
-    protected List<Long> ids;
+    private String tenantName;
 
-    public BaseModel(){
-        super();
-    }
-
-    public BaseModel(Integer pageNum,Integer pageSize){
-        this();
-        this.pageNum=pageNum;
-        this.pageSize=pageSize;
-    }
-
-	public Integer getPageNum() {
-        return pageNum == null ? 1 : pageNum;
-    }
-
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public Integer getPageSize() {
-        return pageSize == null ? 20 : pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public Boolean getOrder() {
-        return order == null ? true : order;
-    }
-
-    public void setOrder(Boolean order) {
-        this.order = order;
-    }
-
-    public String getOrderField() {
-        return orderField == null || orderField.trim().length() == 0 ? "created" : orderField;
-    }
-
-    public void setOrderField(String orderField) {
-        this.orderField = orderField;
-    }
-
-    public List<Long> getIds() {
-        return ids;
-    }
-
-    public void setIds(List<Long> ids) {
-        this.ids = ids;
-    }
+    /**
+     * 租户ID列表
+     */
+    private List<Long> tenantIds;
 }

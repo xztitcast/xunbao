@@ -1,15 +1,5 @@
 package com.bfox.xunbao.admin.web.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,6 +14,15 @@ import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.common.core.exception.custom.SysServiceException;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 系统角色业务接口实现类
@@ -83,7 +82,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 		QueryWrapper<SysRole> warpper = new QueryWrapper<>();
 		warpper.eq(StringUtils.isNotBlank(rm.getName()), "name", rm.getName())
 				.eq(creator != Constant.Sys.SUPER_ADMIN, "creator", creator)
-				.orderBy(true, rm.getOrder(), rm.getOrderField());
+				.orderBy(true, rm.getOrderByAsc(), rm.getOrderField());
 		page(page, warpper);
 		return new P<>(page.getTotal(), page.getRecords());
 	}

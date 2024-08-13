@@ -1,6 +1,6 @@
 package com.bfox.xunbao.admin.web.modelAndView.model;
 
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class DeviceModel extends BaseModel {
+public class DeviceModel extends LimitModel {
 
 	private static final long serialVersionUID = 1L;
 	

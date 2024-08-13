@@ -1,22 +1,17 @@
 package com.bfox.xunbao.admin.web.annotation.aspect;
 
 import com.bfox.xunbao.admin.web.annotation.Fill;
-import com.bfox.xunbao.admin.web.annotation.FillType;
-import com.bfox.xunbao.admin.web.entity.SysUser;
-import com.bfox.xunbao.admin.web.entity.SysUserTenant;
-import com.bfox.xunbao.admin.web.service.impl.UserDetailsServiceImpl.LoginUserDetails;
-import com.bfox.xunbao.common.mybatis.entity.CreateEntity;
-import com.bfox.xunbao.common.mybatis.entity.TenantEntity;
+import com.bfox.xunbao.admin.web.support.handlers.ObjectFillFacadeHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * 填充数据切面
@@ -44,56 +39,8 @@ public class StrictFillAspect {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
 		Fill fill = method.getAnnotation(Fill.class);
-		if(fill != null) {
-			FillType value = fill.value();
-			Object[] args = joinPoint.getArgs();
-			LoginUserDetails loginUserDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			for(Object arg : args) {
-				if(arg instanceof TenantEntity && value == FillType.INSERT) {
-					setTenantEntityEnhance(arg, loginUserDetails.getSysUserTenant());
-				}
-				if(arg instanceof CreateEntity && value == FillType.INSERT) {
-					setCreateEntityEnhance(arg, loginUserDetails.getSysUser());
-				}
-				if(arg instanceof CreateEntity && value == FillType.UPDATE) {
-					setUpdateEntityEnhance(arg, loginUserDetails.getSysUser());
-				}
-			}
-		}
+		Object[] args = joinPoint.getArgs();
+		Arrays.stream(args).forEach(arg -> ObjectFillFacadeHandler.doFill(arg, fill.value()));
 		return joinPoint.proceed();
-	}
-	
-	/**
-	 * 填充机构数据
-	 * @param arg
-	 * @param sysUserTenant
-	 */
-	private void setTenantEntityEnhance(Object arg, SysUserTenant sysUserTenant) {
-		TenantEntity te = (TenantEntity)arg;
-		te.setTenantId(sysUserTenant.getTenantId());
-		te.setTenantName(sysUserTenant.getTenantName());
-	}
-	
-	/**
-	 * 填充创建者数据
-	 * @param arg
-	 * @param sysUser
-	 */
-	private void setCreateEntityEnhance(Object arg, SysUser sysUser) {
-		CreateEntity ce = (CreateEntity)arg;
-		ce.setCreator(sysUser.getId());
-		ce.setCreateName(sysUser.getUsername());
-		setUpdateEntityEnhance(arg, sysUser);
-	}
-	
-	/**
-	 * 填充更新者数据
-	 * @param arg
-	 * @param sysUser
-	 */
-	private void setUpdateEntityEnhance(Object arg, SysUser sysUser) {
-		CreateEntity ce = (CreateEntity)arg;
-		ce.setUpdateName(sysUser.getUsername());
-		ce.setUpdater(sysUser.getId());
 	}
 }

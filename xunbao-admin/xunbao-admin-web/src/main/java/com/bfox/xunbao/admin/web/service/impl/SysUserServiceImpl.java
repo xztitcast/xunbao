@@ -1,15 +1,5 @@
 package com.bfox.xunbao.admin.web.service.impl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -26,6 +16,15 @@ import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.common.core.exception.custom.SysServiceException;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 系统用户业务接口实现类
@@ -46,7 +45,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		IPage<SysUser> page = new Page<>(um.getPageNum(), um.getPageSize());
 		QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
 		wrapper.eq(StringUtils.isNotBlank(um.getUsername()), "username", um.getUsername())
-			   .eq(Constant.Sys.SUPER_ADMIN != userId ,"creator", userId).orderBy(true, um.getOrder(), um.getOrderField());
+			   .eq(Constant.Sys.SUPER_ADMIN != userId ,"creator", userId).orderBy(true, um.getOrderByAsc(), um.getOrderField());
 		page(page,wrapper);
 		return new P<>(page.getTotal(), page.getRecords());
 	}

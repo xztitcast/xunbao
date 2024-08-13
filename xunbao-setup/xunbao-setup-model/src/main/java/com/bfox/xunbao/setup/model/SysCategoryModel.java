@@ -2,7 +2,7 @@ package com.bfox.xunbao.setup.model;
 
 import java.io.Serial;
 
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SysCategoryModel extends BaseModel {
+public class SysCategoryModel extends LimitModel {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

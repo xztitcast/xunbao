@@ -3,7 +3,7 @@ package com.bfox.xunbao.common.core.injecter;
 import java.io.Serializable;
 import java.util.Collection;
 
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.P;
 
 
@@ -21,7 +21,7 @@ public interface FrameworkService<T, ID extends Serializable> {
 	 * @param m
 	 * @return
 	 */
-	default P<T> getBaseList(BaseModel m){return null;};
+	default P<T> getBaseList(LimitModel m){return null;};
 	
 	/**
 	 * 获取单个对象

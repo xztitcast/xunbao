@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bfox.xunbao.common.core.BaseModel;
+import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.sso.entity.Tenant;
@@ -35,10 +35,10 @@ import java.util.stream.Collectors;
 public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> implements IService<Tenant>, TenantService {
 
     @Override
-    public P<Tenant> getBaseList(BaseModel m) {
+    public P<Tenant> getBaseList(LimitModel m) {
         IPage<Tenant> page = new Page<>(m.getPageNum(), m.getPageSize());
         QueryWrapper<Tenant> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderBy(true, m.getOrder(), m.getOrderField());
+        queryWrapper.orderBy(true, m.getOrderByAsc(), m.getOrderField());
         this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());
     }
