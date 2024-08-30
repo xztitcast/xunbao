@@ -1,9 +1,9 @@
 package com.bfox.xunbao.common.core;
 
-import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 基础查询条件参数(映射前端form表单提交)
@@ -12,9 +12,8 @@ import java.io.Serializable;
  * @author eden
  * @date 2022/10/22 22:43:43
  */
-@Getter
 @Setter
-public class LimitModel extends BaseModel implements Serializable {
+public class LimitModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +37,11 @@ public class LimitModel extends BaseModel implements Serializable {
      */
     protected String orderField;
 
+    /**
+     * 租户ID列表
+     */
+    private List<Long> tenantIds;
+
     public LimitModel(){
         this(1, 10);
     }
@@ -45,7 +49,25 @@ public class LimitModel extends BaseModel implements Serializable {
     public LimitModel(Integer pageNum, Integer pageSize){
         this.pageNum=pageNum;
         this.pageSize=pageSize;
-        this.orderByAsc = true;
-        this.orderField = "created";
+    }
+
+    public Integer getPageSize() {
+        return pageSize == null ? 20 : pageSize;
+    }
+
+    public Integer getPageNum() {
+        return pageNum == null ? 1 : pageNum;
+    }
+
+    public String getOrderField() {
+        return orderField == null ? "created" : orderField;
+    }
+
+    public Boolean getOrderByAsc() {
+        return orderByAsc != null && orderByAsc;
+    }
+
+    public List<Long> getTenantIds() {
+        return tenantIds;
     }
 }

@@ -7,7 +7,7 @@ import com.bfox.xunbao.common.core.P;
  * @author eden
  * @date 2024/8/10 21:44:44
  */
-public interface EasyExcelService<R, T extends LimitModel> {
+public interface ExcelWriterService<T extends LimitModel, R> {
 
     P<R> getExcelList(T model);
 

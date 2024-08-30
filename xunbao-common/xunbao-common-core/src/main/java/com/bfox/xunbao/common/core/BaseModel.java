@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 基础数据结构
@@ -37,8 +36,5 @@ public class BaseModel implements Serializable {
      */
     private String tenantName;
 
-    /**
-     * 租户ID列表
-     */
-    private List<Long> tenantIds;
+
 }

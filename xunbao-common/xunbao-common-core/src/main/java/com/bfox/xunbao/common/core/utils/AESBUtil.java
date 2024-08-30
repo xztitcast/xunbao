@@ -1,16 +1,15 @@
 package com.bfox.xunbao.common.core.utils;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import cn.hutool.core.codec.Base58;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.lang.RandomStringUtils;
-
-import cn.hutool.core.codec.Base58;
-import lombok.extern.slf4j.Slf4j;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
  * AES对称加密工具
@@ -100,6 +99,7 @@ public class AESBUtil {
 	 */
 	public static String encrypt(String key, String content, String ivStr, boolean base58) {
 		try {
+			if(StringUtils.isBlank(content)) return content;
 			String left = RandomStringUtils.randomAlphanumeric(6);
 			String right = RandomStringUtils.randomAlphanumeric(6);
 			byte[] contentBytes = left.concat(content).concat(right).getBytes(StandardCharsets.UTF_8);
@@ -127,6 +127,7 @@ public class AESBUtil {
 	 */
 	public static String decrypt(String key, String content, String ivStr, boolean base58) {
 		try {
+			if(StringUtils.isBlank(content)) return content;
 			byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
 			byte[] contentBytes = null;
 			if(base58) {

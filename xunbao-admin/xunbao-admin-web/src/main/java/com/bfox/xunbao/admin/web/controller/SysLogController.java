@@ -36,7 +36,7 @@ public class SysLogController extends BaseController {
 	 */
 	@PostMapping("export")
 	public R export(@RequestBody UserModel form) {
-		SimpleExcelWriter<SysLog, UserModel> writer = new SimpleExcelWriter<>(this.sysLogService, form);
+		SimpleExcelWriter<UserModel, SysLog> writer = new SimpleExcelWriter<>(this.sysLogService, form, SysLog.class);
 		writer.export("系统日志");
 		return R.ok();
 	}
