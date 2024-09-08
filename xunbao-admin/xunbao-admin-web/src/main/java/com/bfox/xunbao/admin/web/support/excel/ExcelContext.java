@@ -27,9 +27,10 @@ public class ExcelContext implements Serializable {
     private String hash;
 
     /**
-     * 文件上传路径
+     * 附加属性
      */
-    private String path;
+    private Object attribute;
+
 
     public ExcelContext() {
 

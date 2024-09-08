@@ -27,6 +27,7 @@
 		<qiniu-java-sdk.version>7.2.27</qiniu-java-sdk.version>
 		<aliyun-sdk-oss.version>2.8.3</aliyun-sdk-oss.version>
 	  	<bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
+	  	<mapstruct-plus.version>1.4.4</mapstruct-plus.version>
 		<mybatis-plus.version>3.5.7</mybatis-plus.version>
 		<commons-lang.version>2.6</commons-lang.version>
 		<commons-io.version>2.11.0</commons-io.version>
@@ -98,6 +99,11 @@
 	  		<artifactId>dubbo-rpc-api</artifactId>
 	  		<version>${dubbo.version}</version>
 	    </dependency>
+		<dependency>
+			<groupId>io.github.linpeilie</groupId>
+			<artifactId>mapstruct-plus-spring-boot-starter</artifactId>
+			<version>${mapstruct-plus.version}</version>
+		</dependency>
   		<dependency>
 		  	<groupId>com.baomidou</groupId>
 		  	<artifactId>dynamic-datasource-spring-boot-starter</artifactId>
@@ -113,6 +119,7 @@
 	      	<artifactId>mybatis-plus-annotation</artifactId>
 	      	<version>${mybatis-plus.version}</version>
 	    </dependency>
+
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>

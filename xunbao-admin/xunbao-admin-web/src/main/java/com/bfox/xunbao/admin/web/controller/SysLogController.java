@@ -3,6 +3,7 @@ package com.bfox.xunbao.admin.web.controller;
 import com.bfox.xunbao.admin.web.entity.SysLog;
 import com.bfox.xunbao.admin.web.modelAndView.model.UserModel;
 import com.bfox.xunbao.admin.web.service.SysLogService;
+import com.bfox.xunbao.admin.web.support.excel.IExcelWriter;
 import com.bfox.xunbao.admin.web.support.excel.SimpleExcelWriter;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
@@ -36,8 +37,7 @@ public class SysLogController extends BaseController {
 	 */
 	@PostMapping("export")
 	public R export(@RequestBody UserModel form) {
-		SimpleExcelWriter<UserModel, SysLog> writer = new SimpleExcelWriter<>(this.sysLogService, form, SysLog.class);
-		writer.export("系统日志");
+		IExcelWriter<UserModel, SysLog> writer = new SimpleExcelWriter<>(this.sysLogService, form, SysLog.class);
 		return R.ok();
 	}
 }
