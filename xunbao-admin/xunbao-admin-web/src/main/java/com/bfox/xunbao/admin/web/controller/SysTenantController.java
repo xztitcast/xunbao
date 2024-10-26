@@ -29,7 +29,7 @@ public class SysTenantController extends BaseController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:tenant:list')")
-    public R list(@RequestParam(required = false) String name) {
+    public R list(@RequestParam(required = false, value = "name") String name) {
         List<Tenant> list = this.tenantService.getTenantList(name);
         return R.ok(list);
     }

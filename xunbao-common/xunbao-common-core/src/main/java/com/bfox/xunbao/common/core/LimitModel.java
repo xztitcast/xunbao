@@ -60,7 +60,7 @@ public class LimitModel implements Serializable {
     }
 
     public String getOrderField() {
-        return orderField == null ? "created" : orderField;
+        return orderField == null || orderField.isEmpty() ? "created" : orderField;
     }
 
     public Boolean getOrderByAsc() {

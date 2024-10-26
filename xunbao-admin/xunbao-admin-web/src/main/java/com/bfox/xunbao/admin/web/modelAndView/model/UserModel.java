@@ -16,14 +16,5 @@ public class UserModel extends LimitModel {
 	
 	private static final long serialVersionUID = 1L;
 
-	public UserModel() {
-		super();
-	}
-
-	public UserModel(int pageNum, int pageSize) {
-		super.pageNum = pageNum;
-		super.pageSize = pageSize;
-	}
-
 	private String username;
 }
