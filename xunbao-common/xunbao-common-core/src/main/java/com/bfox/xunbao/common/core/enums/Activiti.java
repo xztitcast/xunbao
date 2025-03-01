@@ -10,7 +10,9 @@ import lombok.Getter;
 @Getter
 public enum Activiti {
 
-    APPROVAL_FLOW_TYPE_FILE(1, "数据导出审核", "dataCenterServiceImpl");
+    APPROVAL_FLOW_TYPE_FILE(1, "数据导出审核", "dataCenterServiceImpl"),
+
+    APPROVAL_ORDER_TYPE_FILE(2, "数据导出审核", "dataCenterServiceImpl");
 
     /**
      * 类型(自定义)

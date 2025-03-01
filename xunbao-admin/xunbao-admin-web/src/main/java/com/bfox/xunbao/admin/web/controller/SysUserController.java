@@ -1,6 +1,5 @@
 package com.bfox.xunbao.admin.web.controller;
 
-import com.alibaba.fastjson2.JSON;
 import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.admin.web.modelAndView.model.PasswordModel;
@@ -89,8 +88,6 @@ public class SysUserController extends BaseController {
 	@PostMapping("/save")
 	@PreAuthorize(value = "hasAuthority('sys:user:save')")
 	public R save(@RequestBody SysUser user) {
-		List<Long> ids = this.tenantService.getTenantIdList(user.getTenantId());
-		user.setTenantIds(JSON.toJSONString(ids));
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setSalt(RandomStringUtils.randomAlphanumeric(20));
 		user.setCreator(getUserId());
@@ -102,8 +99,6 @@ public class SysUserController extends BaseController {
 	@PostMapping("/update")
 	@PreAuthorize(value = "hasAuthority('sys:user:update')")
 	public R update(@RequestBody SysUser user) throws Exception{
-		List<Long> ids = this.tenantService.getTenantIdList(user.getTenantId());
-		user.setTenantIds(JSON.toJSONString(ids));
 		user.setCreator(getUserId());
 		sysUserService.saveOrUpdate(user);
 		return R.ok();

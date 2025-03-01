@@ -41,16 +41,6 @@ public class SysUser extends BaseEntity implements Serializable {
 	private Date locked;
 
 	/**
-	 * 租户ID
-	 */
-	private Long tenantId;
-
-	/**
-	 * 租户名称
-	 */
-	private String tenantName;
-
-	/**
 	 * 多租户父子列表
 	 */
 	private String tenantIds;
@@ -142,22 +132,6 @@ public class SysUser extends BaseEntity implements Serializable {
 
 	public void setLocked(Date locked) {
 		this.locked = locked;
-	}
-
-	public Long getTenantId() {
-		return tenantId;
-	}
-
-	public void setTenantId(Long tenantId) {
-		this.tenantId = tenantId;
-	}
-
-	public String getTenantName() {
-		return tenantName;
-	}
-
-	public void setTenantName(String tenantName) {
-		this.tenantName = tenantName;
 	}
 
 	public String getTenantIds() {

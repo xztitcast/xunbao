@@ -4,7 +4,6 @@ import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.admin.web.support.SecuritySubjectManager;
 import com.bfox.xunbao.common.mybatis.entity.CreateEntity;
-import com.bfox.xunbao.common.mybatis.entity.TenantEntity;
 
 import java.util.Date;
 
@@ -22,9 +21,6 @@ public final class ObjectFillFacadeHandler {
      * @param value
      */
     public static void doFill(Object arg, FillType value) {
-        if(arg instanceof TenantEntity && value == FillType.INSERT) {
-            tenantFillHandler.doFill((TenantEntity) arg);
-        }
         if(arg instanceof CreateEntity && value == FillType.INSERT) {
             createFillHandler.doFill((CreateEntity) arg);
         }
@@ -32,16 +28,6 @@ public final class ObjectFillFacadeHandler {
             updateFillHandler.doFill((CreateEntity) arg);
         }
     }
-
-
-    /**
-     * 租户填充器
-     */
-    private static ObjectFillHandler<TenantEntity> tenantFillHandler = (object) -> {
-        SysUser subject = SecuritySubjectManager.getSubject();
-        object.setTenantId(subject.getTenantId());
-        object.setTenantName(subject.getTenantName());
-    };
 
     /**
      * 创建人填充器

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bfox.xunbao.framework.mapper.OrderWorkMapper">
+
+    <select id="selectOrderWorkList" parameterType="com.bfox.xunbao.framework.model.SysOrderWorkModel" resultType="com.bfox.xunbao.framework.entity.OrderWork">
+        SELECT
+            B.*
+        FROM
+            tb_order A LEFT JOIN tb_order_work B
+            ON A.serial_number = B.seirial_number
+        <where>
+            A.creator = model.sysUserId
+            <if test="model.serialNumber != null and model.serialNumber != ''">
+                AND serial_number = #{serialNumber}
+            </if>
+            <if test="model.status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        ORDER BY B.created DESC
+    </select>
+</mapper>

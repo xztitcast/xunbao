@@ -30,9 +30,9 @@ public class SysTemplateController {
      * 获取单条数据信息
      * @return
      */
-    @GetMapping("/info")
+    @GetMapping("/info/{id}")
     @PreAuthorize(value = "hasAuthority('sys:#:info')")
-    public R info() {
+    public R info(@PathVariable("id") Long id) {
 
         return R.ok();
     }

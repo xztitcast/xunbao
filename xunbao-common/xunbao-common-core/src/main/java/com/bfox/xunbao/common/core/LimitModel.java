@@ -3,7 +3,6 @@ package com.bfox.xunbao.common.core;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 基础查询条件参数(映射前端form表单提交)
@@ -37,10 +36,6 @@ public class LimitModel implements Serializable {
      */
     protected String orderField;
 
-    /**
-     * 租户ID列表
-     */
-    private List<Long> tenantIds;
 
     public LimitModel(){
         this(1, 10);
@@ -65,9 +60,5 @@ public class LimitModel implements Serializable {
 
     public Boolean getOrderByAsc() {
         return orderByAsc != null && orderByAsc;
-    }
-
-    public List<Long> getTenantIds() {
-        return tenantIds;
     }
 }

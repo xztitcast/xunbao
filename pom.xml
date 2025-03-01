@@ -9,18 +9,17 @@
   <modules>
   	<module>xunbao-admin</module>
   	<module>xunbao-common</module>
-  	<module>xunbao-setup</module>
   	<module>xunbao-framework</module>
   	<module>xunbao-sso</module>
   	<module>xunbao-serve</module>
   </modules>
   <properties>
 		<java.version>17</java.version>
-		<spring-boot.version>3.2.0</spring-boot.version>
+		<spring-boot.version>3.3.0</spring-boot.version>
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	  	<spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
+	  	<spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		<aliyun-java-sdk-core.version>3.3.1</aliyun-java-sdk-core.version>
@@ -28,7 +27,7 @@
 		<aliyun-sdk-oss.version>2.8.3</aliyun-sdk-oss.version>
 	  	<bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
 	  	<mapstruct-plus.version>1.4.4</mapstruct-plus.version>
-		<mybatis-plus.version>3.5.7</mybatis-plus.version>
+		<mybatis-plus.version>3.5.10.1</mybatis-plus.version>
 		<commons-lang.version>2.6</commons-lang.version>
 		<commons-io.version>2.11.0</commons-io.version>
 	  	<hutool-all.version>5.8.27</hutool-all.version>
@@ -39,7 +38,7 @@
 	  	<kaptcha.version>2.3.2</kaptcha.version>
 	  	<captcha.version>1.3.0</captcha.version>
 	  	<jsoup.version>1.16.1</jsoup.version>
-		<dubbo.version>3.2.15</dubbo.version>
+		<dubbo.version>3.3.2</dubbo.version>
 	  	<minio.version>8.4.5</minio.version>
 		<kryo.version>2.7.21</kryo.version>
 		<poi.version>5.2.2</poi.version>
@@ -119,7 +118,11 @@
 	      	<artifactId>mybatis-plus-annotation</artifactId>
 	      	<version>${mybatis-plus.version}</version>
 	    </dependency>
-
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-jsqlparser</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>

@@ -13,7 +13,11 @@ spring:
   jackson:
     default-property-inclusion: NON_EMPTY
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8 
+    time-zone: GMT+8
+  config:
+    import:
+      - nacos:${spring.application.name}.yml
+      - nacos:xunbao-redis.yml
   cloud:
     gateway:
       enabled: true
@@ -31,12 +35,8 @@ spring:
         password: ${spring.cloud.nacos.discovery.password}
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         namespace: '@config.namespace@'
-        file-extension: yml
+        file-extension: yaml
         refresh-enabled: true
-        extension-configs:
-        - data-id: xunbao-redis.yml
-          group: DEFAULT_GROUP
-          refresh: true
     sentinel:
       enabled: true
       log:

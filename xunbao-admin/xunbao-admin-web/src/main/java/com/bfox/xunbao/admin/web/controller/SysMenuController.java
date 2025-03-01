@@ -69,7 +69,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	/**
-	 * 单个菜单信息
+	 * 单个菜单信息-
 	 * @param menuId
 	 * @return
 	 */

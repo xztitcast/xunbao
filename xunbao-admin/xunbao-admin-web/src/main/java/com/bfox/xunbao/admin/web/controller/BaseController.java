@@ -1,10 +1,7 @@
 package com.bfox.xunbao.admin.web.controller;
 
-import com.alibaba.fastjson2.JSON;
 import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.admin.web.support.SecuritySubjectManager;
-
-import java.util.List;
 
 /**
  * 权限基础控制器
@@ -34,30 +31,5 @@ public abstract class BaseController {
 	 * @return String
 	 */
 	protected String getUsername() {return getUser().getUsername();}
-
-	/**
-	 * 获取租户ID
-	 * @return
-	 */
-	protected Long getTenantId() {
-		return getUser().getTenantId();
-	}
-
-	/**
-	 * 获取租户名称
-	 * @return
-	 */
-	protected String getTenantName() {
-		return getUser().getTenantName();
-	}
-
-	/**
-	 * 获取父子租户ID列表
-	 * @return
-	 */
-	protected List<Long> getTenantIdList() {
-		String tenantIds = getUser().getTenantIds();
-		return JSON.parseArray(tenantIds, Long.class);
-	}
 
 }

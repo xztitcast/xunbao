@@ -2,7 +2,6 @@ package com.bfox.xunbao.admin.web.service.impl;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.bfox.xunbao.admin.web.entity.SysUser;
-import com.bfox.xunbao.admin.web.entity.SysUserTenant;
 import com.bfox.xunbao.admin.web.service.SysMenuService;
 import com.bfox.xunbao.admin.web.service.SysUserService;
 import lombok.Getter;
@@ -50,8 +49,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		private SysUser sysUser;
 
         private Set<String> permissions;
-
-        private SysUserTenant sysUserTenant;
 
         public LoginUserDetails(SysUser sysUser, Set<String> permissions) {
             this.sysUser = sysUser;

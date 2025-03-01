@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author eden
  * @date 2023年2月19日 下午4:17:49
  */
-public abstract class CreateEntity extends TenantEntity {
+public abstract class CreateEntity extends BaseEntity {
 
 	/**
 	 * 创建者(ID)
