@@ -55,7 +55,7 @@ public class SysOrderController extends BaseController {
     @Fill(FillType.INSERT)
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:order:save')")
-    public R save(Order entity) {
+    public R save(@RequestBody Order entity) {
         entity.setStatus(BaseEnum.TWO);
         this.orderService.saveEntity(entity);
         return R.ok();
@@ -65,8 +65,9 @@ public class SysOrderController extends BaseController {
     @Fill(FillType.UPDATE)
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:order:update')")
-    public R update(Order entity) {
+    public R update(@RequestBody Order entity) {
         entity.setStatus(BaseEnum.TWO);
+        entity.setSerialNumber(null);
         this.orderService.updateEntity(entity);
         return R.ok();
     }

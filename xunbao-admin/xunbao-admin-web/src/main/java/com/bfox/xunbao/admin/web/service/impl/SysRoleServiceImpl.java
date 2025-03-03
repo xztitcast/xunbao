@@ -53,13 +53,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 	@Override
 	@Transactional
 	public boolean updateById(SysRole entity) {
-		boolean update = super.updateById(entity);
-		if(update) {
-			//检查权限
-			checkPrems(entity);
-			sysRoleMenuService.saveOrUpdate(entity.getId(), entity.getMenuIdList());
-		}
-		return update;
+		//检查权限
+		checkPrems(entity);
+		sysRoleMenuService.saveOrUpdate(entity.getId(), entity.getMenuIdList());
+		return super.updateById(entity);
 	}
 
 	@Override

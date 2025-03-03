@@ -12,6 +12,7 @@ import com.bfox.xunbao.framework.entity.Order;
 import com.bfox.xunbao.framework.i.service.OrderService;
 import com.bfox.xunbao.framework.mapper.OrderMapper;
 import com.bfox.xunbao.framework.model.SysOrderModel;
+import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         SysOrderModel model = (SysOrderModel) m;
         IPage<Order> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("serial_number", model.getSerialNumber());
+        queryWrapper.eq(StringUtils.isNotBlank(model.getSerialNumber()),"serial_number", model.getSerialNumber());
         this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());
     }

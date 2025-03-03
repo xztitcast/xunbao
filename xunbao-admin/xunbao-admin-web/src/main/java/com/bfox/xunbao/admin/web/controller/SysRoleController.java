@@ -1,18 +1,5 @@
 package com.bfox.xunbao.admin.web.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.admin.web.entity.SysRole;
 import com.bfox.xunbao.admin.web.modelAndView.model.RoleModel;
@@ -21,6 +8,12 @@ import com.bfox.xunbao.admin.web.service.SysRoleService;
 import com.bfox.xunbao.common.core.Constant;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 管理系统角色控制器
@@ -94,7 +87,7 @@ public class SysRoleController extends BaseController {
 	@PreAuthorize(value = "hasAuthority('sys:role:update')")
 	public R update(@RequestBody SysRole role) {
 		role.setCreator(getUserId());
-		sysRoleService.saveOrUpdate(role);
+		sysRoleService.updateById(role);
 		return R.ok();
 	}
 	

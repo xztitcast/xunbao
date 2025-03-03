@@ -75,4 +75,9 @@ public class OrderWork extends BaseEntity implements Serializable {
      * 证明(取消时添加证明)
      */
     private String proofUrl;
+
+    /**
+     * 创建人(前端在新增记录时候直接取tb_order中值)
+     */
+    private Long creator;
 }

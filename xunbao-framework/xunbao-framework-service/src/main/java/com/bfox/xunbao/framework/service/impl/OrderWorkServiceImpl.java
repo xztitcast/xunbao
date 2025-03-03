@@ -1,6 +1,6 @@
 package com.bfox.xunbao.framework.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,6 +10,7 @@ import com.bfox.xunbao.framework.entity.OrderWork;
 import com.bfox.xunbao.framework.i.service.OrderWorkService;
 import com.bfox.xunbao.framework.mapper.OrderWorkMapper;
 import com.bfox.xunbao.framework.model.SysOrderWorkModel;
+import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +32,12 @@ public class OrderWorkServiceImpl extends ServiceImpl<OrderWorkMapper, OrderWork
     @Override
     public P<OrderWork> getBaseList(LimitModel m) {
         SysOrderWorkModel model = (SysOrderWorkModel) m;
-        IPage<OrderWork> page = new Page<>(model.getPageNum(), model.getPageSize());
-        this.baseMapper.selectOrderWorkList(page, model);
+        Page<OrderWork> page = new Page<>(model.getPageNum(), model.getPageSize());
+        QueryWrapper<OrderWork> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("creator", model.getSysUserId());
+        queryWrapper.eq(StringUtils.isNotBlank(model.getSerialNumber()), "serial_number", model.getSerialNumber());
+        queryWrapper.eq(model.getStatus() != null, "status", model.getStatus());
+        this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());
     }
 

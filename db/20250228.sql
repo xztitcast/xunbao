@@ -1,14 +1,16 @@
+DROP TABLE IF EXISTS "tb_order";
 CREATE TABLE "tb_order"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "serial_number" varchar(30) NOT NULL UNIQUE,
     "name" varchar(50) NOT NULL,
+    "label" varchar(100) NOT NULL,
     "cycle" int4 NOT NULL DEFAULT 1,
     "status" smallint NOT NULL DEFAULT 1,
     "bonus" decimal(20, 2) NOT NULL DEFAULT 0.00,
-    "has_bond" smallint NOT NULL DEFAULT 0,
     "bond" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "publish_time" timestamp(6) DEFAULT now(),
     "develop" varchar(255) NOT NULL,
+    "contact" varchar(255) NOT NULL,
     "url" varchar(500) NOT NULL,
     "description" text,
     "created" timestamp(6) DEFAULT now(),
@@ -22,13 +24,14 @@ CREATE TABLE "tb_order"(
 COMMENT ON COLUMN "tb_order"."id" IS '主键id';
 COMMENT ON COLUMN "tb_order"."serial_number" IS '编号';
 COMMENT ON COLUMN "tb_order"."name" IS '任务名称';
+COMMENT ON COLUMN "tb_order"."label" IS '标签';
 COMMENT ON COLUMN "tb_order"."cycle" IS '周期';
-COMMENT ON COLUMN "tb_order"."status" IS '后台状态0:审核失败 1:待审核 2:审核成功';
+COMMENT ON COLUMN "tb_order"."status" IS '后台状态0:审核失败 1:待审核 2:审核成功 3:待发布 4:已发布 5:进行中 6:已结束';
 COMMENT ON COLUMN "tb_order"."bonus" IS '奖励';
-COMMENT ON COLUMN "tb_order"."has_bond" IS '是否缴保证金0:否 1:是';
 COMMENT ON COLUMN "tb_order"."bond" IS '保证金(保证金最大是预算的双倍)';
 COMMENT ON COLUMN "tb_order"."publish_time" IS '发布时间';
 COMMENT ON COLUMN "tb_order"."develop" IS '开发语言';
+COMMENT ON COLUMN "tb_order"."contact" IS '联系方式';
 COMMENT ON COLUMN "tb_order"."url" IS '图片链接';
 COMMENT ON COLUMN "tb_order"."description" IS '文案';
 COMMENT ON COLUMN "tb_order"."creator" IS '创建人';
@@ -39,17 +42,19 @@ COMMENT ON COLUMN "tb_order"."update_name" IS '更新人名称';
 COMMENT ON COLUMN "tb_order"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_order" IS '任务订单表';
 
+DROP TABLE IF EXISTS "tb_order_work";
 CREATE TABLE "tb_order_work"(
     "id" int8 NOT NULL PRIMARY KEY,
     "serial_number" varchar(30) NOT NULL,
     "user_id" int8 NOT NULL,
     "username" varchar(50),
     "user_pic" varchar(255),
-    "state" smallint NOT NULL DEFAULT 1,
+    "status" smallint NOT NULL DEFAULT 1,
     "bonus" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "bond" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "remark" varchar(255),
     "proof_url" text,
+    "creator" int8 NOT NULL,
     "created" timestamp(6) DEFAULT now(),
     "updated" timestamp(6) DEFAULT now()
 );
@@ -59,15 +64,17 @@ COMMENT ON COLUMN "tb_order_work"."serial_number" IS '任务编号';
 COMMENT ON COLUMN "tb_order_work"."user_id" IS '用户ID';
 COMMENT ON COLUMN "tb_order_work"."username" IS '用户名称';
 COMMENT ON COLUMN "tb_order_work"."user_pic" IS '用户头像';
-COMMENT ON COLUMN "tb_order_work"."state" IS '状态0:无责取消 1:有责取消 2:进行中 3:待验收 4:已验收 5:已完成';
+COMMENT ON COLUMN "tb_order_work"."status" IS '状态0:无责取消 1:有责取消 2:进行中 3:待验收 4:已验收 5:已完成';
 COMMENT ON COLUMN "tb_order_work"."bonus" IS '奖励(有可能多人同时进行一个订单)';
 COMMENT ON COLUMN "tb_order_work"."bond" IS '接单用户保证金';
 COMMENT ON COLUMN "tb_order_work"."remark" IS '备注(取消时添加备注)';
 COMMENT ON COLUMN "tb_order_work"."proof_url" IS '证明(取消时添加证明)';
+COMMENT ON COLUMN "tb_order_work"."creator" IS '创建人(前端在新增记录时候直接取tb_order中值)';
 COMMENT ON COLUMN "tb_order_work"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_order_work"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_order_work" IS '订单任务表';
 
+DROP TABLE IF EXISTS "tb_user_work";
 CREATE TABLE "tb_user_work"(
     "id" int8 NOT NULL PRIMARY KEY,
     "rate" decimal(5, 2) NOT NULL DEFAULT 0.7,
@@ -103,6 +110,7 @@ COMMENT ON COLUMN "tb_user_work"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_user_work"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_user_work" IS '用户工作台';
 
+DROP TABLE IF EXISTS "tb_balance";
 CREATE TABLE "tb_balance"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "user_id" int8 NOT NULL,
@@ -119,6 +127,7 @@ COMMENT ON COLUMN "tb_balance"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_balance"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_balance" IS '保证金表';
 
+DROP TABLE IF EXISTS "tb_balance_trx";
 CREATE TABLE "tb_balance_trx"(
     "id" int8 NOT NULL PRIMARY KEY,
     "order_flow_id" int8 NOT NULL,
@@ -144,6 +153,7 @@ COMMENT ON COLUMN "tb_balance_trx"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_balance_trx"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_balance_trx" IS '保证金划扣表';
 
+DROP TABLE IF EXISTS "tb_activity";
 CREATE TABLE "tb_activity"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "name" varchar(50) NOT NULL,
@@ -179,6 +189,7 @@ COMMENT ON COLUMN "tb_activity"."update_name" IS '更新人名称';
 COMMENT ON COLUMN "tb_activity"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_activity" IS '活动表';
 
+DROP TABLE IF EXISTS "tb_activity_star_rule";
 CREATE TABLE "tb_activity_star_rule"(
     "id" int8 NOT NULL PRIMARY KEY,
     "star_id" varchar(50) NOT NULL,
@@ -191,6 +202,7 @@ COMMENT ON COLUMN "tb_activity_star_rule"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_activity_star_rule"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_activity_star_rule" IS '活动星级规则表';
 
+DROP TABLE IF EXISTS "tb_activity_user_rule";
 CREATE TABLE "tb_activity_user_rule"(
     "id" int8 NOT NULL PRIMARY KEY,
     "day" int4 NOT NULL DEFAULT 30,
@@ -203,6 +215,7 @@ COMMENT ON COLUMN "tb_activity_user_rule"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_activity_user_rule"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_activity_user_rule" IS '活动用户规则表';
 
+DROP TABLE IF EXISTS "tb_activity_cycle_rule";
 CREATE TABLE "tb_activity_cycle_rule"(
     "id" int8 NOT NULL PRIMARY KEY,
     "month" int2 NOT NULL DEFAULT 1,
@@ -220,6 +233,7 @@ COMMENT ON COLUMN "tb_activity_cycle_rule"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_activity_cycle_rule"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_activity_cycle_rule" IS '活动周期规则表';
 
+DROP TABLE IF EXISTS "tb_reward";
 CREATE TABLE "tb_reward"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "name" varchar(50) NOT NULL,
@@ -247,6 +261,7 @@ COMMENT ON COLUMN "tb_reward"."update_name" IS '更新人名称';
 COMMENT ON COLUMN "tb_reward"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_reward" IS '奖励表';
 
+DROP TABLE IF EXISTS "tb_activity_reward";
 CREATE TABLE "tb_activity_reward"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "activity_id" int8 NOT NULL,
@@ -262,9 +277,11 @@ COMMENT ON COLUMN "tb_activity_reward"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_activity_reward"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_activity_reward" IS '活动奖励表';
 
+DROP TABLE IF EXISTS "tb_star";
 CREATE TABLE "tb_star"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "name" varchar(30) NOT NULL,
+    "icon" varchar(255) NOT NULL,
     "start_value" int4 NOT NULL DEFAULT 0,
     "end_value" int4 NOT NULL DEFAULT 0,
     "created" timestamp(6) DEFAULT now(),
@@ -277,6 +294,7 @@ CREATE TABLE "tb_star"(
 
 COMMENT ON COLUMN "tb_star"."id" IS '主键id';
 COMMENT ON COLUMN "tb_star"."name" IS '星级名称 武林新秀、小有名气、渐入佳境、名动一方、武林豪侠、一代宗师、绝世高手';
+COMMENT ON COLUMN "tb_star"."icon" IS '图标';
 COMMENT ON COLUMN "tb_star"."start_value" IS '起始值';
 COMMENT ON COLUMN "tb_star"."end_value" IS '结束值';
 COMMENT ON COLUMN "tb_star"."creator" IS '创建人';
@@ -286,3 +304,19 @@ COMMENT ON COLUMN "tb_star"."updater" IS '更新人';
 COMMENT ON COLUMN "tb_star"."update_name" IS '更新人名称';
 COMMENT ON COLUMN "tb_star"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_star" IS '星级表';
+
+DROP TABLE IF EXISTS "tb_label";
+CREATE TABLE "tb_label"(
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(20) NOT NULL,
+    "bean_name" varchar(100) NOT NULL,
+    "created" timestamp(6) DEFAULT now(),
+    "updated" timestamp(6) DEFAULT now()
+);
+
+COMMENT ON COLUMN "tb_label"."id" IS '主键id';
+COMMENT ON COLUMN "tb_label"."name" IS '标签名称';
+COMMENT ON COLUMN "tb_label"."bean_name" IS 'Spring bean名称';
+COMMENT ON COLUMN "tb_label"."created" IS '创建时间';
+COMMENT ON COLUMN "tb_label"."updated" IS '更新时间';
+COMMENT ON TABLE "tb_label" IS '标签表';

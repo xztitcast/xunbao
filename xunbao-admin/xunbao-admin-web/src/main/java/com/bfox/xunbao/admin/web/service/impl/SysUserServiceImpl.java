@@ -65,9 +65,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Override
 	@Transactional
 	public boolean saveOrUpdate(SysUser entity) {
+		checkRole(entity);
 		boolean saveOrUpdate = super.saveOrUpdate(entity);
 		if(saveOrUpdate) {
-			checkRole(entity);
 			sysUserRoleService.saveOrUpdate(entity.getId(), entity.getRoleIdList());
 		}
 		return saveOrUpdate;

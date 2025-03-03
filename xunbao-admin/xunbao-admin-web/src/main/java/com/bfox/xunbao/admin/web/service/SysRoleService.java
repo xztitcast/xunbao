@@ -1,11 +1,11 @@
 package com.bfox.xunbao.admin.web.service;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bfox.xunbao.admin.web.entity.SysRole;
 import com.bfox.xunbao.admin.web.modelAndView.model.RoleModel;
 import com.bfox.xunbao.common.core.P;
+
+import java.util.List;
 
 /**
  * 系统角色业务接口
@@ -18,7 +18,7 @@ public interface SysRoleService extends IService<SysRole> {
 	
 	/**
 	 * 查询用户创建的角色ID列表
-	 * @param adder 创建者ID
+	 * @param creator 创建者ID
 	 * @return
 	 */
 	List<Long> getRoleIdList(Long creator);

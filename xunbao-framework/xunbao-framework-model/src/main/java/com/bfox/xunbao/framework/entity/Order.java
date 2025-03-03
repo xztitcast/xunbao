@@ -58,11 +58,6 @@ public class Order extends CreateEntity implements Serializable {
     private BigDecimal bonus;
 
     /**
-     * 是否缴保证金0:否 1:是
-     */
-    private Short hasBond;
-
-    /**
      * 保证金(保证金最大是预算的双倍)
      */
     private BigDecimal bond;
@@ -71,6 +66,16 @@ public class Order extends CreateEntity implements Serializable {
      * 发布时间
      */
     private Date publishTime;
+
+    /**
+     * 联系方式(微信二维码)
+     */
+    private String contact;
+
+    /**
+     * 图片
+     */
+    private String url;
 
     /**
      * 开发语言
