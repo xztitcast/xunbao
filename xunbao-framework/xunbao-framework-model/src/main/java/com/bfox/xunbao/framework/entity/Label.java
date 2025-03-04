@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,11 @@ public class Label extends BaseEntity implements Serializable {
     private Integer id;
 
     /**
+     * 状态 0:禁用 1:启用
+     */
+    private Integer status;
+
+    /**
      * 标签名称
      */
     private String name;
@@ -38,5 +44,6 @@ public class Label extends BaseEntity implements Serializable {
     /**
      * Spring bean名称
      */
+    @JsonIgnore
     private String beanName;
 }

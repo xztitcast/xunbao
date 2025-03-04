@@ -37,6 +37,11 @@ public class Balance extends BaseEntity implements Serializable {
     private Long userId;
 
     /**
+     * 用户名称
+     */
+    private String username;
+
+    /**
      * 保证金余额
      */
     private BigDecimal amount;

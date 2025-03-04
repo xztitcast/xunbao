@@ -114,6 +114,7 @@ DROP TABLE IF EXISTS "tb_balance";
 CREATE TABLE "tb_balance"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "user_id" int8 NOT NULL,
+    "username" varchar(50),
     "amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "freeze" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "created" timestamp(6) DEFAULT now(),
@@ -121,6 +122,7 @@ CREATE TABLE "tb_balance"(
 );
 COMMENT ON COLUMN "tb_balance"."id" IS '主键id';
 COMMENT ON COLUMN "tb_balance"."user_id" IS '用户ID';
+COMMENT ON COLUMN "tb_balance"."username" IS '用户名称';
 COMMENT ON COLUMN "tb_balance"."amount" IS '保证金余额';
 COMMENT ON COLUMN "tb_balance"."freeze" IS '冻结金额';
 COMMENT ON COLUMN "tb_balance"."created" IS '创建时间';
@@ -281,6 +283,7 @@ DROP TABLE IF EXISTS "tb_star";
 CREATE TABLE "tb_star"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "name" varchar(30) NOT NULL,
+    "status" int2 NOT NULL DEFAULT 1,
     "icon" varchar(255) NOT NULL,
     "start_value" int4 NOT NULL DEFAULT 0,
     "end_value" int4 NOT NULL DEFAULT 0,
@@ -294,6 +297,7 @@ CREATE TABLE "tb_star"(
 
 COMMENT ON COLUMN "tb_star"."id" IS '主键id';
 COMMENT ON COLUMN "tb_star"."name" IS '星级名称 武林新秀、小有名气、渐入佳境、名动一方、武林豪侠、一代宗师、绝世高手';
+COMMENT ON COLUMN "tb_star"."status" IS '状态 0:禁用 1:启用';
 COMMENT ON COLUMN "tb_star"."icon" IS '图标';
 COMMENT ON COLUMN "tb_star"."start_value" IS '起始值';
 COMMENT ON COLUMN "tb_star"."end_value" IS '结束值';
@@ -309,6 +313,7 @@ DROP TABLE IF EXISTS "tb_label";
 CREATE TABLE "tb_label"(
     "id" serial NOT NULL PRIMARY KEY,
     "name" varchar(20) NOT NULL,
+    "status" int2 NOT NULL DEFAULT 1,
     "bean_name" varchar(100) NOT NULL,
     "created" timestamp(6) DEFAULT now(),
     "updated" timestamp(6) DEFAULT now()
@@ -316,6 +321,7 @@ CREATE TABLE "tb_label"(
 
 COMMENT ON COLUMN "tb_label"."id" IS '主键id';
 COMMENT ON COLUMN "tb_label"."name" IS '标签名称';
+COMMENT ON COLUMN "tb_label"."status" IS '状态 0:禁用 1:启用';
 COMMENT ON COLUMN "tb_label"."bean_name" IS 'Spring bean名称';
 COMMENT ON COLUMN "tb_label"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_label"."updated" IS '更新时间';
