@@ -6,6 +6,7 @@ CREATE TABLE "tb_order"(
     "label" varchar(100) NOT NULL,
     "cycle" int4 NOT NULL DEFAULT 1,
     "status" smallint NOT NULL DEFAULT 1,
+    "type" smallint NOT NULL DEFAULT 1,
     "bonus" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "bond" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "publish_time" timestamp(6) DEFAULT now(),
@@ -27,6 +28,7 @@ COMMENT ON COLUMN "tb_order"."name" IS '任务名称';
 COMMENT ON COLUMN "tb_order"."label" IS '标签';
 COMMENT ON COLUMN "tb_order"."cycle" IS '周期';
 COMMENT ON COLUMN "tb_order"."status" IS '后台状态0:审核失败 1:待审核 2:审核成功 3:待发布 4:已发布 5:进行中 6:已结束';
+COMMENT ON COLUMN "tb_order"."type" IS '类型(1:需求 2:BUG)';
 COMMENT ON COLUMN "tb_order"."bonus" IS '奖励';
 COMMENT ON COLUMN "tb_order"."bond" IS '保证金(保证金最大是预算的双倍)';
 COMMENT ON COLUMN "tb_order"."publish_time" IS '发布时间';
@@ -77,6 +79,7 @@ COMMENT ON TABLE "tb_order_work" IS '订单任务表';
 DROP TABLE IF EXISTS "tb_user_work";
 CREATE TABLE "tb_user_work"(
     "id" int8 NOT NULL PRIMARY KEY,
+    "username" varchar(50),
     "rate" decimal(5, 2) NOT NULL DEFAULT 0.7,
     "trade_amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "score" int4 NOT NULL DEFAULT 0,
@@ -94,6 +97,7 @@ CREATE TABLE "tb_user_work"(
 );
 
 COMMENT ON COLUMN "tb_user_work"."id" IS '主键id(即用户ID)';
+COMMENT ON COLUMN "tb_user_work"."username" IS '用户名';
 COMMENT ON COLUMN "tb_user_work"."rate" IS '分成比例';
 COMMENT ON COLUMN "tb_user_work"."trade_amount" IS '交易量';
 COMMENT ON COLUMN "tb_user_work"."score" IS '积分';
@@ -132,8 +136,10 @@ COMMENT ON TABLE "tb_balance" IS '保证金表';
 DROP TABLE IF EXISTS "tb_balance_trx";
 CREATE TABLE "tb_balance_trx"(
     "id" int8 NOT NULL PRIMARY KEY,
-    "order_flow_id" int8 NOT NULL,
+    "order_work_id" int8 NOT NULL,
+    "serial_number" varchar(30) NOT NULL,
     "user_id" int8 NOT NULL,
+    "username" varchar(50),
     "amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "status" smallint NOT NULL DEFAULT 1,
     "cycle" int4 NOT NULL DEFAULT 7,
@@ -144,8 +150,10 @@ CREATE TABLE "tb_balance_trx"(
 );
 
 COMMENT ON COLUMN "tb_balance_trx"."id" IS '主键id';
-COMMENT ON COLUMN "tb_balance_trx"."order_flow_id" IS '订单流ID';
+COMMENT ON COLUMN "tb_balance_trx"."order_work_id" IS '订单任务ID';
+COMMENT ON COLUMN "tb_balance_trx"."serial_number" IS '订单编号(冗余用于前端显示)';
 COMMENT ON COLUMN "tb_balance_trx"."user_id" IS '用户ID';
+COMMENT ON COLUMN "tb_balance_trx"."username" IS '用户名称(冗余字段)';
 COMMENT ON COLUMN "tb_balance_trx"."amount" IS '扣除保证金';
 COMMENT ON COLUMN "tb_balance_trx"."status" IS '状态1:待申诉 2:申诉成功 3:申诉失败';
 COMMENT ON COLUMN "tb_balance_trx"."cycle" IS '申诉周期';
@@ -160,6 +168,8 @@ CREATE TABLE "tb_activity"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "name" varchar(50) NOT NULL,
     "url" varchar(255) NOT NULL,
+    "background_image" varchar(255) NOT NULL,
+    "poster_image" varchar(255),
     "total" int4 NOT NULL DEFAULT 0,
     "surplus" int4 NOT NULL DEFAULT 0,
     "start_time" timestamp(6) DEFAULT now(),
@@ -177,6 +187,8 @@ CREATE TABLE "tb_activity"(
 COMMENT ON COLUMN "tb_activity"."id" IS '主键id';
 COMMENT ON COLUMN "tb_activity"."name" IS '活动名称';
 COMMENT ON COLUMN "tb_activity"."url" IS '活动图片地址';
+COMMENT ON COLUMN "tb_activity"."background_image" IS '活动图片地址';
+COMMENT ON COLUMN "tb_activity"."poster_image" IS '分享海报';
 COMMENT ON COLUMN "tb_activity"."total" IS '总库存';
 COMMENT ON COLUMN "tb_activity"."surplus" IS '剩余库存';
 COMMENT ON COLUMN "tb_activity"."start_time" IS '活动开始时间';
@@ -285,6 +297,7 @@ CREATE TABLE "tb_star"(
     "name" varchar(30) NOT NULL,
     "status" int2 NOT NULL DEFAULT 1,
     "icon" varchar(255) NOT NULL,
+    "disclaimer" int2 NOT NULL DEFAULT 0,
     "start_value" int4 NOT NULL DEFAULT 0,
     "end_value" int4 NOT NULL DEFAULT 0,
     "created" timestamp(6) DEFAULT now(),
@@ -299,6 +312,7 @@ COMMENT ON COLUMN "tb_star"."id" IS '主键id';
 COMMENT ON COLUMN "tb_star"."name" IS '星级名称 武林新秀、小有名气、渐入佳境、名动一方、武林豪侠、一代宗师、绝世高手';
 COMMENT ON COLUMN "tb_star"."status" IS '状态 0:禁用 1:启用';
 COMMENT ON COLUMN "tb_star"."icon" IS '图标';
+COMMENT ON COLUMN "tb_star"."disclaimer" IS '免责次数';
 COMMENT ON COLUMN "tb_star"."start_value" IS '起始值';
 COMMENT ON COLUMN "tb_star"."end_value" IS '结束值';
 COMMENT ON COLUMN "tb_star"."creator" IS '创建人';

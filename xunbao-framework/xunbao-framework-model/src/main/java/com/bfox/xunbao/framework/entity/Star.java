@@ -46,6 +46,11 @@ public class Star extends CreateEntity implements Serializable {
     private String icon;
 
     /**
+     * 免责次数
+     */
+    private Integer disclaimer;
+
+    /**
      * 起始值
      */
     private Integer startValue;

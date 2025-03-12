@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -42,6 +42,16 @@ public class Activity extends CreateEntity implements Serializable {
     private String url;
 
     /**
+     * 活动背景图
+     */
+    private String backgroundImage;
+
+    /**
+     * 分享海报
+     */
+    private String posterImage;
+
+    /**
      * 总库存
      */
     private Integer total;
@@ -54,40 +64,20 @@ public class Activity extends CreateEntity implements Serializable {
     /**
      * 活动开始时间
      */
-    private LocalDateTime startTime;
+    private Date startTime;
 
     /**
      * 活动结束时间
      */
-    private LocalDateTime endTime;
+    private Date endTime;
 
     /**
      * 状态0:暂停 1:下架 2:上架
      */
-    private Short status;
+    private Integer status;
 
     /**
      * 活动描述
      */
     private String description;
-
-    /**
-     * 创建人
-     */
-    private Long creator;
-
-    /**
-     * 更新人
-     */
-    private Long updater;
-
-    /**
-     * 创建名称
-     */
-    private String createName;
-
-    /**
-     * 更新人名称
-     */
-    private String updateName;
 }

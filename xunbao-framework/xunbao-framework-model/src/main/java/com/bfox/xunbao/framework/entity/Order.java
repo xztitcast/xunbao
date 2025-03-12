@@ -53,6 +53,11 @@ public class Order extends CreateEntity implements Serializable {
     private Integer status;
 
     /**
+     * 类型(1:需求 2:BUG)
+     */
+    private Integer type;
+
+    /**
      * 奖励
      */
     private BigDecimal bonus;

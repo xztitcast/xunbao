@@ -9,7 +9,7 @@ import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.framework.entity.Label;
 import com.bfox.xunbao.framework.i.service.LabelService;
-import com.bfox.xunbao.framework.model.SysStarModel;
+import com.bfox.xunbao.framework.model.SysCommonModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2025/3/5 0:41
  */
 @RestController
-@RequestMapping("/sys/label")
+@RequestMapping("/sys/+")
 public class SysLabelController {
 
     @DubboReference
@@ -32,7 +32,7 @@ public class SysLabelController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:label:list')")
-    public R list(SysStarModel model) {
+    public R list(SysCommonModel model) {
         P<Label> p = this.labelService.getBaseList(model);
         return R.ok(p);
     }

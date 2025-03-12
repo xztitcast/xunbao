@@ -32,6 +32,11 @@ public class UserWork extends BaseEntity implements Serializable {
     private Long id;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
      * 分成比例
      */
     private BigDecimal rate;

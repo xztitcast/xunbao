@@ -10,7 +10,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.Label;
 import com.bfox.xunbao.framework.i.service.LabelService;
 import com.bfox.xunbao.framework.mapper.LabelMapper;
-import com.bfox.xunbao.framework.model.SysStarModel;
+import com.bfox.xunbao.framework.model.SysCommonModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
 
     @Override
     public P<Label> getBaseList(LimitModel m) {
-        SysStarModel model = (SysStarModel) m;
+        SysCommonModel model = (SysCommonModel) m;
         IPage<Label> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Label> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());
