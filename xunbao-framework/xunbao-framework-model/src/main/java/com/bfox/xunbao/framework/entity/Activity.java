@@ -72,6 +72,11 @@ public class Activity extends CreateEntity implements Serializable {
     private Date endTime;
 
     /**
+     * 固定时间
+     */
+    private String fixed;
+
+    /**
      * 状态0:暂停 1:下架 2:上架
      */
     private Integer status;
@@ -80,4 +85,5 @@ public class Activity extends CreateEntity implements Serializable {
      * 活动描述
      */
     private String description;
+
 }

@@ -77,6 +77,10 @@ public class SysMenuController extends BaseController {
 	@PreAuthorize(value = "hasAuthority('sys:menu:info')")
 	public R info(@PathVariable("menuId") Long menuId){
 		SysMenu menu = sysMenuService.getById(menuId);
+		if(menu != null && menu.getParentId() != 0) {
+			SysMenu parent = this.sysMenuService.getById(menu.getParentId());
+			menu.setParentName(parent.getName());
+		}
 		return R.ok(menu);
 	}
 	
