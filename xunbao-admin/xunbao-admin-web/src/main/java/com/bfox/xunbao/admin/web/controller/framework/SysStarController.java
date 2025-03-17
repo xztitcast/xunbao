@@ -4,6 +4,7 @@ package com.bfox.xunbao.admin.web.controller.framework;
 import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
+import com.bfox.xunbao.admin.web.modelAndView.view.SelectorView;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
@@ -13,6 +14,8 @@ import com.bfox.xunbao.framework.model.SysCommonModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 后台星级控制器
@@ -43,7 +46,7 @@ public class SysStarController {
      */
     @GetMapping("/info/{id}")
     @PreAuthorize(value = "hasAuthority('sys:star:info')")
-    public R info(@PathVariable("id") Integer id) {
+    public R info(@PathVariable("id") Long id) {
         Star entity = this.starService.getEntity(id);
         return R.ok(entity);
     }
@@ -79,5 +82,18 @@ public class SysStarController {
         }
         this.starService.updateEntity(entity);
         return R.ok();
+    }
+
+    /**
+     * 选择器数据
+     * @return
+     */
+    @GetMapping("/select")
+    @PreAuthorize(value = "hasAuthority('sys:star:list')")
+    public R select() {
+        List<Star> list = this.starService.getSelection();
+        SelectorView<Long> view = new SelectorView<>();
+        List<SelectorView<Long>> result = list.stream().map(item -> new SelectorView<Long>(item.getName(), item.getId())).toList();
+        return R.ok(result);
     }
 }

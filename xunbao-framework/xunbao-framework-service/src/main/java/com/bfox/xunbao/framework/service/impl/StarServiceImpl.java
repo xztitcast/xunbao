@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -40,13 +41,13 @@ public class StarServiceImpl extends ServiceImpl<StarMapper, Star> implements IS
     }
 
     @Override
-    public Star getEntity(Integer id) {
+    public Star getEntity(Long id) {
         return this.getById(id);
     }
 
     @Override
     @Transactional
-    public Integer saveEntity(Star t) {
+    public Long saveEntity(Star t) {
         this.save(t);
         return t.getId();
     }
@@ -59,13 +60,18 @@ public class StarServiceImpl extends ServiceImpl<StarMapper, Star> implements IS
 
     @Override
     @Transactional
-    public boolean delete(Collection<Integer> ids) {
+    public boolean delete(Collection<Long> ids) {
         return this.removeByIds(ids);
     }
 
     @Override
     @Transactional
-    public boolean delete(Integer id) {
+    public boolean delete(Long id) {
         return this.removeById(id);
+    }
+
+    @Override
+    public List<Star> getSelection() {
+        return this.list();
     }
 }
