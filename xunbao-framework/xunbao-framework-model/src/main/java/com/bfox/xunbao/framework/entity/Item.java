@@ -49,11 +49,15 @@ public class Item extends CreateEntity implements Serializable {
     /**
      * 状态0:暂停 1:上架 2:下架
      */
-    private Short status;
+    private Integer status;
 
     /**
      * 过期天数
      */
     private Integer expire;
 
+    /**
+     * 排名范围
+     */
+    private Integer range;
 }

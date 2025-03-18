@@ -283,6 +283,7 @@ CREATE TABLE "tb_item"(
     "amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "status" smallint NOT NULL DEFAULT 1,
     "expire" int4 NOT NULL DEFAULT 7,
+    "range" int4 NOT NULL DEFAULT 1,
     "created" timestamp(6) DEFAULT now(),
     "updated" timestamp(6) DEFAULT now(),
     "creator" int8,
@@ -297,6 +298,7 @@ COMMENT ON COLUMN "tb_item"."url" IS '图片';
 COMMENT ON COLUMN "tb_item"."amount" IS '奖励金额';
 COMMENT ON COLUMN "tb_item"."status" IS '状态0:暂停 1:上架 2:下架';
 COMMENT ON COLUMN "tb_item"."expire" IS '过期天数';
+COMMENT ON COLUMN "tb_item"."range" IS '排名范围';
 COMMENT ON COLUMN "tb_item"."creator" IS '创建人';
 COMMENT ON COLUMN "tb_item"."create_name" IS '创建名称';
 COMMENT ON COLUMN "tb_item"."created" IS '创建时间';
