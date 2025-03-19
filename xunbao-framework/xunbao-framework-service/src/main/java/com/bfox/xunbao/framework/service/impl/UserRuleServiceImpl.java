@@ -7,16 +7,20 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.P;
+import com.bfox.xunbao.common.core.enums.BaseEnum;
+import com.bfox.xunbao.framework.annotation.RuleType;
 import com.bfox.xunbao.framework.entity.UserRule;
 import com.bfox.xunbao.framework.i.service.UserRuleService;
 import com.bfox.xunbao.framework.mapper.UserRuleMapper;
 import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.view.RuleView;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +31,7 @@ import java.util.Collection;
  * @since 2025-03-01 13:38:50
  */
 @Service
+@RuleType(BaseEnum.ONE)
 @DubboService(interfaceClass = UserRuleService.class)
 public class UserRuleServiceImpl extends ServiceImpl<UserRuleMapper, UserRule> implements IService<UserRule>, UserRuleService {
 
@@ -69,5 +74,11 @@ public class UserRuleServiceImpl extends ServiceImpl<UserRuleMapper, UserRule> i
     @Transactional
     public boolean delete(Long id) {
         return this.removeById(id);
+    }
+
+    @Override
+    public RuleView extension() {
+        List<RuleView.Option> list = this.list().stream().map(item -> new RuleView.Option(item.getId(), item.getName())).toList();
+        return new RuleView("userRule", "新用户规则", BaseEnum.ONE, list);
     }
 }

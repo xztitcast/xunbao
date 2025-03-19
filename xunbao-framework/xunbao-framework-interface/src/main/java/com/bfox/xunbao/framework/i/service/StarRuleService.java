@@ -2,6 +2,7 @@ package com.bfox.xunbao.framework.i.service;
 
 import com.bfox.xunbao.common.core.injecter.FrameworkService;
 import com.bfox.xunbao.framework.entity.StarRule;
+import com.bfox.xunbao.framework.i.service.support.ActivityRuleExtendService;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import com.bfox.xunbao.framework.entity.StarRule;
  * @author Eden
  * @since 2025-03-01 13:38:50
  */
-public interface StarRuleService extends FrameworkService<StarRule, Long> {
+public interface StarRuleService extends FrameworkService<StarRule, Long>, ActivityRuleExtendService {
 
 }

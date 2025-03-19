@@ -2,6 +2,7 @@ package com.bfox.xunbao.framework.i.service;
 
 import com.bfox.xunbao.common.core.injecter.FrameworkService;
 import com.bfox.xunbao.framework.entity.CycleRule;
+import com.bfox.xunbao.framework.i.service.support.ActivityRuleExtendService;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import com.bfox.xunbao.framework.entity.CycleRule;
  * @author Eden
  * @since 2025-03-01 13:38:50
  */
-public interface CycleRuleService extends FrameworkService<CycleRule, Long> {
+public interface CycleRuleService extends FrameworkService<CycleRule, Long>, ActivityRuleExtendService {
 
 }

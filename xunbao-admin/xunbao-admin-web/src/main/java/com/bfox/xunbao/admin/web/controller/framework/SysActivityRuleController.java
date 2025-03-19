@@ -2,16 +2,16 @@ package com.bfox.xunbao.admin.web.controller.framework;
 
 
 import com.bfox.xunbao.admin.web.annotation.Log;
+import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.framework.entity.ActivityRule;
 import com.bfox.xunbao.framework.i.service.ActivityRuleService;
+import com.bfox.xunbao.framework.view.RuleView;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 活动规则控制器
@@ -57,5 +57,16 @@ public class SysActivityRuleController {
                 this.activityRuleService.updateEntity(rule);
             }
         }
+    }
+
+    /**
+     * 查询规则选择器
+     * @return
+     */
+    @GetMapping("/select")
+    @PreAuthorize(value = "hasAuthority('sys:activity:list')")
+    public R select() {
+        List<RuleView> views = this.activityRuleService.getDynamicSelection();
+        return R.ok(views);
     }
 }

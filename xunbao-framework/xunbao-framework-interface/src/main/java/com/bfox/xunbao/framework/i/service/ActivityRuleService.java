@@ -2,6 +2,9 @@ package com.bfox.xunbao.framework.i.service;
 
 import com.bfox.xunbao.common.core.injecter.FrameworkService;
 import com.bfox.xunbao.framework.entity.ActivityRule;
+import com.bfox.xunbao.framework.view.RuleView;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.bfox.xunbao.framework.entity.ActivityRule;
  */
 public interface ActivityRuleService extends FrameworkService<ActivityRule, Long> {
 
+    /**
+     * 获取动态活动规则列表
+     * @return
+     */
+    List<RuleView> getDynamicSelection();
 }

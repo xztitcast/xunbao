@@ -1,7 +1,9 @@
 package com.bfox.xunbao.framework.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -68,5 +71,11 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements IS
     @Transactional
     public boolean delete(Long id) {
         return this.removeById(id);
+    }
+
+    @Override
+    public List<Item> getSelection() {
+        LambdaQueryWrapper<Item> queryWrapper = Wrappers.lambdaQuery(Item.class).orderByDesc(Item::getCreated).last("limit 100");
+        return this.list(queryWrapper);
     }
 }

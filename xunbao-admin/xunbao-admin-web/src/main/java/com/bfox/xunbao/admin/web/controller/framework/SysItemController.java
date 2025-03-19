@@ -4,6 +4,7 @@ package com.bfox.xunbao.admin.web.controller.framework;
 import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
+import com.bfox.xunbao.admin.web.modelAndView.view.SelectorView;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.framework.entity.Item;
@@ -14,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 后台奖励控制器
@@ -73,5 +75,17 @@ public class SysItemController {
     public R delete(@RequestBody Long[] ids) {
         this.itemService.delete(Arrays.asList(ids));
         return R.ok();
+    }
+
+    /**
+     * 奖品选择器
+     * @return
+     */
+    @GetMapping("/select")
+    @PreAuthorize(value = "hasAuthority('sys:item:list')")
+    public R select() {
+        List<Item> list = this.itemService.getSelection();
+        List<SelectorView<Long>> views = list.stream().map(item -> new SelectorView<Long>(item.getName(), item.getId())).toList();
+        return R.ok(views);
     }
 }
