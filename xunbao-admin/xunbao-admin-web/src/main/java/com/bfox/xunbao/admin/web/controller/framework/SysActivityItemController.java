@@ -9,10 +9,9 @@ import com.bfox.xunbao.framework.entity.ActivityItem;
 import com.bfox.xunbao.framework.i.service.ActivityItemService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 后台活动与奖品关联控制器
@@ -25,6 +24,18 @@ public class SysActivityItemController {
 
     @DubboReference
     private ActivityItemService activityItemService;
+
+    /**
+     * 查询活动下所有关联的奖品
+     * @param activityId
+     * @return
+     */
+    @GetMapping("/info")
+    @PreAuthorize(value = "hasAuthority('sys:item:info')")
+    public R info(@RequestParam("activityId") Long activityId) {
+        List<ActivityItem> dataList = this.activityItemService.getDataList(activityId);
+        return R.ok(dataList);
+    }
 
     @Log("保存活动与奖品关联数据")
     @Fill(FillType.INSERT)

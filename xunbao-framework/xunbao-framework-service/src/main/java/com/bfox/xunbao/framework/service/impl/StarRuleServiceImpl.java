@@ -35,6 +35,10 @@ import java.util.List;
 @DubboService(interfaceClass = StarRuleService.class)
 public class StarRuleServiceImpl extends ServiceImpl<StarRuleMapper, StarRule> implements IService<StarRule>, StarRuleService {
 
+    private final String field = "starRule";
+
+    private final String ruleName = "星级规则";
+
     @Override
     public P<StarRule> getBaseList(LimitModel m) {
         SysCommonModel model = (SysCommonModel)m;
@@ -78,6 +82,12 @@ public class StarRuleServiceImpl extends ServiceImpl<StarRuleMapper, StarRule> i
     @Override
     public RuleView extension() {
         List<RuleView.Option> list = this.list().stream().map(item -> new RuleView.Option(item.getId(), item.getName())).toList();
-        return new RuleView("starRule", "星级规则", BaseEnum.THREE, list);
+        return new RuleView(this.field, this.ruleName, BaseEnum.THREE, list);
+    }
+
+    @Override
+    public RuleView extension(Long id) {
+        StarRule entity = this.getById(id);
+        return entity == null ? null : new RuleView(this.field, this.ruleName, BaseEnum.THREE, List.of(new RuleView.Option(entity.getId(), entity.getName())));
     }
 }

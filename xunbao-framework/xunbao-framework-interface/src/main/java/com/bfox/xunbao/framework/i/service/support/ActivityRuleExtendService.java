@@ -15,4 +15,11 @@ public interface ActivityRuleExtendService {
      * @return
      */
     RuleView extension();
+
+    /**
+     * 获取扩展页数据
+     * @param id
+     * @return
+     */
+    RuleView extension(Long id);
 }

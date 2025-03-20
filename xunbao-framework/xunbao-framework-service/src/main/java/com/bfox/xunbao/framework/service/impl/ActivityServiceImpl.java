@@ -41,8 +41,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     }
 
     @Override
-    public Activity getEntity(Long aLong) {
-        return ActivityService.super.getEntity(aLong);
+    public Activity getEntity(Long id) {
+        return this.getById(id);
     }
 
     @Override

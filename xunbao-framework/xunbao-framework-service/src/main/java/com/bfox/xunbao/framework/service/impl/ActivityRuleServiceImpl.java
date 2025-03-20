@@ -1,5 +1,7 @@
 package com.bfox.xunbao.framework.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bfox.xunbao.framework.annotation.RuleType;
@@ -9,6 +11,7 @@ import com.bfox.xunbao.framework.i.service.support.ActivityRuleExtendService;
 import com.bfox.xunbao.framework.mapper.ActivityRuleMapper;
 import com.bfox.xunbao.framework.view.RuleView;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -31,7 +34,7 @@ public class ActivityRuleServiceImpl extends ServiceImpl<ActivityRuleMapper, Act
 
     private ApplicationContext applicationContext;
 
-    private final List<String> beanNames = new ArrayList<>();
+    private final Map<Integer, String> beanNames = new HashMap<>();
 
     @Override
     public ActivityRule getEntity(Long id) {
@@ -67,17 +70,32 @@ public class ActivityRuleServiceImpl extends ServiceImpl<ActivityRuleMapper, Act
     public void onApplicationEvent(ContextRefreshedEvent event) {
         ApplicationContext applicationContext = event.getApplicationContext();
         if (Objects.requireNonNull(applicationContext.getParent()).getParent() == null) {
-            String[] names = applicationContext.getBeanNamesForAnnotation(RuleType.class);
-            this.beanNames.addAll(Arrays.asList(names));
+            Map<String, Object> beans = applicationContext.getBeansWithAnnotation(RuleType.class);
+            beans.forEach((beanName, bean) -> {
+                Class<?> targetClass = AopUtils.getTargetClass(bean);
+                RuleType annotation = targetClass.getAnnotation(RuleType.class);
+                beanNames.put(annotation.value(), beanName);
+            });
         }
         this.applicationContext = applicationContext;
     }
 
     @Override
     public List<RuleView> getDynamicSelection() {
-        return beanNames.stream().map(beanName -> {
+        return beanNames.values().stream().map(beanName -> {
             ActivityRuleExtendService bean = this.applicationContext.getBean(beanName, ActivityRuleExtendService.class);
             return bean.extension();
         }).toList();
+    }
+
+    @Override
+    public List<RuleView> getInfo(Long activityId) {
+        LambdaQueryWrapper<ActivityRule> queryWrapper = Wrappers.lambdaQuery(ActivityRule.class).eq(ActivityRule::getActivityId, activityId);
+        List<ActivityRule> list = this.list(queryWrapper);
+        return list.stream().map(item -> {
+            String beanName = this.beanNames.get(item.getRuleType());
+            ActivityRuleExtendService bean = this.applicationContext.getBean(beanName, ActivityRuleExtendService.class);
+            return bean.extension(item.getRuleId());
+        }).filter(Objects::nonNull).toList();
     }
 }

@@ -35,6 +35,10 @@ import java.util.List;
 @DubboService(interfaceClass = CycleRuleService.class)
 public class CycleRuleServiceImpl extends ServiceImpl<CycleRuleMapper, CycleRule> implements IService<CycleRule>, CycleRuleService {
 
+    private final String field = "cycleRule";
+
+    private final String ruleName = "周期规则";
+
     @Override
     public P<CycleRule> getBaseList(LimitModel m) {
         SysCommonModel model = (SysCommonModel) m;
@@ -74,6 +78,12 @@ public class CycleRuleServiceImpl extends ServiceImpl<CycleRuleMapper, CycleRule
     @Override
     public RuleView extension() {
         List<RuleView.Option> list = this.list().stream().map(item -> new RuleView.Option(item.getId(), item.getName())).toList();
-        return new RuleView("cycleRule", "周期规则", BaseEnum.TWO, list);
+        return new RuleView(this.field, this.ruleName, BaseEnum.TWO, list);
+    }
+
+    @Override
+    public RuleView extension(Long id) {
+        CycleRule entity = this.getById(id);
+        return entity == null ? null : new RuleView(this.field, this.ruleName, BaseEnum.TWO, List.of(new RuleView.Option(entity.getId(), entity.getName())));
     }
 }

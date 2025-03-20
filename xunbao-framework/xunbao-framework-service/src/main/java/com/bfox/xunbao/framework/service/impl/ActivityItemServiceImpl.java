@@ -1,5 +1,7 @@
 package com.bfox.xunbao.framework.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bfox.xunbao.framework.entity.ActivityItem;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -51,5 +54,11 @@ public class ActivityItemServiceImpl extends ServiceImpl<ActivityItemMapper, Act
     @Transactional
     public boolean delete(Long id) {
         return this.removeById(id);
+    }
+
+    @Override
+    public List<ActivityItem> getDataList(Long activityId) {
+        LambdaQueryWrapper<ActivityItem> queryWrapper = Wrappers.lambdaQuery(ActivityItem.class).eq(ActivityItem::getActivityId, activityId);
+        return this.list(queryWrapper);
     }
 }

@@ -26,13 +26,25 @@ public class SysActivityRuleController {
     private ActivityRuleService activityRuleService;
 
     /**
+     * 查询活动关联的规则
+     * @param activityId
+     * @return
+     */
+    @GetMapping("/info")
+    @PreAuthorize(value = "hasAuthority('sys:activity:info')")
+    public R info(@RequestParam("activityId") Long activityId) {
+        List<RuleView> views = this.activityRuleService.getInfo(activityId);
+        return R.ok(views);
+    }
+
+    /**
      * 新增活动规则
      * @param rules
      */
     @Log("保存活动规则关联数据")
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:activity:save')")
-    public void save(@RequestBody ActivityRule[] rules) {
+    public R save(@RequestBody ActivityRule[] rules) {
         for(ActivityRule rule : rules) {
             if(rule.getRuleId() != null) {
                 rule.setCreated(new Date());
@@ -40,12 +52,13 @@ public class SysActivityRuleController {
                 this.activityRuleService.saveEntity(rule);
             }
         }
+        return R.ok();
     }
 
     @Log("修改活动规则关联数据")
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:activity:update')")
-    public void update(@RequestBody ActivityRule[] rules) {
+    public R update(@RequestBody ActivityRule[] rules) {
         for(ActivityRule rule : rules) {
             if(rule.getId() == null) {
                 continue;
@@ -57,6 +70,7 @@ public class SysActivityRuleController {
                 this.activityRuleService.updateEntity(rule);
             }
         }
+        return R.ok();
     }
 
     /**

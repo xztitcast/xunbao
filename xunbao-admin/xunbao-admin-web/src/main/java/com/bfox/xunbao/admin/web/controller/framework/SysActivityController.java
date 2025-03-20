@@ -54,8 +54,8 @@ public class SysActivityController {
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:activity:save')")
     public R save(@RequestBody Activity entity) {
-        this.activityService.saveEntity(entity);
-        return R.ok();
+        Long id = this.activityService.saveEntity(entity);
+        return R.ok(id);
     }
 
     @Log("修改活动数据")

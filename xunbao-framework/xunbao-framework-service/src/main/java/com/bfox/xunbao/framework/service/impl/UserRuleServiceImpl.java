@@ -35,6 +35,10 @@ import java.util.List;
 @DubboService(interfaceClass = UserRuleService.class)
 public class UserRuleServiceImpl extends ServiceImpl<UserRuleMapper, UserRule> implements IService<UserRule>, UserRuleService {
 
+    private final String field = "userRule";
+
+    private final String ruleName = "新用户规则";
+
     @Override
     public P<UserRule> getBaseList(LimitModel m) {
         SysCommonModel model = (SysCommonModel) m;
@@ -79,6 +83,12 @@ public class UserRuleServiceImpl extends ServiceImpl<UserRuleMapper, UserRule> i
     @Override
     public RuleView extension() {
         List<RuleView.Option> list = this.list().stream().map(item -> new RuleView.Option(item.getId(), item.getName())).toList();
-        return new RuleView("userRule", "新用户规则", BaseEnum.ONE, list);
+        return new RuleView(this.field, this.ruleName, BaseEnum.ONE, list);
+    }
+
+    @Override
+    public RuleView extension(Long id) {
+        UserRule entity = this.getById(id);
+        return entity == null ? null : new RuleView(this.field, this.ruleName, BaseEnum.ONE, List.of(new RuleView.Option(entity.getId(), entity.getName())));
     }
 }

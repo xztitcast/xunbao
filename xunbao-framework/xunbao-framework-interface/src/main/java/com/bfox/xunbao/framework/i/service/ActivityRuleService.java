@@ -21,4 +21,11 @@ public interface ActivityRuleService extends FrameworkService<ActivityRule, Long
      * @return
      */
     List<RuleView> getDynamicSelection();
+
+    /**
+     * 获取活动规则列表
+     * @param activityId
+     * @return
+     */
+    List<RuleView> getInfo(Long activityId);
 }

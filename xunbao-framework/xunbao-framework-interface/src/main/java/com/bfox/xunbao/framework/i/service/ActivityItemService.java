@@ -3,6 +3,8 @@ package com.bfox.xunbao.framework.i.service;
 import com.bfox.xunbao.common.core.injecter.FrameworkService;
 import com.bfox.xunbao.framework.entity.ActivityItem;
 
+import java.util.List;
+
 /**
  * <p>
  * 活动奖励表 服务类
@@ -13,4 +15,10 @@ import com.bfox.xunbao.framework.entity.ActivityItem;
  */
 public interface ActivityItemService extends FrameworkService<ActivityItem, Long> {
 
+    /**
+     * 获取活动奖励列表
+     * @param activityId
+     * @return
+     */
+    List<ActivityItem> getDataList(Long activityId);
 }

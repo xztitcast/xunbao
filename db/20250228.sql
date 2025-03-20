@@ -214,7 +214,7 @@ CREATE TABLE "tb_activity_rule"(
     "created" timestamp(6) DEFAULT now(),
     "updated" timestamp(6) DEFAULT now()
 );
-
+CREATE UNIQUE INDEX tb_activity_rule_idx_001 ON "tb_activity_rule" ("activity_id", "rule_id", "rule_type");
 COMMENT ON COLUMN "tb_activity_rule"."id" IS '主键id';
 COMMENT ON COLUMN "tb_activity_rule"."activity_id" IS '活动ID';
 COMMENT ON COLUMN "tb_activity_rule"."rule_id" IS '规则ID';
