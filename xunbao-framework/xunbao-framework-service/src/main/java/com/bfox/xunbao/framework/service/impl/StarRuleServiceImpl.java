@@ -90,4 +90,9 @@ public class StarRuleServiceImpl extends ServiceImpl<StarRuleMapper, StarRule> i
         StarRule entity = this.getById(id);
         return entity == null ? null : new RuleView(this.field, this.ruleName, BaseEnum.THREE, List.of(new RuleView.Option(entity.getId(), entity.getName())));
     }
+
+    @Override
+    public String getField() {
+        return this.field;
+    }
 }

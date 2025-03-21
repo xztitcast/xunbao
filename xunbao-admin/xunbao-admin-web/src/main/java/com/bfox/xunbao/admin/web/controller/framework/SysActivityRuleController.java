@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 活动规则控制器
@@ -33,8 +34,8 @@ public class SysActivityRuleController {
     @GetMapping("/info")
     @PreAuthorize(value = "hasAuthority('sys:activity:info')")
     public R info(@RequestParam("activityId") Long activityId) {
-        List<RuleView> views = this.activityRuleService.getInfo(activityId);
-        return R.ok(views);
+        Map<String, Object> info = this.activityRuleService.getInfo(activityId);
+        return R.ok(info);
     }
 
     /**

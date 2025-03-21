@@ -91,4 +91,9 @@ public class UserRuleServiceImpl extends ServiceImpl<UserRuleMapper, UserRule> i
         UserRule entity = this.getById(id);
         return entity == null ? null : new RuleView(this.field, this.ruleName, BaseEnum.ONE, List.of(new RuleView.Option(entity.getId(), entity.getName())));
     }
+
+    @Override
+    public String getField() {
+        return this.field;
+    }
 }

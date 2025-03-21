@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * <p>
@@ -57,8 +56,8 @@ public class ActivityItemServiceImpl extends ServiceImpl<ActivityItemMapper, Act
     }
 
     @Override
-    public List<ActivityItem> getDataList(Long activityId) {
+    public ActivityItem getInfo(Long activityId) {
         LambdaQueryWrapper<ActivityItem> queryWrapper = Wrappers.lambdaQuery(ActivityItem.class).eq(ActivityItem::getActivityId, activityId);
-        return this.list(queryWrapper);
+        return this.getOne(queryWrapper);
     }
 }

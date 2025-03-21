@@ -89,13 +89,14 @@ public class ActivityRuleServiceImpl extends ServiceImpl<ActivityRuleMapper, Act
     }
 
     @Override
-    public List<RuleView> getInfo(Long activityId) {
+    public Map<String, Object> getInfo(Long activityId) {
         LambdaQueryWrapper<ActivityRule> queryWrapper = Wrappers.lambdaQuery(ActivityRule.class).eq(ActivityRule::getActivityId, activityId);
         List<ActivityRule> list = this.list(queryWrapper);
-        return list.stream().map(item -> {
-            String beanName = this.beanNames.get(item.getRuleType());
+        return list.stream().collect(HashMap::new, (left, right) -> {
+            String beanName = this.beanNames.get(right.getRuleType());
             ActivityRuleExtendService bean = this.applicationContext.getBean(beanName, ActivityRuleExtendService.class);
-            return bean.extension(item.getRuleId());
-        }).filter(Objects::nonNull).toList();
+            String field = bean.getField();
+            left.put(field, right);
+        }, Map::putAll);
     }
 }

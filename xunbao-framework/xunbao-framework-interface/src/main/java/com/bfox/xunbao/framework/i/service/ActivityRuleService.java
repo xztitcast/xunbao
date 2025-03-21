@@ -5,6 +5,7 @@ import com.bfox.xunbao.framework.entity.ActivityRule;
 import com.bfox.xunbao.framework.view.RuleView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,5 +28,5 @@ public interface ActivityRuleService extends FrameworkService<ActivityRule, Long
      * @param activityId
      * @return
      */
-    List<RuleView> getInfo(Long activityId);
+    Map<String, Object> getInfo(Long activityId);
 }

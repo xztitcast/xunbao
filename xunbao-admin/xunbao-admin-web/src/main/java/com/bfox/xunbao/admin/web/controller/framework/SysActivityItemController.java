@@ -11,8 +11,6 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * 后台活动与奖品关联控制器
  * @Author Eden
@@ -33,8 +31,8 @@ public class SysActivityItemController {
     @GetMapping("/info")
     @PreAuthorize(value = "hasAuthority('sys:item:info')")
     public R info(@RequestParam("activityId") Long activityId) {
-        List<ActivityItem> dataList = this.activityItemService.getDataList(activityId);
-        return R.ok(dataList);
+        ActivityItem entity = this.activityItemService.getInfo(activityId);
+        return R.ok(entity);
     }
 
     @Log("保存活动与奖品关联数据")

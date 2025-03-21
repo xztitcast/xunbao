@@ -22,4 +22,10 @@ public interface ActivityRuleExtendService {
      * @return
      */
     RuleView extension(Long id);
+
+    /**
+     * 获取属性
+     * @return
+     */
+    String getField();
 }

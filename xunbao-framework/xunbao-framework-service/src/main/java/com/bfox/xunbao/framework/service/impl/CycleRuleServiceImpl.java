@@ -86,4 +86,9 @@ public class CycleRuleServiceImpl extends ServiceImpl<CycleRuleMapper, CycleRule
         CycleRule entity = this.getById(id);
         return entity == null ? null : new RuleView(this.field, this.ruleName, BaseEnum.TWO, List.of(new RuleView.Option(entity.getId(), entity.getName())));
     }
+
+    @Override
+    public String getField() {
+        return this.field;
+    }
 }
