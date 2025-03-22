@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -37,7 +38,7 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
         QueryWrapper<Label> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());
         this.page(page, queryWrapper);
-        return LabelService.super.getBaseList(m);
+        return new P<>(page.getTotal(), page.getRecords());
     }
 
     @Override
@@ -68,5 +69,10 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
     @Transactional
     public boolean delete(Integer id) {
         return this.removeById(id);
+    }
+
+    @Override
+    public List<Label> getSelection() {
+        return this.list();
     }
 }

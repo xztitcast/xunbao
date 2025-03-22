@@ -4,6 +4,7 @@ package com.bfox.xunbao.admin.web.controller.framework;
 import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
+import com.bfox.xunbao.admin.web.modelAndView.view.SelectorView;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
@@ -14,13 +15,15 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 后台管理标签控制器
  * @Author Eden
  * @Date 2025/3/5 0:41
  */
 @RestController
-@RequestMapping("/sys/+")
+@RequestMapping("/sys/label")
 public class SysLabelController {
 
     @DubboReference
@@ -52,7 +55,8 @@ public class SysLabelController {
     @Fill(FillType.INSERT)
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:label:save')")
-    public R save(Label entity) {
+    public R save(@RequestBody Label entity) {
+        entity.setBeanName("1");
         this.labelService.saveEntity(entity);
         return R.ok();
     }
@@ -61,7 +65,7 @@ public class SysLabelController {
     @Fill(FillType.UPDATE)
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:label:update')")
-    public R update(Label entity) {
+    public R update(@RequestBody Label entity) {
         this.labelService.updateEntity(entity);
         return R.ok();
     }
@@ -79,6 +83,18 @@ public class SysLabelController {
         }
         this.labelService.updateEntity(entity);
         return R.ok();
+    }
+
+    /**
+     * 查询标签选择器
+     * @return
+     */
+    @GetMapping("/select")
+    @PreAuthorize(value = "hasAuthority('sys:label:list')")
+    public R select() {
+        List<Label> list = this.labelService.getSelection();
+        List<SelectorView<Integer>> views = list.stream().map(item -> new SelectorView<Integer>(item.getName(), item.getId())).toList();
+        return R.ok(views);
     }
 
 }
