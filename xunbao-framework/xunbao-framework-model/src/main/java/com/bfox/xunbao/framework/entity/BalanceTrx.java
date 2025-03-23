@@ -32,14 +32,24 @@ public class BalanceTrx extends BaseEntity implements Serializable {
     private Long id;
 
     /**
-     * 订单流ID
+     * 订单任务ID
      */
-    private Long orderFlowId;
+    private Long orderWorkId;
+
+    /**
+     * 订单标号
+     */
+    private String serialNumber;
 
     /**
      * 用户ID
      */
     private Long userId;
+
+    /**
+     * 用户名
+     */
+    private String username;
 
     /**
      * 扣除保证金

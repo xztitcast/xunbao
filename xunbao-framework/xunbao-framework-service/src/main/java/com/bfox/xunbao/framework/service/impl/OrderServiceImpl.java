@@ -44,6 +44,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         SysOrderModel model = (SysOrderModel) m;
         IPage<Order> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("creator", model.getCreator());
         queryWrapper.eq(StringUtils.isNotBlank(model.getSerialNumber()),"serial_number", model.getSerialNumber());
         this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());

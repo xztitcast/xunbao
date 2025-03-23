@@ -41,13 +41,11 @@ public class SysUser extends BaseEntity implements Serializable {
 	private Date locked;
 
 	/**
-	 * 多租户父子列表
+	 * 关联应用账号ID
+	 * (与应用账号做关联)
 	 */
-	private String tenantIds;
-    
-    @TableField(exist = false)
-    private Integer parentId = 0;
-    
+	private Long accId;
+
     @TableField(exist = false)
     private List<Long> roleIdList;
 
@@ -109,14 +107,6 @@ public class SysUser extends BaseEntity implements Serializable {
 	public void setCreator(Long creator) {
 		this.creator = creator;
 	}
-	
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
 
 	public List<Long> getRoleIdList() {
 		return roleIdList;
@@ -134,11 +124,11 @@ public class SysUser extends BaseEntity implements Serializable {
 		this.locked = locked;
 	}
 
-	public String getTenantIds() {
-		return tenantIds;
+	public Long getAccId() {
+		return accId;
 	}
 
-	public void setTenantIds(String tenantIds) {
-		this.tenantIds = tenantIds;
+	public void setAccId(Long accId) {
+		this.accId = accId;
 	}
 }

@@ -1,14 +1,5 @@
 package com.bfox.xunbao.admin.web.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -16,6 +7,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bfox.xunbao.admin.web.entity.SysUserRole;
 import com.bfox.xunbao.admin.web.mapper.SysUserRoleMapper;
 import com.bfox.xunbao.admin.web.service.SysUserRoleService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 系统用户与角色业务接口实现类
@@ -28,9 +27,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 	@Override
 	@Transactional
 	public void saveOrUpdate(Long userId, List<Long> roleIdList) {
-		this.remove(new QueryWrapper<SysUserRole>().eq("user_id", userId));
-		
 		if(CollectionUtils.isEmpty(roleIdList)) return;
+
+		this.remove(new QueryWrapper<SysUserRole>().eq("user_id", userId));
 		
 		roleIdList.forEach(id -> {
 			SysUserRole sysUserRole = new SysUserRole();

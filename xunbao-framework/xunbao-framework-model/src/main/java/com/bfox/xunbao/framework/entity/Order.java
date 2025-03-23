@@ -73,6 +73,12 @@ public class Order extends CreateEntity implements Serializable {
     private Date publishTime;
 
     /**
+     * 联系方式(文本)
+     * QQ:1234566 / 微信:5878552
+     */
+    private String contactText;
+
+    /**
      * 联系方式(微信二维码)
      */
     private String contact;
@@ -81,6 +87,11 @@ public class Order extends CreateEntity implements Serializable {
      * 图片
      */
     private String url;
+
+    /**
+     * 标签
+     */
+    private String label;
 
     /**
      * 开发语言

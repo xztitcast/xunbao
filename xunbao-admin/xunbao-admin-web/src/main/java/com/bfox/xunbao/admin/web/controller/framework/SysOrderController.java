@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * 任务订单控制器
@@ -36,6 +37,7 @@ public class SysOrderController extends BaseController {
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:order:list')")
     public R list(SysOrderModel model) {
+        model.setCreator(getUserId());
         P<Order> p = this.orderService.getBaseList(model);
         return R.ok(p);
     }
@@ -77,6 +79,23 @@ public class SysOrderController extends BaseController {
     @PreAuthorize(value = "hasAuthority('sys:order:delete')")
     public R delete(@RequestBody Long[] ids) {
         this.orderService.delete(Arrays.asList(ids));
+        return R.ok();
+    }
+
+    @Log("发布任务订单")
+    @PostMapping("/change")
+    @PreAuthorize(value = "hasAuthority('sys:order:update')")
+    public R change(@RequestBody Order entity) {
+        Order order = this.orderService.getEntity(entity.getId());
+        if(order == null) {
+            return R.error("订单不存在!");
+        }
+        if(entity.getStatus() != BaseEnum.TWO) {
+            return R.error("非审核成功状态不允许发布!");
+        }
+        entity.setStatus(BaseEnum.THREE);
+        entity.setPublishTime(new Date());
+        this.orderService.updateEntity(entity);
         return R.ok();
     }
 }

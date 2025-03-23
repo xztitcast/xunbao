@@ -37,6 +37,7 @@ public class BalanceServiceImpl extends ServiceImpl<BalanceMapper, Balance> impl
         QueryWrapper<Balance> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(model.getUserId() != null, "user_id", model.getUserId());
         queryWrapper.eq(StringUtils.isNotBlank(model.getUsername()), "username", model.getUsername());
+        queryWrapper.orderBy(true, model.getOrderByAsc(), model.getOrderField());
         this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());
     }

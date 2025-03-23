@@ -1,3 +1,6 @@
+ALTER TABLE "xunbao_admin"."tb_sys_user" ADD COLUMN "acc_id" int8;
+COMMENT ON COLUMN "xunbao_admin"."tb_sys_user"."acc_id" IS '关联应用ID'
+
 DROP TABLE IF EXISTS "tb_order";
 CREATE TABLE "tb_order"(
     "id" bigserial NOT NULL PRIMARY KEY,
@@ -11,13 +14,14 @@ CREATE TABLE "tb_order"(
     "bond" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "publish_time" timestamp(6) DEFAULT now(),
     "develop" varchar(255) NOT NULL,
+    "contact_text" varchar(255),
     "contact" varchar(255) NOT NULL,
     "url" varchar(500) NOT NULL,
     "description" text,
     "created" timestamp(6) DEFAULT now(),
     "updated" timestamp(6) DEFAULT now(),
-    "creator" int8,
-    "updater" int8,
+    "creator" int8 NOT NULL,
+    "updater" int8 NOT NULL,
     "create_name" varchar(20),
     "update_name" varchar(20)
 );
@@ -27,12 +31,13 @@ COMMENT ON COLUMN "tb_order"."serial_number" IS '编号';
 COMMENT ON COLUMN "tb_order"."name" IS '任务名称';
 COMMENT ON COLUMN "tb_order"."label" IS '标签';
 COMMENT ON COLUMN "tb_order"."cycle" IS '周期';
-COMMENT ON COLUMN "tb_order"."status" IS '后台状态0:审核失败 1:待审核 2:审核成功 3:待发布 4:已发布 5:进行中 6:已结束';
+COMMENT ON COLUMN "tb_order"."status" IS '后台状态0:审核失败 1:待审核 2:审核成功 3:已发布 4:进行中 5:已结束';
 COMMENT ON COLUMN "tb_order"."type" IS '类型(1:需求 2:BUG)';
 COMMENT ON COLUMN "tb_order"."bonus" IS '奖励';
 COMMENT ON COLUMN "tb_order"."bond" IS '保证金(保证金最大是预算的双倍)';
 COMMENT ON COLUMN "tb_order"."publish_time" IS '发布时间';
 COMMENT ON COLUMN "tb_order"."develop" IS '开发语言';
+COMMENT ON COLUMN "tb_order"."contact_text" IS '联系方式(文本)';
 COMMENT ON COLUMN "tb_order"."contact" IS '联系方式';
 COMMENT ON COLUMN "tb_order"."url" IS '图片链接';
 COMMENT ON COLUMN "tb_order"."description" IS '文案';
@@ -43,6 +48,67 @@ COMMENT ON COLUMN "tb_order"."updater" IS '更新人';
 COMMENT ON COLUMN "tb_order"."update_name" IS '更新人名称';
 COMMENT ON COLUMN "tb_order"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_order" IS '任务订单表';
+
+--tb_order表数据被删除触发器
+CREATE TRIGGER "del_tb_order_trigger" AFTER DELETE ON "tb_order" FOR EACH ROW EXECUTE PROCEDURE tb_order_delete_trigger();
+CREATE OR REPLACE FUNCTION "public"."tb_order_delete_trigger"()
+  RETURNS "pg_catalog"."trigger" AS $BODY$
+BEGIN
+
+INSERT INTO "tb_order_del" ("id", "serial_number", "name", "label", "cycle", "status", "type", "bonus", "bond", "publish_time", "develop", "contact_text", "contact", "url", "description", "created", "updated", "creator", "updater", "create_name", "update_name") VALUES (OLD."id", OLD."serial_number", OLD."name", OLD."label", OLD."cycle", OLD."status", OLD."type", OLD."bonus", OLD."bond", OLD."publish_time", OLD."develop", OLD."contact_text", OLD."contact", OLD."url", OLD."description", OLD."created", OLD."updated", OLD."creator", OLD."updater", OLD."create_name", OLD."update_name");
+RETURN NULL;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+DROP TABLE IF EXISTS "tb_order_del";
+CREATE TABLE "tb_order_del"(
+    "id" int8 NOT NULL PRIMARY KEY,
+    "serial_number" varchar(30) NOT NULL UNIQUE,
+    "name" varchar(50) NOT NULL,
+    "label" varchar(100) NOT NULL,
+    "cycle" int4 NOT NULL DEFAULT 1,
+    "status" smallint NOT NULL DEFAULT 1,
+    "type" smallint NOT NULL DEFAULT 1,
+    "bonus" decimal(20, 2) NOT NULL DEFAULT 0.00,
+    "bond" decimal(20, 2) NOT NULL DEFAULT 0.00,
+    "publish_time" timestamp(6) DEFAULT now(),
+    "develop" varchar(255) NOT NULL,
+    "contact_text" varchar(255),
+    "contact" varchar(255) NOT NULL,
+    "url" varchar(500) NOT NULL,
+    "description" text,
+    "created" timestamp(6) DEFAULT now(),
+    "updated" timestamp(6) DEFAULT now(),
+    "creator" int8 NOT NULL,
+    "updater" int8 NOT NULL,
+    "create_name" varchar(20),
+    "update_name" varchar(20)
+);
+
+COMMENT ON COLUMN "tb_order_del"."id" IS '主键id';
+COMMENT ON COLUMN "tb_order_del"."serial_number" IS '编号';
+COMMENT ON COLUMN "tb_order_del"."name" IS '任务名称';
+COMMENT ON COLUMN "tb_order_del"."label" IS '标签';
+COMMENT ON COLUMN "tb_order_del"."cycle" IS '周期';
+COMMENT ON COLUMN "tb_order_del"."status" IS '后台状态0:审核失败 1:待审核 2:审核成功 3:已发布 4:进行中 5:已结束';
+COMMENT ON COLUMN "tb_order_del"."type" IS '类型(1:需求 2:BUG)';
+COMMENT ON COLUMN "tb_order_del"."bonus" IS '奖励';
+COMMENT ON COLUMN "tb_order_del"."bond" IS '保证金(保证金最大是预算的双倍)';
+COMMENT ON COLUMN "tb_order_del"."publish_time" IS '发布时间';
+COMMENT ON COLUMN "tb_order_del"."develop" IS '开发语言';
+COMMENT ON COLUMN "tb_order_del"."contact_text" IS '联系方式(文本)';
+COMMENT ON COLUMN "tb_order_del"."contact" IS '联系方式';
+COMMENT ON COLUMN "tb_order_del"."url" IS '图片链接';
+COMMENT ON COLUMN "tb_order_del"."description" IS '文案';
+COMMENT ON COLUMN "tb_order_del"."creator" IS '创建人';
+COMMENT ON COLUMN "tb_order_del"."create_name" IS '创建名称';
+COMMENT ON COLUMN "tb_order_del"."created" IS '创建时间';
+COMMENT ON COLUMN "tb_order_del"."updater" IS '更新人';
+COMMENT ON COLUMN "tb_order_del"."update_name" IS '更新人名称';
+COMMENT ON COLUMN "tb_order_del"."updated" IS '更新时间';
+COMMENT ON TABLE "tb_order_del" IS '任务订单删除表';
 
 DROP TABLE IF EXISTS "tb_order_work";
 CREATE TABLE "tb_order_work"(

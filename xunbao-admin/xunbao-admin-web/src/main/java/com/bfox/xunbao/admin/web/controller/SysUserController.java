@@ -9,11 +9,9 @@ import com.bfox.xunbao.admin.web.service.SysUserService;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
-import com.bfox.xunbao.sso.i.service.TenantService;
 import jakarta.validation.Valid;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,9 +41,6 @@ public class SysUserController extends BaseController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@DubboReference
-	private TenantService tenantService;
 	
 	/**
 	 * 获取当前登陆用户创建的所有用户列表
@@ -161,24 +156,6 @@ public class SysUserController extends BaseController {
 		sysUserService.removeByIds(Arrays.asList(userIds));
 		
 		return R.ok();
-	}
-	
-	/**
-	 * 获取用户Tree数据
-	 * @return
-	 */
-	@GetMapping("/tree")
-	@PreAuthorize(value = "hasAuthority('sys:user:list')")
-	public R tree() {
-		List<SysUser> list = sysUserService.getSysUserList(getUserId());
-		SysUser root = new SysUser();
-		root.setId(0L);
-		root.setParentId(-1);
-		root.setUsername("请关联用户");
-		root.setStatus(0);
-		root.setCreator(0L);
-		list.add(root);
-		return R.ok(list);
 	}
 	
 }
