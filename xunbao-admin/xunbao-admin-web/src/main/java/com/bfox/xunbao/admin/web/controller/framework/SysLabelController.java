@@ -70,13 +70,13 @@ public class SysLabelController {
         return R.ok();
     }
 
-    @Log("修改标签状态")
+    @Log("切换标签状态")
     @PostMapping("/change")
     @PreAuthorize(value = "hasAuthority('sys:label:update')")
     public R change(@RequestBody Label entity) {
         Label label = this.labelService.getEntity(entity.getId());
         if(label == null) {
-            return R.error("修改星级不存在!");
+            return R.error("标签不存在!");
         }
         if(entity.getStatus() == label.getStatus().intValue()) {
             return R.error(S.USER_STATUS_PARAMTER_ERROR);

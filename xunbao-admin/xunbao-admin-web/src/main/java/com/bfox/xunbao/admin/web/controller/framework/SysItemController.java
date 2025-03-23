@@ -7,6 +7,7 @@ import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.admin.web.modelAndView.view.SelectorView;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
+import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.framework.entity.Item;
 import com.bfox.xunbao.framework.i.service.ItemService;
 import com.bfox.xunbao.framework.model.SysCommonModel;
@@ -74,6 +75,21 @@ public class SysItemController {
     @PreAuthorize(value = "hasAuthority('sys:item:delete')")
     public R delete(@RequestBody Long[] ids) {
         this.itemService.delete(Arrays.asList(ids));
+        return R.ok();
+    }
+
+    @Log("切换奖品状态")
+    @PostMapping("/change")
+    @PreAuthorize(value = "hasAuthority('sys:item:update')")
+    public R change(@RequestBody Item entity) {
+        Item item = this.itemService.getEntity(entity.getId());
+        if(item == null) {
+            return R.error("奖品不存在!");
+        }
+        if(entity.getStatus() == item.getStatus().intValue()) {
+            return R.error(S.USER_STATUS_PARAMTER_ERROR);
+        }
+        this.itemService.updateEntity(entity);
         return R.ok();
     }
 

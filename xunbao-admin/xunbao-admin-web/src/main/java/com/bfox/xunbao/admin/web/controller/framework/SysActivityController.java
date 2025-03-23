@@ -6,6 +6,7 @@ import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
+import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.framework.entity.Activity;
 import com.bfox.xunbao.framework.i.service.ActivityService;
 import com.bfox.xunbao.framework.model.SysCommonModel;
@@ -72,6 +73,21 @@ public class SysActivityController {
     @PreAuthorize(value = "hasAuthority('sys:activity:delete')")
     public R delete(@RequestBody Long[] ids) {
         this.activityService.delete(Arrays.asList(ids));
+        return R.ok();
+    }
+
+    @Log("切换活动状态")
+    @PostMapping("/change")
+    @PreAuthorize(value = "hasAuthority('sys:activity:update')")
+    public R change(@RequestBody Activity entity) {
+        Activity activity = this.activityService.getEntity(entity.getId());
+        if(activity == null) {
+            return R.error("活动不存在!");
+        }
+        if(entity.getStatus() == activity.getStatus().intValue()) {
+            return R.error(S.USER_STATUS_PARAMTER_ERROR);
+        }
+        this.activityService.updateEntity(entity);
         return R.ok();
     }
 }

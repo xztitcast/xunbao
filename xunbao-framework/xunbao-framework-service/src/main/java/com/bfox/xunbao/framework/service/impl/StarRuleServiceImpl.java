@@ -45,6 +45,7 @@ public class StarRuleServiceImpl extends ServiceImpl<StarRuleMapper, StarRule> i
         IPage<StarRule> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<StarRule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());
+        queryWrapper.orderBy(true, model.getOrderByAsc(), model.getOrderField());
         this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());
     }

@@ -39,6 +39,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements IS
         IPage<Item> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Item> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());
+        queryWrapper.orderBy(true, model.getOrderByAsc(), model.getOrderField());
         this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());
     }

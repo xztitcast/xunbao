@@ -45,6 +45,7 @@ public class CycleRuleServiceImpl extends ServiceImpl<CycleRuleMapper, CycleRule
         IPage<CycleRule> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<CycleRule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());
+        queryWrapper.orderBy(true, model.getOrderByAsc(), model.getOrderField());
         this.page(page, queryWrapper);
         return new P<>(page.getTotal(), page.getRecords());
     }
