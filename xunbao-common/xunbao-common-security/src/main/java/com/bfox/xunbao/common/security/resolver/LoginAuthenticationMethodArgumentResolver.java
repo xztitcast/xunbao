@@ -44,8 +44,8 @@ public class LoginAuthenticationMethodArgumentResolver implements HandlerMethodA
 		Subject subject = parameter.getParameterAnnotation(Subject.class);
 		return switch (subject.value()) {
 			case ID -> principal.getId();
-			case NAME -> principal.getMobile();
-			case OPPENID -> principal.getOpenid();
+			case NAME -> principal.getUsername();
+			case OPENID -> principal.getOpenid();
 			default -> principal;
 		};
 	}

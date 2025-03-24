@@ -1,6 +1,5 @@
 package com.bfox.xunbao.common.core.injecter;
 
-import com.bfox.xunbao.common.core.Constant;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,19 +16,19 @@ public class Principal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 用户ID
+	 * 主键id
 	 */
 	private Long id;
 
 	/**
-	 * 机构ID
+	 * 用户名
 	 */
-	private Long tisid;
+	private String username;
 
 	/**
-	 * 用户名(即手机号)
+	 * 密码
 	 */
-	private String mobile;
+	private String password;
 
 	/**
 	 * 昵称
@@ -37,108 +36,43 @@ public class Principal implements Serializable {
 	private String nickname;
 
 	/**
-	 * 微信openid
+	 * 用户头像
+	 */
+	private String avatar;
+
+	/**
+	 * 微信union_id
+	 */
+	private String unionId;
+
+	/**
+	 * 小程序openid
 	 */
 	private String openid;
 
 	/**
-	 * 微信unionid
+	 * 用户唯一标识
 	 */
-	private String unionid;
+	private String uuid;
 
 	/**
-	 * 用户标识ID
+	 * 类型1:真实用户 2:虚拟用户
 	 */
-	private String userpasid;
+	private Short type;
 
 	/**
-	 * 用户类型(1:真实用户 2:虚拟用户)
+	 * IP地址
 	 */
-	private Integer type;
+	private String ip;
 
 	/**
-	 * 省份
-	 */
-	private String pname;
-
-	/**
-	 * 城市
-	 */
-	private String cname;
-
-	/**
-	 * 地区
-	 */
-	private String areaname;
-
-	/**
-	 * 省ID
-	 */
-	private String pid;
-
-	/**
-	 * 城市ID
-	 */
-	private String cid;
-
-	/**
-	 * 地区ID
-	 */
-	private String areaId;
-
-	/**
-	 * 国家
-	 */
-	private String country;
-
-	/**
-	 * 创建时间即注册时间
+	 * 创建时间
 	 */
 	private Date created;
 
 	/**
-	 * 头像
+	 * 更新时间
 	 */
-	private String avatar;
-
-	public Principal() {
-		super();
-	}
-
-	public Principal(Long id, String mobile, String openid) {
-		super();
-		this.id = id;
-		this.mobile = mobile;
-		this.openid = openid;
-	}
-
-	public Principal(Long id, String openid) {
-		super();
-		this.id = id;
-		this.openid = openid;
-	}
-
-	/**
-	 * 获取用户省、市、区
-	 * @return
-	 */
-	public String getLocation() {
-		if(this.pname == null || this.cname == null || this.areaname == null) {
-			return null;
-		}
-		return this.pname.concat(this.cname).concat(this.areaname);
-	}
-
-	/**
-	 * 获取用户省、市、区 ID
-	 * @return
-	 */
-	public String getLocationId() {
-		if(this.pid == null || this.cid == null || this.areaId == null) {
-			return null;
-		}
-		return this.pid.concat(Constant.DELIMITER_COMMA).concat(this.cid).concat(Constant.DELIMITER_COMMA).concat(this.areaId);
-	}
-
+	private Date updated;
 
 }

@@ -186,7 +186,7 @@ CREATE TABLE "tb_balance"(
     "user_id" int8 NOT NULL,
     "username" varchar(50),
     "amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
-    "freeze" decimal(20, 2) NOT NULL DEFAULT 0.00,
+    "freezes" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "created" timestamp(6) DEFAULT now(),
     "updated" timestamp(6) DEFAULT now()
 );
@@ -194,7 +194,7 @@ COMMENT ON COLUMN "tb_balance"."id" IS '主键id';
 COMMENT ON COLUMN "tb_balance"."user_id" IS '用户ID';
 COMMENT ON COLUMN "tb_balance"."username" IS '用户名称';
 COMMENT ON COLUMN "tb_balance"."amount" IS '保证金余额';
-COMMENT ON COLUMN "tb_balance"."freeze" IS '冻结金额';
+COMMENT ON COLUMN "tb_balance"."freezes" IS '冻结金额';
 COMMENT ON COLUMN "tb_balance"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_balance"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_balance" IS '保证金表';

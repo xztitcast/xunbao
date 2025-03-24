@@ -6,7 +6,7 @@ public enum Entity {
 	
 	NAME,
 	
-	OPPENID,
+	OPENID,
 	
 	SUBJECT
 }

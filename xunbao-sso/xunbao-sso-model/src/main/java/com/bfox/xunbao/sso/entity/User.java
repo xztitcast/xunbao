@@ -1,32 +1,45 @@
 package com.bfox.xunbao.sso.entity;
 
+import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.bfox.xunbao.common.mybatis.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 用户实体类
- * 与common包中 Principal类属性一一相同
+ * <p>
+ * 用户表
+ * </p>
+ *
+ * @author Eden
+ * @since 2025-03-24 23:01:11
  */
 @Getter
 @Setter
-@TableName(value = "tb_user")
-public class User implements Serializable {
+@TableName("tb_user")
+public class User extends BaseEntity implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
-    /**
-     * 机构ID
-     */
-    private Long tisid;
 
     /**
-     * 用户名(即手机号)
+     * 主键id
      */
-    private String mobile;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     /**
      * 昵称
@@ -34,62 +47,37 @@ public class User implements Serializable {
     private String nickname;
 
     /**
-     * 微信openid
+     * 用户头像
+     */
+    private String avatar;
+
+    /**
+     * 微信union_id
+     */
+    private String unionId;
+
+    /**
+     * 小程序openid
      */
     private String openid;
 
     /**
-     * 微信unionid
+     * 用户唯一标识
      */
-    private String unionid;
+    private String uuid;
 
     /**
-     * 用户标识ID
-     */
-    private String userpasid;
-
-    /**
-     * 用户类型(1:真实用户 2:虚拟用户)
+     * 类型1:真实用户 2:虚拟用户
      */
     private Integer type;
 
     /**
-     * 省份
+     * IP地址
      */
-    private String pname;
+    private String ip;
 
-    /**
-     * 城市
-     */
-    private String cname;
-
-    /**
-     * 地区
-     */
-    private String areaname;
-
-    /**
-     * 省ID
-     */
-    private String pid;
-
-    /**
-     * 城市ID
-     */
-    private String cid;
-
-    /**
-     * 地区ID
-     */
-    private String areaId;
-
-    /**
-     * 国家
-     */
-    private String country;
-
-    /**
-     * 头像
-     */
-    private String avatar;
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }

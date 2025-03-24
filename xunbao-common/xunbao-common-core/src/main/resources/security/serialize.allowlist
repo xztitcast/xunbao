@@ -1,3 +1,5 @@
 com.bfox.xunbao.common.core.S
+org.postgresql.util.PSQLException
+org.springframework.jdbc.BadSqlGrammarException
 com.bfox.xunbao.common.core.exception.custom.XunbaoServiceException
 com.bfox.xunbao.common.core.exception.custom.AuthenticationException

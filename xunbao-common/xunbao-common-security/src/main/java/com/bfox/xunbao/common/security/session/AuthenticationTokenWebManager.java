@@ -9,14 +9,14 @@ import com.bfox.xunbao.common.core.injecter.Principal;
  */
 public interface AuthenticationTokenWebManager extends TokenSessionManager {
 
-    String TOKEN_KEY = "JC:SECURITY:TOKEN:";
+    String TOKEN_KEY = "XB:SECURITY:TOKEN:";
 
     /**
      * 生成token
      * @param principal (主体)生态用户
      * @return
      */
-    String createToken(Principal principal);
+    String create(Principal principal);
 
     /**
      * 删除

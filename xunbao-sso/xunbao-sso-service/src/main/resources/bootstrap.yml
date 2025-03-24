@@ -18,6 +18,10 @@ spring:
     default-property-inclusion: NON_EMPTY
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  config:
+    import:
+      - nacos:${spring.application.name}.yml
+      - nacos:xunbao-redis.yml
   cloud:
     nacos:
       discovery:
@@ -34,10 +38,6 @@ spring:
         namespace: '@config.namespace@'
         file-extension: yml
         refresh-enabled: true
-        extension-configs:
-        - data-id: xunbao-redis.yml
-          group: DEFAULT_GROUP
-          refresh: true
 
 dubbo:
   application:

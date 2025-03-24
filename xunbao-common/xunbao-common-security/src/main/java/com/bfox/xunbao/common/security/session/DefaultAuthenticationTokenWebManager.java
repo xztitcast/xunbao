@@ -21,17 +21,17 @@ public class DefaultAuthenticationTokenWebManager implements AuthenticationToken
 
     private Pattern pattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-:._~+/]+=*)$", Pattern.CASE_INSENSITIVE);
 
-    private RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public DefaultAuthenticationTokenWebManager(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
     @Override
-    public String createToken(Principal principal) {
+    public String create(Principal principal) {
         String token = DigestUtil.md5Hex(UUID.randomUUID().toString() + principal.getId()).toUpperCase();
         this.redisTemplate.opsForValue().set(TOKEN_KEY.concat(token), JSON.toJSONString(principal), BaseEnum.SEVEN, TimeUnit.DAYS);
         this.redisTemplate.opsForValue().set(TOKEN_KEY + principal.getId(), token, BaseEnum.SEVEN, TimeUnit.DAYS);
-        return null;
+        return token;
     }
 
     @Override
@@ -81,6 +81,6 @@ public class DefaultAuthenticationTokenWebManager implements AuthenticationToken
 
     @Override
     public void initLocalCache() {
-        LocalCacheManager.setTokenSessionManager(this);
+
     }
 }

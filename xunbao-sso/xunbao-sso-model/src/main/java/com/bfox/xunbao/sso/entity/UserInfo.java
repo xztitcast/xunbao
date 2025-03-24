@@ -1,4 +1,4 @@
-package com.bfox.xunbao.framework.entity;
+package com.bfox.xunbao.sso.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -8,20 +8,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * <p>
- * 保证金表
+ * 用户信息表
  * </p>
  *
  * @author Eden
- * @since 2025-03-01 13:38:50
+ * @since 2025-03-24 23:01:11
  */
 @Getter
 @Setter
-@TableName("tb_balance")
-public class Balance extends BaseEntity implements Serializable {
+@TableName("tb_user_info")
+public class UserInfo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,17 +36,22 @@ public class Balance extends BaseEntity implements Serializable {
     private Long userId;
 
     /**
-     * 用户名称
+     * 真实姓名
      */
-    private String username;
+    private String accName;
 
     /**
-     * 保证金余额
+     * 账号
      */
-    private BigDecimal amount;
+    private String accNo;
 
     /**
-     * 冻结金额
+     * 收款码
      */
-    private BigDecimal freezes;
+    private String accCode;
+
+    /**
+     * 1:微信 2:支付宝 3:银行卡
+     */
+    private Short type;
 }

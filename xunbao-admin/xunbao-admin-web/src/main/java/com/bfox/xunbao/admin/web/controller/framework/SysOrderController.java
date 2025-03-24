@@ -5,6 +5,7 @@ import com.bfox.xunbao.admin.web.annotation.Fill;
 import com.bfox.xunbao.admin.web.annotation.FillType;
 import com.bfox.xunbao.admin.web.annotation.Log;
 import com.bfox.xunbao.admin.web.controller.BaseController;
+import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.enums.BaseEnum;
@@ -93,6 +94,11 @@ public class SysOrderController extends BaseController {
         if(entity.getStatus() != BaseEnum.TWO) {
             return R.error("非审核成功状态不允许发布!");
         }
+        SysUser user = getUser();
+        if(user.getAccId() == null) {
+            return R.error("请先关联小程序账号");
+        }
+
         entity.setStatus(BaseEnum.THREE);
         entity.setPublishTime(new Date());
         this.orderService.updateEntity(entity);

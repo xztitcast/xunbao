@@ -13,7 +13,7 @@ import java.util.List;
  */
 public abstract class MapstructResolver {
 
-    private static Converter converter;
+    private static final Converter converter;
 
     static {
         converter = SpringContextUtils.getBean(Converter.class);
