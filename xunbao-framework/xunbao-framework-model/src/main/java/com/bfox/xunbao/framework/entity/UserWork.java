@@ -29,7 +29,7 @@ public class UserWork extends BaseEntity implements Serializable {
      * 主键id(即用户ID)
      */
     @TableId(type = IdType.INPUT)
-    private Long id;
+    private String id;
 
     /**
      * 用户名

@@ -11,7 +11,7 @@ import com.bfox.xunbao.sso.entity.User;
  * @author Eden
  * @since 2025-03-24 23:01:11
  */
-public interface UserService extends FrameworkService<User, Long> {
+public interface UserService extends FrameworkService<User, String> {
 
     /**
      * 根据用户名

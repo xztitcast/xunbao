@@ -31,13 +31,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IS
     }
 
     @Override
-    public User getEntity(Long id) {
+    public User getEntity(String id) {
         return this.getById(id);
     }
 
     @Override
     @Transactional
-    public Long saveEntity(User t) {
+    public String saveEntity(User t) {
         this.save(t);
         return t.getId();
     }
@@ -50,13 +50,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IS
 
     @Override
     @Transactional
-    public boolean delete(Collection<Long> ids) {
+    public boolean delete(Collection<String> ids) {
         return this.removeByIds(ids);
     }
 
     @Override
     @Transactional
-    public boolean delete(Long id) {
+    public boolean delete(String id) {
         return this.removeById(id);
     }
 

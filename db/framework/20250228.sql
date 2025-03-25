@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS "tb_order_work";
 CREATE TABLE "tb_order_work"(
     "id" int8 NOT NULL PRIMARY KEY,
     "serial_number" varchar(30) NOT NULL,
-    "user_id" int8 NOT NULL,
+    "user_id" varchar(20) NOT NULL,
     "username" varchar(50),
     "user_pic" varchar(255),
     "status" smallint NOT NULL DEFAULT 1,
@@ -144,7 +144,7 @@ COMMENT ON TABLE "tb_order_work" IS '订单任务表';
 
 DROP TABLE IF EXISTS "tb_user_work";
 CREATE TABLE "tb_user_work"(
-    "id" int8 NOT NULL PRIMARY KEY,
+    "id" varchar(20) NOT NULL PRIMARY KEY,
     "username" varchar(50),
     "rate" decimal(5, 2) NOT NULL DEFAULT 0.7,
     "trade_amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
@@ -183,7 +183,7 @@ COMMENT ON TABLE "tb_user_work" IS '用户工作台';
 DROP TABLE IF EXISTS "tb_balance";
 CREATE TABLE "tb_balance"(
     "id" bigserial NOT NULL PRIMARY KEY,
-    "user_id" int8 NOT NULL,
+    "user_id" varchar(20) NOT NULL,
     "username" varchar(50),
     "amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "freezes" decimal(20, 2) NOT NULL DEFAULT 0.00,
@@ -204,7 +204,7 @@ CREATE TABLE "tb_balance_trx"(
     "id" int8 NOT NULL PRIMARY KEY,
     "order_work_id" int8 NOT NULL,
     "serial_number" varchar(30) NOT NULL,
-    "user_id" int8 NOT NULL,
+    "user_id" varchar(20) NOT NULL,
     "username" varchar(50),
     "amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "status" smallint NOT NULL DEFAULT 1,
@@ -398,7 +398,7 @@ CREATE TABLE "tb_activity_order"(
     "item_id" int8 NOT NULL,
     "item_name" int8 NOT NULL,
     "amount" decimal(20, 2) NOT NULL DEFAULT 0.00,
-    "user_id" int8 NOT NULL,
+    "user_id" varchar(20) NOT NULL,
     "username" varchar(50),
     "user_pic" varchar(255),
     "status" smallint NOT NULL DEFAULT 1,
@@ -425,7 +425,7 @@ DROP TABLE IF EXISTS "tb_user_kabaw";
 CREATE TABLE "tb_user_kabaw"(
     "id" bigserial NOT NULL PRIMARY KEY,
     "activity_order_id" int8 NOT NULL,
-    "user_id" int8 NOT NULL,
+    "user_id" varchar(20) NOT NULL,
     "username" varchar(50),
     "user_pic" varchar(255),
     "status" smallint NOT NULL DEFAULT 1,

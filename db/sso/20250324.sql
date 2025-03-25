@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS "tb_user";
 CREATE TABLE "tb_user"(
-    "id" int8 NOT NULL PRIMARY KEY,
+    "id" varchar(20) NOT NULL PRIMARY KEY,
     "username" varchar(50) NOT NULL DEFAULT '0',
     "password" varchar(64) NOT NULL DEFAULT '0',
     "nickname" varchar(50),
@@ -31,7 +31,7 @@ COMMENT ON TABLE "tb_user" IS '用户表';
 DROP TABLE IF EXISTS "tb_user_info";
 CREATE TABLE "tb_user_info"(
     "id" bigserial NOT NULL PRIMARY KEY,
-    "user_id" int8 NOT NULL,
+    "user_id" varchar(20) NOT NULL,
     "acc_name" varchar(30) NOT NULL,
     "acc_no" varchar(64) NOT NULL,
     "acc_code" varchar(255) NOT NULL,

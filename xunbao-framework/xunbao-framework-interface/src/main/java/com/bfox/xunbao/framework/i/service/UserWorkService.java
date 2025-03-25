@@ -11,6 +11,6 @@ import com.bfox.xunbao.framework.entity.UserWork;
  * @author Eden
  * @since 2025-03-01 13:38:50
  */
-public interface UserWorkService extends FrameworkService<UserWork, Long> {
+public interface UserWorkService extends FrameworkService<UserWork, String> {
 
 }
