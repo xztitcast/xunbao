@@ -1,5 +1,6 @@
 package com.bfox.xunbao.framework.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,7 +11,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.Label;
 import com.bfox.xunbao.framework.i.service.LabelService;
 import com.bfox.xunbao.framework.mapper.LabelMapper;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
 
     @Override
     public P<Label> getBaseList(LimitModel m) {
-        SysCommonModel model = (SysCommonModel) m;
+        CommonModel model = (CommonModel) m;
         IPage<Label> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Label> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());
@@ -75,5 +76,11 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
     @Override
     public List<Label> getSelection() {
         return this.list();
+    }
+
+    @Override
+    public List<String> coverToName(String labelIds) {
+        List<Integer> list = JSON.parseArray(labelIds, Integer.class);
+        return list.stream().map(this::getById).map(Label::getName).toList();
     }
 }

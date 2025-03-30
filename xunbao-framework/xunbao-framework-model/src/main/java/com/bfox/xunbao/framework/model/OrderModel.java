@@ -5,14 +5,17 @@ import com.bfox.xunbao.common.core.LimitModel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
- * 后台订单工作流查询对象
  * @Author Eden
- * @Date 2025/3/1 17:20
+ * @Date 2025/3/1 15:28
  */
 @Getter
 @Setter
-public class SysOrderWorkModel extends LimitModel {
+public class OrderModel extends LimitModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 编号
@@ -20,12 +23,12 @@ public class SysOrderWorkModel extends LimitModel {
     private String serialNumber;
 
     /**
-     * 状态
+     * 开发语言ID
      */
-    private Integer status;
+    private Integer developId;
 
     /**
-     * 后台管理用户ID
+     * 创建人
      */
-    private Long sysUserId;
+    private Long creator;
 }

@@ -20,4 +20,11 @@ public interface LabelService extends FrameworkService<Label, Integer> {
      * @return
      */
     List<Label> getSelection();
+
+    /**
+     * 转换
+     * @param labelIds
+     * @return
+     */
+    List<String> coverToName(String labelIds);
 }

@@ -12,7 +12,7 @@ import com.bfox.xunbao.framework.annotation.RuleType;
 import com.bfox.xunbao.framework.entity.StarRule;
 import com.bfox.xunbao.framework.i.service.StarRuleService;
 import com.bfox.xunbao.framework.mapper.StarRuleMapper;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import com.bfox.xunbao.framework.view.RuleView;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -41,7 +41,7 @@ public class StarRuleServiceImpl extends ServiceImpl<StarRuleMapper, StarRule> i
 
     @Override
     public P<StarRule> getBaseList(LimitModel m) {
-        SysCommonModel model = (SysCommonModel)m;
+        CommonModel model = (CommonModel)m;
         IPage<StarRule> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<StarRule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());

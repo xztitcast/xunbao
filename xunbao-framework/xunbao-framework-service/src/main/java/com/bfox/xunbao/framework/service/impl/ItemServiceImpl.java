@@ -12,7 +12,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.Item;
 import com.bfox.xunbao.framework.i.service.ItemService;
 import com.bfox.xunbao.framework.mapper.ItemMapper;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements IS
 
     @Override
     public P<Item> getBaseList(LimitModel m) {
-        SysCommonModel model = (SysCommonModel) m;
+        CommonModel model = (CommonModel) m;
         IPage<Item> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Item> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());

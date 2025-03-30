@@ -10,7 +10,7 @@ import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.framework.entity.Star;
 import com.bfox.xunbao.framework.i.service.StarService;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class SysStarController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:star:list')")
-    public R list(SysCommonModel model) {
+    public R list(CommonModel model) {
         P<Star> p = this.starService.getBaseList(model);
         return R.ok(p);
     }
@@ -78,7 +78,7 @@ public class SysStarController {
            return R.error("修改星级不存在!");
         }
         if(entity.getStatus() == star.getStatus().intValue()) {
-            return R.error(S.USER_STATUS_PARAMTER_ERROR);
+            return R.error(S.USER_STATUS_PARAMETER_ERROR);
         }
         this.starService.updateEntity(entity);
         return R.ok();

@@ -1,7 +1,9 @@
 package com.bfox.xunbao.framework.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,7 +12,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.Balance;
 import com.bfox.xunbao.framework.i.service.BalanceService;
 import com.bfox.xunbao.framework.mapper.BalanceMapper;
-import com.bfox.xunbao.framework.model.SysBalanceModel;
+import com.bfox.xunbao.framework.model.BalanceModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,7 @@ public class BalanceServiceImpl extends ServiceImpl<BalanceMapper, Balance> impl
 
     @Override
     public P<Balance> getBaseList(LimitModel m) {
-        SysBalanceModel model = (SysBalanceModel) m;
+        BalanceModel model = (BalanceModel) m;
         IPage<Balance> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Balance> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(model.getUserId() != null, "user_id", model.getUserId());
@@ -71,5 +73,11 @@ public class BalanceServiceImpl extends ServiceImpl<BalanceMapper, Balance> impl
     @Transactional
     public boolean delete(Long id) {
         return this.removeById(id);
+    }
+
+    @Override
+    public Balance getBalance(String userId) {
+        LambdaQueryWrapper<Balance> wrapper = Wrappers.lambdaQuery(Balance.class).eq(Balance::getUserId, userId);
+        return this.getOne(wrapper);
     }
 }

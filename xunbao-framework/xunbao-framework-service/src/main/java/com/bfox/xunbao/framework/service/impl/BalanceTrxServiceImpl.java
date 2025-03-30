@@ -10,7 +10,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.BalanceTrx;
 import com.bfox.xunbao.framework.i.service.BalanceTrxService;
 import com.bfox.xunbao.framework.mapper.BalanceTrxMapper;
-import com.bfox.xunbao.framework.model.SysBalanceTrxModel;
+import com.bfox.xunbao.framework.model.BalanceTrxModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class BalanceTrxServiceImpl extends ServiceImpl<BalanceTrxMapper, Balance
 
     @Override
     public P<BalanceTrx> getBaseList(LimitModel m) {
-        SysBalanceTrxModel model = (SysBalanceTrxModel) m;
+        BalanceTrxModel model = (BalanceTrxModel) m;
         IPage<BalanceTrx> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<BalanceTrx> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(model.getOrderWorkId() != null, "order_work_id", model.getOrderWorkId());

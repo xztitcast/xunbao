@@ -9,7 +9,7 @@ import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.framework.entity.Activity;
 import com.bfox.xunbao.framework.i.service.ActivityService;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ public class SysActivityController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:activity:list')")
-    public R list(SysCommonModel model) {
+    public R list(CommonModel model) {
         P<Activity> p = this.activityService.getBaseList(model);
         return R.ok(p);
     }
@@ -85,7 +85,7 @@ public class SysActivityController {
             return R.error("活动不存在!");
         }
         if(entity.getStatus() == activity.getStatus().intValue()) {
-            return R.error(S.USER_STATUS_PARAMTER_ERROR);
+            return R.error(S.USER_STATUS_PARAMETER_ERROR);
         }
         this.activityService.updateEntity(entity);
         return R.ok();

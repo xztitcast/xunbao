@@ -1,17 +1,24 @@
 package com.bfox.xunbao.framework.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bfox.xunbao.common.core.LimitModel;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.redis.redisson.RedisIdentifierGenerator;
+import com.bfox.xunbao.framework.entity.Develop;
 import com.bfox.xunbao.framework.entity.Order;
+import com.bfox.xunbao.framework.i.service.DevelopService;
+import com.bfox.xunbao.framework.i.service.LabelService;
 import com.bfox.xunbao.framework.i.service.OrderService;
 import com.bfox.xunbao.framework.mapper.OrderMapper;
-import com.bfox.xunbao.framework.model.SysOrderModel;
+import com.bfox.xunbao.framework.model.OrderModel;
+import com.bfox.xunbao.framework.view.OrderInfoView;
+import com.bfox.xunbao.framework.view.OrderView;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.InitializingBean;
@@ -21,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -34,14 +42,20 @@ import java.util.Collection;
 @DubboService(interfaceClass = OrderService.class)
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IService<Order>, OrderService, InitializingBean {
 
+    private RedisIdentifierGenerator redisIdentifierGenerator;
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-    private RedisIdentifierGenerator redisIdentifierGenerator;
+    @Autowired
+    private DevelopService developService;
+
+    @Autowired
+    private LabelService labelService;
 
     @Override
     public P<Order> getBaseList(LimitModel m) {
-        SysOrderModel model = (SysOrderModel) m;
+        OrderModel model = (OrderModel) m;
         IPage<Order> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("creator", model.getCreator());
@@ -58,7 +72,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     @Override
     @Transactional
     public Long saveEntity(Order t) {
-        t.setSerialNumber(this.redisIdentifierGenerator.generate("xunbao_order"));
+        String value = this.redisIdentifierGenerator.generate(IDENTIFIER_SERIAL);
+        t.setSerialNumber(value);
         this.save(t);
         return t.getId();
     }
@@ -83,7 +98,39 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        this.redisIdentifierGenerator = new SerialNumberRedisIdentifierGenerator(redisTemplate);
+        this.redisIdentifierGenerator = new SerialNumberRedisIdentifierGenerator(this.redisTemplate);
+    }
+
+    @Override
+    public P<OrderView> getDataList(OrderModel model) {
+        IPage<Order> page = new Page<>(model.getPageNum(), model.getPageSize());
+        LambdaQueryWrapper<Order> queryWrapper = Wrappers.lambdaQuery(Order.class)
+                .eq(Order::getDevelopId, model.getDevelopId())
+                .orderByAsc(Order::getCreated);
+        this.page(page, queryWrapper);
+        List<OrderView> list = page.getRecords().stream().map(item -> {
+            OrderView view = new OrderView();
+            view.setId(item.getId());
+            view.setName(item.getName());
+            view.setType(item.getType());
+            view.setStatus(item.getStatus());
+            view.setSerialNumber(item.getSerialNumber());
+            view.setLabel(this.labelService.coverToName(item.getLabel()));
+            return view;
+        }).toList();
+        return new P<>(page.getTotal(), page.getPages(), list);
+    }
+
+    @Override
+    public OrderInfoView getInfo(Long id) {
+        Order entity = this.getById(id);
+        if(entity == null) return null;
+        Develop develop = this.developService.getEntity(entity.getDevelopId());
+        List<String> labels = this.labelService.coverToName(entity.getLabel());
+        OrderInfoView view = new OrderInfoView(entity);
+        view.setLabel(labels);
+        view.setDevelop(develop.getName());
+        return view;
     }
 
     /**

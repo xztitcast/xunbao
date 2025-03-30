@@ -128,11 +128,11 @@ public class SysUserController extends BaseController {
 		if (getUserId() != SUPER_ADMIN) {
 			List<Long> nodeUserIdList = sysUserService.getNodeUserIdList(getUserId());
 			if (!nodeUserIdList.contains(em.getId())){
-				return R.error(S.USER_NOTPERMISSION_ERROR);
+				return R.error(S.USER_NOT_PERMISSION_ERROR);
 			}
 		}
 		if(sysUser.getStatus() == em.getStatus().intValue()) {
-			return R.error(S.USER_STATUS_PARAMTER_ERROR);
+			return R.error(S.USER_STATUS_PARAMETER_ERROR);
 		}
 		sysUserService.updateById(em);
 		return R.ok();

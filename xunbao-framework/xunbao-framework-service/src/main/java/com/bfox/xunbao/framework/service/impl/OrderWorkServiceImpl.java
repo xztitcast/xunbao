@@ -9,7 +9,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.OrderWork;
 import com.bfox.xunbao.framework.i.service.OrderWorkService;
 import com.bfox.xunbao.framework.mapper.OrderWorkMapper;
-import com.bfox.xunbao.framework.model.SysOrderWorkModel;
+import com.bfox.xunbao.framework.model.OrderWorkModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class OrderWorkServiceImpl extends ServiceImpl<OrderWorkMapper, OrderWork
 
     @Override
     public P<OrderWork> getBaseList(LimitModel m) {
-        SysOrderWorkModel model = (SysOrderWorkModel) m;
+        OrderWorkModel model = (OrderWorkModel) m;
         Page<OrderWork> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<OrderWork> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("creator", model.getSysUserId());

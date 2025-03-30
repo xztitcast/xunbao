@@ -8,7 +8,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.framework.entity.Balance;
 import com.bfox.xunbao.framework.i.service.BalanceService;
-import com.bfox.xunbao.framework.model.SysBalanceModel;
+import com.bfox.xunbao.framework.model.BalanceModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ public class SysBalanceController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:balance:list')")
-    public R list(SysBalanceModel model) {
+    public R list(BalanceModel model) {
         P<Balance> p = this.balanceService.getBaseList(model);
         return R.ok(p);
     }

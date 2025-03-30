@@ -12,7 +12,7 @@ import com.bfox.xunbao.framework.annotation.RuleType;
 import com.bfox.xunbao.framework.entity.CycleRule;
 import com.bfox.xunbao.framework.i.service.CycleRuleService;
 import com.bfox.xunbao.framework.mapper.CycleRuleMapper;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import com.bfox.xunbao.framework.view.RuleView;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -41,7 +41,7 @@ public class CycleRuleServiceImpl extends ServiceImpl<CycleRuleMapper, CycleRule
 
     @Override
     public P<CycleRule> getBaseList(LimitModel m) {
-        SysCommonModel model = (SysCommonModel) m;
+        CommonModel model = (CommonModel) m;
         IPage<CycleRule> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<CycleRule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());

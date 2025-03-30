@@ -9,13 +9,17 @@ import com.bfox.xunbao.admin.web.entity.SysUser;
 import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.enums.BaseEnum;
+import com.bfox.xunbao.framework.entity.Balance;
 import com.bfox.xunbao.framework.entity.Order;
+import com.bfox.xunbao.framework.i.service.BalanceService;
 import com.bfox.xunbao.framework.i.service.OrderService;
-import com.bfox.xunbao.framework.model.SysOrderModel;
+import com.bfox.xunbao.framework.model.OrderModel;
+import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -31,13 +35,16 @@ public class SysOrderController extends BaseController {
     @DubboReference
     private OrderService orderService;
 
+    @DubboReference
+    private BalanceService balanceService;
+
     /**
      * 查询列表
      * @return
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:order:list')")
-    public R list(SysOrderModel model) {
+    public R list(OrderModel model) {
         model.setCreator(getUserId());
         P<Order> p = this.orderService.getBaseList(model);
         return R.ok(p);
@@ -94,11 +101,14 @@ public class SysOrderController extends BaseController {
         if(entity.getStatus() != BaseEnum.TWO) {
             return R.error("非审核成功状态不允许发布!");
         }
-        SysUser user = getUser();
-        if(user.getAccId() == null) {
+        SysUser sysUser = getUser();
+        if(StringUtils.isBlank(sysUser.getAccId())) {
             return R.error("请先关联小程序账号");
         }
-
+        Balance balance = this.balanceService.getBalance(sysUser.getAccId());
+        if(balance == null || balance.getAmount().compareTo(new BigDecimal("1000")) < 0) {
+            return R.error("保证金余额不足,请在小程序充值!");
+        }
         entity.setStatus(BaseEnum.THREE);
         entity.setPublishTime(new Date());
         this.orderService.updateEntity(entity);

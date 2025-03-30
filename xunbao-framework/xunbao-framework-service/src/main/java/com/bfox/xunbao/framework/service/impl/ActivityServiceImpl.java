@@ -10,7 +10,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.Activity;
 import com.bfox.xunbao.framework.i.service.ActivityService;
 import com.bfox.xunbao.framework.mapper.ActivityMapper;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 
     @Override
     public P<Activity> getBaseList(LimitModel m) {
-        SysCommonModel model = (SysCommonModel) m;
+        CommonModel model = (CommonModel) m;
         IPage<Activity> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Activity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());

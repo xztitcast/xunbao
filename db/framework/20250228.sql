@@ -13,7 +13,7 @@ CREATE TABLE "tb_order"(
     "bonus" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "bond" decimal(20, 2) NOT NULL DEFAULT 0.00,
     "publish_time" timestamp(6) DEFAULT now(),
-    "develop" varchar(255) NOT NULL,
+    "develop_id" int4 NOT NULL,
     "contact_text" varchar(255),
     "contact" varchar(255) NOT NULL,
     "url" varchar(500) NOT NULL,
@@ -500,3 +500,19 @@ COMMENT ON COLUMN "tb_label"."bean_name" IS 'Spring bean名称';
 COMMENT ON COLUMN "tb_label"."created" IS '创建时间';
 COMMENT ON COLUMN "tb_label"."updated" IS '更新时间';
 COMMENT ON TABLE "tb_label" IS '标签表';
+
+DROP TABLE IF EXISTS "tb_develop";
+CREATE TABLE "tb_develop"(
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(20) NOT NULL,
+    "sorted" int4 NOT NULL DEFAULT 1
+    "created" timestamp(6) DEFAULT now(),
+    "updated" timestamp(6) DEFAULT now()
+);
+
+COMMENT ON COLUMN "tb_develop"."id" IS '主键id';
+COMMENT ON COLUMN "tb_develop"."name" IS '开发名称';
+COMMENT ON COLUMN "tb_develop"."sorted" IS '排序';
+COMMENT ON COLUMN "tb_develop"."created" IS '创建时间';
+COMMENT ON COLUMN "tb_develop"."updated" IS '更新时间';
+COMMENT ON TABLE "tb_develop" IS '开发语言表';

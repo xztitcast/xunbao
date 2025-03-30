@@ -10,7 +10,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.framework.entity.Star;
 import com.bfox.xunbao.framework.i.service.StarService;
 import com.bfox.xunbao.framework.mapper.StarMapper;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ import java.util.List;
 public class StarServiceImpl extends ServiceImpl<StarMapper, Star> implements IService<Star>, StarService {
     @Override
     public P<Star> getBaseList(LimitModel m) {
-        SysCommonModel model = (SysCommonModel) m;
+        CommonModel model = (CommonModel) m;
         IPage<Star> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<Star> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());

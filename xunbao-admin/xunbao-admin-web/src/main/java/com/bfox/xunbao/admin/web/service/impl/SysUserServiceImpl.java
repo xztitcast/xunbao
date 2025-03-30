@@ -103,7 +103,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		
 		//check permission
 		if(!roleIdList.containsAll(user.getRoleIdList())) {
-			throw new SysServiceException(S.USER_ADDPERMISSIONS_ERROR);
+			throw new SysServiceException(S.USER_ADD_PERMISSIONS_ERROR);
 		}
 		
 	}

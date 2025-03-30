@@ -44,7 +44,7 @@ public class SysUser extends BaseEntity implements Serializable {
 	 * 关联应用账号ID
 	 * (与应用账号做关联)
 	 */
-	private Long accId;
+	private String accId;
 
     @TableField(exist = false)
     private List<Long> roleIdList;
@@ -124,11 +124,11 @@ public class SysUser extends BaseEntity implements Serializable {
 		this.locked = locked;
 	}
 
-	public Long getAccId() {
+	public String getAccId() {
 		return accId;
 	}
 
-	public void setAccId(Long accId) {
+	public void setAccId(String accId) {
 		this.accId = accId;
 	}
 }

@@ -13,4 +13,10 @@ import com.bfox.xunbao.framework.entity.Balance;
  */
 public interface BalanceService extends FrameworkService<Balance, Long> {
 
+    /**
+     * 获取balance账户
+     * @param userId
+     * @return
+     */
+    Balance getBalance(String userId);
 }

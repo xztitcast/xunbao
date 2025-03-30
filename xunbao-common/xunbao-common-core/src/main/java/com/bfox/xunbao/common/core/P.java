@@ -1,11 +1,11 @@
 package com.bfox.xunbao.common.core;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 分页
@@ -18,9 +18,20 @@ import lombok.Setter;
 public class P<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * 总条数
+	 */
 	private long total;
 
+	/**
+	 * 总页数
+	 */
+	private long pages;
+
+	/**
+	 * 当前页数据
+	 */
 	@JsonInclude
 	private List<T> pageList;
 
@@ -29,8 +40,13 @@ public class P<T> implements Serializable {
 	}
 
 	public P(long total, List<T> pageList) {
+		this(total, 0, pageList);
+	}
+
+	public P(long total, long pages, List<T> pageList) {
 		super();
 		this.total = total;
+		this.pages = pages;
 		this.pageList = pageList;
 	}
 	

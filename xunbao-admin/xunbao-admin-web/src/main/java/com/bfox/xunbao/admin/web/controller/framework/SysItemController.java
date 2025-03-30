@@ -10,7 +10,7 @@ import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.framework.entity.Item;
 import com.bfox.xunbao.framework.i.service.ItemService;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +36,7 @@ public class SysItemController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:item:list')")
-    public R list(SysCommonModel model) {
+    public R list(CommonModel model) {
         P<Item> p = this.itemService.getBaseList(model);
         return R.ok(p);
     }
@@ -87,7 +87,7 @@ public class SysItemController {
             return R.error("奖品不存在!");
         }
         if(entity.getStatus() == item.getStatus().intValue()) {
-            return R.error(S.USER_STATUS_PARAMTER_ERROR);
+            return R.error(S.USER_STATUS_PARAMETER_ERROR);
         }
         this.itemService.updateEntity(entity);
         return R.ok();

@@ -10,7 +10,7 @@ import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.common.core.S;
 import com.bfox.xunbao.framework.entity.Label;
 import com.bfox.xunbao.framework.i.service.LabelService;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class SysLabelController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:label:list')")
-    public R list(SysCommonModel model) {
+    public R list(CommonModel model) {
         P<Label> p = this.labelService.getBaseList(model);
         return R.ok(p);
     }
@@ -79,7 +79,7 @@ public class SysLabelController {
             return R.error("标签不存在!");
         }
         if(entity.getStatus() == label.getStatus().intValue()) {
-            return R.error(S.USER_STATUS_PARAMTER_ERROR);
+            return R.error(S.USER_STATUS_PARAMETER_ERROR);
         }
         this.labelService.updateEntity(entity);
         return R.ok();

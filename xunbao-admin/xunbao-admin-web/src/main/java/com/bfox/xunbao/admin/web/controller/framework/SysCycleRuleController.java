@@ -8,7 +8,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.framework.entity.CycleRule;
 import com.bfox.xunbao.framework.i.service.CycleRuleService;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ public class SysCycleRuleController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:cycle:rule:list')")
-    public R list(SysCommonModel model) {
+    public R list(CommonModel model) {
         P<CycleRule> p = this.cycleRuleService.getBaseList(model);
         return R.ok(p);
     }

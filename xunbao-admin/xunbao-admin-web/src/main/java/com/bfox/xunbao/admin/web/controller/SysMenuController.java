@@ -120,7 +120,7 @@ public class SysMenuController extends BaseController {
 	public R delete(@PathVariable("menuId") long menuId){
 		SysMenu entity = sysMenuService.getById(menuId);
 		if(entity.getStatus() == 0){
-			return R.error(S.MENU_BASEFRAME_REMOVE_ERROR);
+			return R.error(S.MENU_BASE_FRAME_REMOVE_ERROR);
 		}
 
 		//判断是否有子菜单或按钮
@@ -164,7 +164,7 @@ public class SysMenuController extends BaseController {
 		if(menu.getType() == Constant.MenuType.CATALOG.getValue() ||
 				menu.getType() == Constant.MenuType.MENU.getValue()){
 			if(parentType != Constant.MenuType.CATALOG.getValue()){
-				throw new SysServiceException(S.MENU_PARENTMENU_ONLYCATALOG_ERROR);
+				throw new SysServiceException(S.MENU_PARENT_MENU_ONLY_CATALOG_ERROR);
 			}
 			return ;
 		}
@@ -172,7 +172,7 @@ public class SysMenuController extends BaseController {
 		//按钮
 		if(menu.getType() == Constant.MenuType.BUTTON.getValue()){
 			if(parentType != Constant.MenuType.MENU.getValue()){
-				throw new SysServiceException(S.MENU_PARENTMENU_ONLYMENU_ERROR);
+				throw new SysServiceException(S.MENU_PARENT_MENU_ONLY_MENU_ERROR);
 			}
 			return ;
 		}

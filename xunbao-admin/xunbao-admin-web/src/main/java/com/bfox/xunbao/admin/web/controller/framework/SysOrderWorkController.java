@@ -9,7 +9,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.framework.entity.OrderWork;
 import com.bfox.xunbao.framework.i.service.OrderWorkService;
-import com.bfox.xunbao.framework.model.SysOrderWorkModel;
+import com.bfox.xunbao.framework.model.OrderWorkModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ public class SysOrderWorkController extends BaseController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:order:work:list')")
-    public R list(SysOrderWorkModel model) {
+    public R list(OrderWorkModel model) {
         model.setSysUserId(getUserId());
         P<OrderWork> p = this.orderWorkService.getBaseList(model);
         return R.ok(p);

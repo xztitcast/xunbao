@@ -8,22 +8,22 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * 后台订单申诉参数
  * @Author Eden
- * @Date 2025/3/23 23:30
+ * @Date 2025/3/5 0:26
  */
 @Getter
 @Setter
-public class SysBalanceTrxModel extends LimitModel implements Serializable {
+public class BalanceModel extends LimitModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
-     * 订单任务ID
+     * 用户ID
      */
-    private Long orderWorkId;
+    private Long userId;
 
     /**
-     * 订单标号
+     * 用户名
      */
-    private String serialNumber;
-
+    private String username;
 }

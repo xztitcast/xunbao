@@ -12,7 +12,7 @@ import com.bfox.xunbao.framework.annotation.RuleType;
 import com.bfox.xunbao.framework.entity.UserRule;
 import com.bfox.xunbao.framework.i.service.UserRuleService;
 import com.bfox.xunbao.framework.mapper.UserRuleMapper;
-import com.bfox.xunbao.framework.model.SysCommonModel;
+import com.bfox.xunbao.framework.model.CommonModel;
 import com.bfox.xunbao.framework.view.RuleView;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -41,7 +41,7 @@ public class UserRuleServiceImpl extends ServiceImpl<UserRuleMapper, UserRule> i
 
     @Override
     public P<UserRule> getBaseList(LimitModel m) {
-        SysCommonModel model = (SysCommonModel) m;
+        CommonModel model = (CommonModel) m;
         IPage<UserRule> page = new Page<>(model.getPageNum(), model.getPageSize());
         QueryWrapper<UserRule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(model.getName()), "name", model.getName());

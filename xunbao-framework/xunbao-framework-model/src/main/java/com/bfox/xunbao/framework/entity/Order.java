@@ -96,7 +96,7 @@ public class Order extends CreateEntity implements Serializable {
     /**
      * 开发语言
      */
-    private String develop;
+    private Integer developId;
 
     /**
      * 文案

@@ -8,7 +8,7 @@ import com.bfox.xunbao.common.core.P;
 import com.bfox.xunbao.common.core.R;
 import com.bfox.xunbao.framework.entity.BalanceTrx;
 import com.bfox.xunbao.framework.i.service.BalanceTrxService;
-import com.bfox.xunbao.framework.model.SysBalanceTrxModel;
+import com.bfox.xunbao.framework.model.BalanceTrxModel;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ public class SysBalanceTrxController {
      */
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('sys:balance-trx:list')")
-    public R list(SysBalanceTrxModel model) {
+    public R list(BalanceTrxModel model) {
         P<BalanceTrx> p = this.balanceTrxService.getBaseList(model);
         return R.ok(p);
     }
