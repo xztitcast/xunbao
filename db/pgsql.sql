@@ -1076,3 +1076,73 @@ COMMENT ON COLUMN "public"."tb_content"."updater" IS '更新人id';
 COMMENT ON COLUMN "public"."tb_content"."update_name" IS '更新人名称';
 COMMENT ON COLUMN "public"."tb_content"."updated" IS '更新时间';
 COMMENT ON TABLE "public"."tb_content" IS '内容表';
+
+DROP TABLE IF EXISTS "public"."tb_message_channel";
+CREATE TABLE "public"."tb_message_channel"(
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(20) NOT NULL,
+    "status" smallint NOT NULL DEFAULT 1,
+    "api_key" varchar(64) NOT NULL,
+    "api_secret" varchar(64) NOT NULL,
+    "url" varchar(255),
+    "remark" varchar(255),
+    "creator" int8,
+    "create_name" varchar(20),
+    "updater" int8,
+    "update_name" varchar(20),
+    "created" timestamp(6) DEFAULT now(),
+    "updated" timestamp(6) DEFAULT now()
+);
+
+COMMENT ON COLUMN "public"."tb_message_channel"."id" IS '主键ID';
+COMMENT ON COLUMN "public"."tb_message_channel"."name" IS '渠道名称';
+COMMENT ON COLUMN "public"."tb_message_channel"."status" IS '是否启用 0:禁用 1:启用';
+COMMENT ON COLUMN "public"."tb_message_channel"."api_key" IS 'API账号';
+COMMENT ON COLUMN "public"."tb_message_channel"."api_secret" IS ' API秘钥';
+COMMENT ON COLUMN "public"."tb_message_channel"."url" IS '回调URL';
+COMMENT ON COLUMN "public"."tb_message_channel"."remark" IS '备注';
+COMMENT ON COLUMN "public"."tb_message_channel"."creator" IS '创建人id';
+COMMENT ON COLUMN "public"."tb_message_channel"."create_name" IS '创建名称';
+COMMENT ON COLUMN "public"."tb_message_channel"."created" IS '创建时间';
+COMMENT ON COLUMN "public"."tb_message_channel"."updater" IS '更新人id';
+COMMENT ON COLUMN "public"."tb_message_channel"."update_name" IS '更新人名称';
+COMMENT ON COLUMN "public"."tb_message_channel"."updated" IS '更新时间';
+COMMENT ON TABLE "public"."tb_message_channel" IS '消息渠道表';
+
+DROP TABLE IF EXISTS "public"."tb_message_template";
+CREATE TABLE "public"."tb_message_template"(
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(20) NOT NULL,
+    "code" varchar(20) NOT NULL,
+    "template_id" varchar(32) NOT NULL DEFAULT '-1',
+    "content" text NOT NULL,
+    "bean_name" varchar(32) NOT NULL,
+    "status" smallint NOT NULL DEFAULT 1,
+    "channel_id" int8 NOT NULL,
+    "channel_name" varchar(20),
+    "remark" varchar(255),
+    "creator" int8,
+    "create_name" varchar(20),
+    "updater" int8,
+    "update_name" varchar(20),
+    "created" timestamp(6) DEFAULT now(),
+    "updated" timestamp(6) DEFAULT now()
+)
+
+COMMENT ON COLUMN "public"."tb_message_template"."id" IS '主键ID';
+COMMENT ON COLUMN "public"."tb_message_template"."name" IS '模板名称';
+COMMENT ON COLUMN "public"."tb_message_template"."code" IS '模板编码';
+COMMENT ON COLUMN "public"."tb_message_template"."template_id" IS '模板ID(-1:不要模板ID仅用于占位)';
+COMMENT ON COLUMN "public"."tb_message_template"."content" IS '模板内容';
+COMMENT ON COLUMN "public"."tb_message_template"."bean_name" IS '模板解析器';
+COMMENT ON COLUMN "public"."tb_message_template"."status" IS '是否启用 0:禁用 1:启用';
+COMMENT ON COLUMN "public"."tb_message_template"."channel_id" IS '渠道ID';
+COMMENT ON COLUMN "public"."tb_message_template"."channel_name" IS '渠道名称(冗余字段)';
+COMMENT ON COLUMN "public"."tb_message_template"."remark" IS '备注';
+COMMENT ON COLUMN "public"."tb_message_template"."creator" IS '创建人id';
+COMMENT ON COLUMN "public"."tb_message_template"."create_name" IS '创建名称';
+COMMENT ON COLUMN "public"."tb_message_template"."created" IS '创建时间';
+COMMENT ON COLUMN "public"."tb_message_template"."updater" IS '更新人id';
+COMMENT ON COLUMN "public"."tb_message_template"."update_name" IS '更新人名称';
+COMMENT ON COLUMN "public"."tb_message_template"."updated" IS '更新时间';
+COMMENT ON TABLE "public"."tb_message_template" IS '消息模板表';
